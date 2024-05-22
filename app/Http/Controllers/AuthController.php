@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    function register(){
-        return view('register');
+    function registerView(){
+        return view('auth.register');
     }
 
-    public function registerPost(Request $request)
+    public function register(Request $request)
     {
         $user = new User();
 
@@ -23,15 +23,15 @@ class AuthController extends Controller
 
         $user->save();
 
-        return back()->with('success', 'Register successfully');
+        return redirect('login')->with('success', 'Register successfully');
     }
 
-    public function login()
+    public function loginView()
     {
-        return view('login');
+        return view('auth.login');
     }
 
-    public function loginPost(Request $request)
+    public function login(Request $request)
     {
         $credetials = [
             'email' => $request->email,

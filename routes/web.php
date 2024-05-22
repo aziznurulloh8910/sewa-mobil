@@ -9,10 +9,10 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'guest'], function () {
-    Route::get('/register', [AuthController::class, 'register'])->name('register');
-    Route::post('/register', [AuthController::class, 'registerPost'])->name('register');
-    Route::get('/login', [AuthController::class, 'login'])->name('login');
-    Route::post('/login', [AuthController::class, 'loginPost'])->name('login');
+    Route::get('/register', [AuthController::class, 'registerView'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    Route::get('/login', [AuthController::class, 'loginView'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
 });
 
 Route::group(['middleware' => 'auth'], function () {
