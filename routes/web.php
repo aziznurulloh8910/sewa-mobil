@@ -2,6 +2,12 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AsetController;
+use App\Http\Controllers\KriteriaController;
+use App\Http\Controllers\SubKriteriaController;
+use App\Http\Controllers\HistoryPenghapusanController;
+use App\Http\Controllers\PengadaanAsetController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,5 +23,28 @@ Route::group(['middleware' => 'guest'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home-dashboard');
+
+    // mengelola data aset
+    Route::get('/aset', [AsetController::class, 'index'])->name('aset');
+
+    // mengelola data history penghapusan aset
+    Route::get('/history-penghapusan', [HistoryPenghapusanController::class, 'index'])->name('history-penghapusan');
+
+    // mengelola data history penghapusan aset
+    Route::get('/pengadaan-aset', [PengadaanAsetController::class, 'index'])->name('pengadaan-aset');
+
+    // mengelola data kriteria
+    Route::get('/kriteria', [KriteriaController::class, 'index'])->name('kriteria');
+
+    // mengelola data sub kriteria
+    Route::get('/sub-kriteria', [SubKriteriaController::class, 'index'])->name('sub-kriteria');
+
+    // mengelola data sub kriteria
+    Route::get('/users', [UserController::class, 'index'])->name('users');
+
+    Route::get('/profile', function () {
+        return 'hello';
+    })->name('profile');
+
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
 });
