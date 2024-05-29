@@ -43,15 +43,13 @@
                                     <tr>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
-                                        @if ($user->role == 1)
                                         <td>
-                                            <span class="badge rounded-pill badge-light-primary me-1">Super Admin</span>
+                                            @if ($user->role == 1)
+                                                <span class="badge rounded-pill badge-light-primary me-1">Super Admin</span>
+                                            @else
+                                                <span class="badge rounded-pill badge-light-success me-1">Admin</span>
+                                            @endif
                                         </td>
-                                        @else
-                                        <td>
-                                            <span class="badge rounded-pill badge-light-success me-1">Admin</span>
-                                        </td>
-                                        @endif
                                         <td>
                                             <div class="dropdown dropstart">
                                                 <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">

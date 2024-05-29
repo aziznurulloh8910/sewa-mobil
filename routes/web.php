@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // mengelola data aset
     Route::get('/aset', [AsetController::class, 'index'])->name('aset');
+    Route::get('/aset-data-table', [AsetController::class, 'dataTable']);
 
     // mengelola data history penghapusan aset
     Route::get('/history-penghapusan', [HistoryPenghapusanController::class, 'index'])->name('history-penghapusan');
