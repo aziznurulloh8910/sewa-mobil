@@ -13,6 +13,19 @@ return new class extends Migration
     {
         Schema::create('asets', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->integer('registration_number');
+            $table->string('asset_code');
+            $table->string('location');
+            $table->string('brand/type');
+            $table->year('procurement_year');
+            $table->integer('quantity');
+            $table->double('acquisition_cost');
+            $table->double('recorded_value');
+            $table->double('accumulated_depreciation');
+            $table->float('total_depreciation');
+            $table->integer('condition');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

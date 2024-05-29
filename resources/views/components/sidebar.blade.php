@@ -72,13 +72,15 @@
                 <i data-feather="list"></i><span class="menu-title text-truncate" data-i18n="Hasil Perankingan">Hasil Perankingan</span></a>
             </li>
 
-            <li class=" navigation-header"><span data-i18n="Data User">Data User</span>
-                <i data-feather="more-horizontal"></i>
-            </li>
 
-            <li class="nav-item {{ Request::is('users') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('users') }}">
-                <i data-feather="users"></i><span class="menu-title text-truncate" data-i18n="Data User">Data User</span></a>
-            </li>
+            @if(auth()->user()->role == 1)
+                <li class=" navigation-header"><span data-i18n="Data User">Data User</span>
+                    <i data-feather="more-horizontal"></i>
+                </li>
+                <li class="nav-item {{ Request::is('users') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('users') }}">
+                    <i data-feather="users"></i><span class="menu-title text-truncate" data-i18n="Data User">Data User</span></a>
+                </li>
+            @endif
 
             </li>
         </ul>

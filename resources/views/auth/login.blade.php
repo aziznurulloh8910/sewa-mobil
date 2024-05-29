@@ -24,7 +24,7 @@
                         <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
                             <h2 class="card-title fw-bold mb-1">Welcome to Vuexy! 👋</h2>
                             <p class="card-text mb-2">Please sign-in to your account and start the adventure</p>
-                            <form class="auth-login-form mt-2" action="{{ route('login') }}" method="POST">
+                            <form class="auth-login-form mt-2" action="{{ route('login') }}" method="POST"  id="login-form">
                                 @csrf
                                 <div class="mb-1">
                                     <label class="form-label" for="email">Email</label>
@@ -60,4 +60,43 @@
     </div>
 </div>
 <!-- END: Content-->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        fetch(this.getAttribute('action'), {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                // If login successful, show success message using SweetAlert2
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Login Successful',
+                    text: 'You have successfully logged in!',
+                    confirmButtonText: 'OK'
+                    // showConfirmButton: false,
+                    // timer: 2000
+                }).then(() => {
+                    window.location.href = '/home';
+                });
+            } else {
+                // If login failed, show error message using SweetAlert2
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Failed',
+                    text: 'Invalid email or password. Please try again.',
+                    confirmButtonText: 'Retry'
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
 </x-layout>

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Aset;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,9 +16,18 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+        Aset::factory()->count(50)->create();
+
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Super Admin',
+            'email' => 'admin@mail.com',
+            'role' => 1,
+        ]);
+
+        User::factory()->create([
+            'name' => 'User',
+            'email' => 'user@mail.com',
+            'role' => 0,
         ]);
     }
 }
