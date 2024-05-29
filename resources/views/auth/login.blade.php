@@ -61,7 +61,6 @@
 </div>
 <!-- END: Content-->
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.getElementById('login-form').addEventListener('submit', function(event) {
         event.preventDefault();

@@ -73,7 +73,7 @@
                             <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
                                 <h2 class="card-title fw-bold mb-1">Adventure starts here 🚀</h2>
                                 <p class="card-text mb-2">Make your app management easy and fun!</p>
-                                <form class="auth-register-form mt-2" action="{{ route('register') }}" method="POST">
+                                <form class="auth-register-form mt-2" action="{{ route('register') }}" method="POST" id="register-form">
                                     @csrf
                                     <div class="mb-1">
                                         <label class="form-label" for="name">Full Name</label>
@@ -111,4 +111,42 @@
         </div>
     </div>
     <!-- END: Content-->
+
+    <script>
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            fetch(this.getAttribute('action'), {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    // If login successful, show success message using SweetAlert2
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Register Successful',
+                        text: 'You have successfully logged in!',
+                        confirmButtonText: 'OK'
+                        // showConfirmButton: false,
+                        // timer: 2000
+                    }).then(() => {
+                        window.location.href = '/home';
+                    });
+                } else {
+                    // If login failed, show error message using SweetAlert2
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Login Failed',
+                        text: 'Invalid email or password. Please try again.',
+                        confirmButtonText: 'Retry'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
 </x-layout>

@@ -66,6 +66,9 @@
     <script src="{{ asset('app-assets/js/scripts/pages/auth-login.js')}}"></script>
     <!-- END: Page JS-->
 
+    <!-- sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $(window).on('load', function() {
             if (feather) {
