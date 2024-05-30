@@ -12,13 +12,6 @@
     <div class="app-content content ">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
-        <div class="content-wrapper container-xxl p-0">
-            <div class="content-header row">
-                <div class="content-header-left col-md-9 col-12 mb-2">
-                    <h2>Data Aset</h2>
-                </div>
-            </div>
-        </div>
         <div class="content-body">
             <!-- Basic table -->
             <section id="basic-datatable">
@@ -109,6 +102,89 @@
                         </form>
                     </div>
                 </div>
+
+                <!-- Modal -->
+                <div
+                    class="modal fade text-start"
+                    id="inlineForm"
+                    tabindex="-1"
+                    aria-labelledby="ModalFormAset"
+                    aria-hidden="true"
+                >
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h4 class="modal-title" id="ModalFormAset">Form Data Aset</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="#">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <label>Nama Barang</label>
+                                        <div class="mb-1">
+                                            <input type="text" placeholder="Nama Barang" name="asset_name" id="asset_name" class="form-control" />
+                                        </div>
+                                        <label>Kode Barang</label>
+                                        <div class="mb-1">
+                                            <input type="text" placeholder="Kode Barang" name="asset_code" id="asset_code" class="form-control" />
+                                        </div>
+                                        <label>Nomor Registrasi</label>
+                                        <div class="mb-1">
+                                            <input type="text" placeholder="Nomor Registrasi" name="registration_number" id="registration_number" class="form-control" />
+                                        </div>
+                                        <label>Lokasi</label>
+                                        <div class="mb-1">
+                                            <input type="text" placeholder="Lokasi" name="location" id="location" class="form-control" />
+                                        </div>
+                                        <label>Merk/Type</label>
+                                        <div class="mb-1">
+                                            <input type="text" placeholder="Merk/Type" name="brand_type" id="brand_type" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <label>Tahun Pengadaan</label>
+                                        <div class="mb-1">
+                                            <input type="text" placeholder="Tahun Pengadaan" name="year_procurment" id="year_procurment" class="form-control" />
+                                        </div>
+                                        <label>Jumlah Barang</label>
+                                        <div class="mb-1">
+                                            <input type="text" placeholder="Jumlah Barang" name="quantity" id="quantity" class="form-control" />
+                                        </div>
+                                        <label>Harga Satuan</label>
+                                        <div class="mb-1">
+                                            <input type="text" placeholder="Harga Satuan" name="registration_number" id="registration_number" class="form-control" />
+                                        </div>
+                                        <label for="condition">Kondisi</label>
+                                        <div class="mb-1">
+                                            <select class="form-select" name="condition" id="condition">
+                                                <option selected>-- Pilih Kondisi --</option>
+                                                <option value="4">Baik</option>
+                                                <option value="3">Rusak Ringan</option>
+                                                <option value="2">Rusak Berat</option>
+                                                <option value="1">Tidak Ada</option>
+                                            </select>
+                                        </div>
+                                        <label>Keterangan</label>
+                                        <div class="mb-1">
+                                            <input type="text" placeholder="Keterangan" id="description" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Simpan</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        </div>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+                </div>
             </section>
             <!-- Basic Tables end -->
         </div>
@@ -123,177 +199,6 @@
 
 
     @push('data')
-        <script>
-            $(document).ready(function() {
-            $('#dataAset').DataTable({
-                ajax: {
-                    "url": "http://localhost:8000/aset-data-table",
-                    "dataSrc": "data"
-                },
-                columns: [
-                    { "data": "id" },
-                    { "data": "asset_code" },
-                    { "data": "location" },
-                    { "data": "quantity" },
-                    { "data": "acquisition_cost" },
-                    { "data": "condition" },
-                    { "data": "" },
-                ],
-                columnDefs: [
-                    {
-                        // Actions
-                        targets: -1,
-                        title: 'Actions',
-                        orderable: false,
-                        render: function (data, type, full, meta) {
-                            return (
-                            '<div class="d-inline-flex">' +
-                            '<a class="pe-1 dropdown-toggle hide-arrow text-primary" data-bs-toggle="dropdown">' +
-                            feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
-                            '</a>' +
-                            '<div class="dropdown-menu dropdown-menu-end">' +
-                            '<a href="javascript:;" class="dropdown-item">' +
-                            feather.icons['file-text'].toSvg({ class: 'font-small-4 me-50' }) +
-                            'Details</a>' +
-                            '<a href="javascript:;" class="dropdown-item">' +
-                            feather.icons['archive'].toSvg({ class: 'font-small-4 me-50' }) +
-                            'Archive</a>' +
-                            '<a href="javascript:;" class="dropdown-item delete-record">' +
-                            feather.icons['trash-2'].toSvg({ class: 'font-small-4 me-50' }) +
-                            'Delete</a>' +
-                            '</div>' +
-                            '</div>' +
-                            '<a href="javascript:;" class="item-edit">' +
-                            feather.icons['edit'].toSvg({ class: 'font-small-4' }) +
-                            '</a>'
-                            );
-                        }
-                    },
-                    {
-                        // Label
-                        targets: -2,
-                        render: function (data, type, full, meta) {
-                            var $condition_number = full['condition'];
-                            var $condition = {
-                                1: { title: 'Tidak Ada', class: ' badge-light-danger' },
-                                2: { title: 'Rusak Berat', class: 'badge-light-warning' },
-                                3: { title: 'Rusak Ringan', class: ' badge-light-secondary' },
-                                4: { title: 'Baik', class: ' badge-light-success' },
-                            };
-                            if (typeof $condition[$condition_number] === 'undefined') {
-                                return data;
-                            }
-                            return (
-                                '<span class="badge rounded-pill ' +
-                                $condition[$condition_number].class +
-                                '">' +
-                                $condition[$condition_number].title +
-                                '</span>'
-                            );
-                        }
-                    },
-                ],
-                order: [[0, 'asc']],
-                dom: '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center m-1 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between m-1 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-                buttons: [
-                    {
-                        extend: 'collection',
-                        className: 'btn btn-outline-secondary dropdown-toggle me-2',
-                        text: feather.icons['share'].toSvg({ class: 'font-small-4 me-50' }) + 'Export',
-                        buttons: [
-                            {
-                            extend: 'print',
-                            text: feather.icons['printer'].toSvg({ class: 'font-small-4 me-50' }) + 'Print',
-                            className: 'dropdown-item',
-                            exportOptions: { columns: [1, 2, 3, 4, 5] }
-                            },
-                            {
-                            extend: 'csv',
-                            text: feather.icons['file-text'].toSvg({ class: 'font-small-4 me-50' }) + 'Csv',
-                            className: 'dropdown-item',
-                            exportOptions: { columns: [1, 2, 3, 4, 5] }
-                            },
-                            {
-                            extend: 'excel',
-                            text: feather.icons['file'].toSvg({ class: 'font-small-4 me-50' }) + 'Excel',
-                            className: 'dropdown-item',
-                            exportOptions: { columns: [1, 2, 3, 4, 5] }
-                            },
-                            {
-                            extend: 'pdf',
-                            text: feather.icons['clipboard'].toSvg({ class: 'font-small-4 me-50' }) + 'Pdf',
-                            className: 'dropdown-item',
-                            exportOptions: { columns: [1, 2, 3, 4, 5] }
-                            },
-                            {
-                            extend: 'copy',
-                            text: feather.icons['copy'].toSvg({ class: 'font-small-4 me-50' }) + 'Copy',
-                            className: 'dropdown-item',
-                            exportOptions: { columns: [1, 2, 3, 4, 5] }
-                            }
-                        ],
-                        init: function (api, node, config) {
-                            $(node).removeClass('btn-secondary');
-                            $(node).parent().removeClass('btn-group');
-                            setTimeout(function () {
-                            $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex');
-                            }, 50);
-                        }
-                    },
-                    {
-                    text: feather.icons['plus'].toSvg({ class: 'me-50 font-small-4' }) + 'Add New Record',
-                    className: 'create-new btn btn-primary',
-                    attr: {
-                        'data-bs-toggle': 'modal',
-                        'data-bs-target': '#modals-slide-in'
-                    },
-                    init: function (api, node, config) {
-                        $(node).removeClass('btn-secondary');
-                    }
-                    }
-                ],
-                responsive: {
-                    details: {
-                    display: $.fn.dataTable.Responsive.display.modal({
-                        header: function (row) {
-                        var data = row.data();
-                        return 'Details of ' + data['name'];
-                        }
-                    }),
-                    type: 'column',
-                    renderer: function (api, rowIdx, columns) {
-                        var data = $.map(columns, function (col, i) {
-                            return col.title !== '' // ? Do not show row in modal popup if title is blank (for check box)
-                                ? '<tr data-dt-row="' +
-                                    col.rowIdx +
-                                    '" data-dt-column="' +
-                                    col.columnIndex +
-                                    '">' +
-                                    '<td>' +
-                                    col.title +
-                                    ':' +
-                                    '</td> ' +
-                                    '<td>' +
-                                    col.data +
-                                    '</td>' +
-                                    '</tr>'
-                                : '';
-                            }).join('');
-
-                            return data ? $('<table class="table"/>').append('<tbody>' + data + '</tbody>') : false;
-                        }
-                    }
-                },
-                language: {
-                    paginate: {
-                        // remove previous & next text from pagination
-                        previous: '&nbsp;',
-                        next: '&nbsp;'
-                    }
-                }
-            });
-            $('div.head-label').html('<h3 class="mb-0">DataTable with Buttons</h3>');
-        });
-        </script>
+        <script src="{{ asset('/js/data/aset.js') }}"></script>
     @endpush
 </x-layout-dashboard>
