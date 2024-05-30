@@ -85,6 +85,7 @@
     <script src="{{ asset('vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
 
     @stack('data')
+    @stack('script')
 
     <!-- END: Data Tables -->
 

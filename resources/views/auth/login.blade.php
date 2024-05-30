@@ -62,40 +62,78 @@
 <!-- END: Content-->
 
 <script>
-    document.getElementById('login-form').addEventListener('submit', function(event) {
-        event.preventDefault();
+    // document.getElementById('login-form').addEventListener('submit', function(event) {
+    //     event.preventDefault();
 
-        const formData = new FormData(this);
-        fetch(this.getAttribute('action'), {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            if (response.ok) {
-                // If login successful, show success message using SweetAlert2
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Login Successful',
-                    text: 'You have successfully logged in!',
-                    confirmButtonText: 'OK'
-                    // showConfirmButton: false,
-                    // timer: 2000
-                }).then(() => {
-                    window.location.href = '/home';
-                });
-            } else {
-                // If login failed, show error message using SweetAlert2
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Login Failed',
-                    text: 'Invalid email or password. Please try again.',
-                    confirmButtonText: 'Retry'
-                });
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    //     const formData = new FormData(this);
+    //     fetch(this.getAttribute('action'), {
+    //         method: 'POST',
+    //         body: formData
+    //     })
+    //     .then(response => {
+    //         if (response.ok) {
+    //             // If login successful, show success message using SweetAlert2
+    //             Swal.fire({
+    //                 icon: 'success',
+    //                 title: 'Login Successful',
+    //                 text: 'You have successfully logged in!',
+    //                 confirmButtonText: 'OK'
+    //                 // showConfirmButton: false,
+    //                 // timer: 2000
+    //             }).then(() => {
+    //                 window.location.href = '/home';
+    //             });
+    //         } else {
+    //             // If login failed, show error message using SweetAlert2
+    //             Swal.fire({
+    //                 icon: 'error',
+    //                 title: 'Login Failed',
+    //                 text: 'Invalid email or password. Please try again.',
+    //                 confirmButtonText: 'Retry'
+    //             });
+    //         }
+    //     })
+    //     .catch(error => {
+    //         console.error('Error:', error);
+    //     });
+    // });
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(this);
+    fetch(this.getAttribute('action'), {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // If login successful, show success message using SweetAlert2
+            Swal.fire({
+                icon: 'success',
+                title: 'Login Successful',
+                text: 'Welcome, ' + data.user + '!', // Menampilkan nama pengguna
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = '/home';
+            });
+        } else {
+            // If login failed, show error message using SweetAlert2
+            Swal.fire({
+                icon: 'error',
+                title: 'Login Failed',
+                text: 'Invalid email or password. Please try again.',
+                confirmButtonText: 'Retry'
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
     });
+});
+
+
+
+
 </script>
 </x-layout>

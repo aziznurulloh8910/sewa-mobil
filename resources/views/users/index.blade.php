@@ -20,17 +20,6 @@
             </div>
         </div>
 
-        @if (session()->has('success'))
-            <div class="p-2">
-                <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                    <div class="alert-body">
-                        {{ session('success') }}
-                    </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="location.reload();"></button>
-                </div>
-            </div>
-        @endif
-
         <div class="content-body">
             <!-- Basic Tables start -->
             <div class="row" id="basic-table">
@@ -75,13 +64,13 @@
                                                         <i data-feather="edit-2" class="me-50"></i>
                                                         <span>Edit</span>
                                                     </a>
-                                                    <form action="{{ route('users.delete', ['id' => $user->id]) }}" method="POST" style="display:inline;">
+                                                    <a class="dropdown-item" href="{{ route('users.delete', ['id' => $user->id]) }} "id="delete-user-button" data-name="{{ $user->name }}">
+                                                        <i data-feather="trash" class="me-50"></i>
+                                                        <span>Delete</span>
+                                                    </a>
+                                                    <form id="delete-user-form" action="{{ route('users.delete', ['id' => $user->id]) }}" method="POST" style="display: none;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="dropdown-item">
-                                                            <i data-feather="trash" class="me-50"></i>
-                                                            <span>Delete</span>
-                                                        </button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -110,7 +99,7 @@
                         <h4 class="modal-title" id="myModalLabel33">Add User Form</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="{{ route('users.store') }}" method="POST">
+                    <form action="{{ route('users.store') }}" method="POST" id="add-user-form">
                         @csrf
                         <div class="modal-body">
                             <label>Name: </label>
@@ -143,6 +132,78 @@
 
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
+
+    @push('script')
+    <script>
+        document.getElementById('delete-user-button').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default action
+
+            var user_name = this.getAttribute('data-name')
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: `You will delete the user : ${user_name}.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Delete!',
+                cancelButtonText: 'Cancel',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-danger'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-user-form').submit();
+
+                    setTimeout(function() {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: `User has been deleted.`,
+                            icon: 'success',
+                            confirmButtonText: 'OK',
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            }
+                        });
+                    }, 500);
+                }
+            });
+        });
+
+
+        document.getElementById('add-user-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            fetch(this.getAttribute('action'), {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successful',
+                        text: 'New user has been successfully added!',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.href = '/users';
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Add User Failed',
+                        text: 'Invalid email or password. Please try again.',
+                        confirmButtonText: 'Retry'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+    @endpush
 
     <x-footer></x-footer>
 

@@ -121,25 +121,22 @@
                 method: 'POST',
                 body: formData
             })
-            .then(response => {
-                if (response.ok) {
-                    // If login successful, show success message using SweetAlert2
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Register Successful',
-                        text: 'You have successfully logged in!',
+                        title: 'Registration Successful',
+                        text: 'Welcome, ' + data.user + '!',
                         confirmButtonText: 'OK'
-                        // showConfirmButton: false,
-                        // timer: 2000
                     }).then(() => {
                         window.location.href = '/home';
                     });
                 } else {
-                    // If login failed, show error message using SweetAlert2
                     Swal.fire({
                         icon: 'error',
-                        title: 'Login Failed',
-                        text: 'Invalid email or password. Please try again.',
+                        title: 'Registration Failed',
+                        text: 'Registration unsuccessful. Please try again.',
                         confirmButtonText: 'Retry'
                     });
                 }
@@ -148,5 +145,6 @@
                 console.error('Error:', error);
             });
         });
+
     </script>
 </x-layout>

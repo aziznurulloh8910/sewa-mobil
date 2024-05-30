@@ -24,8 +24,12 @@ class AuthController extends Controller
 
         $user->save();
 
-        return redirect('home')->with('success', 'Register successfully');
+        // Setelah berhasil register, ambil informasi pengguna yang baru saja dibuat
+        $registeredUser = User::where('email', $request->email)->first();
+
+        return response()->json(['success' => true, 'user' => $registeredUser->name]); // Sertakan nama pengguna dalam respons
     }
+
 
     public function loginView()
     {
@@ -40,10 +44,11 @@ class AuthController extends Controller
         ];
 
         if (Auth::attempt($credetials)) {
-            return redirect('/home')->with('success', 'Login berhasil');
+            $user = Auth::user();
+            return response()->json(['success' => true, 'user' => $user->name]);
         }
 
-        return back()->with('error', 'Email or Password salah');
+        return response()->json(['success' => false]);
     }
 
     public function logout()
