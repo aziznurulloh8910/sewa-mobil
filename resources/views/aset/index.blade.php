@@ -29,13 +29,13 @@
                                 <table id="dataAset" class="datatables-basic table">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Name</th>
+                                            <th>Id</th>
                                             <th>Asset Code</th>
                                             <th>Location</th>
-                                            <th>Brand/Type</th>
-                                            <th>Qty</th>
+                                            <th>Quantity</th>
                                             <th>Price</th>
+                                            <th>Condition</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -126,24 +126,20 @@
         <script>
             $(document).ready(function() {
             $('#dataAset').DataTable({
-                "ajax": {
+                ajax: {
                     "url": "http://localhost:8000/aset-data-table",
                     "dataSrc": "data"
                 },
-                "columns": [
+                columns: [
                     { "data": "id" },
-                    { "data": "name" },
                     { "data": "asset_code" },
                     { "data": "location" },
-                    { "data": "brand/type" },
                     { "data": "quantity" },
                     { "data": "acquisition_cost" },
+                    { "data": "condition" },
+                    { "data": "" },
                 ],
                 columnDefs: [
-                    {
-                        responsivePriority: 1,
-                        targets: 4
-                    },
                     {
                         // Actions
                         targets: -1,
@@ -170,6 +166,29 @@
                             '<a href="javascript:;" class="item-edit">' +
                             feather.icons['edit'].toSvg({ class: 'font-small-4' }) +
                             '</a>'
+                            );
+                        }
+                    },
+                    {
+                        // Label
+                        targets: -2,
+                        render: function (data, type, full, meta) {
+                            var $condition_number = full['condition'];
+                            var $condition = {
+                                1: { title: 'Tidak Ada', class: ' badge-light-danger' },
+                                2: { title: 'Rusak Berat', class: 'badge-light-warning' },
+                                3: { title: 'Rusak Ringan', class: ' badge-light-secondary' },
+                                4: { title: 'Baik', class: ' badge-light-success' },
+                            };
+                            if (typeof $condition[$condition_number] === 'undefined') {
+                                return data;
+                            }
+                            return (
+                                '<span class="badge rounded-pill ' +
+                                $condition[$condition_number].class +
+                                '">' +
+                                $condition[$condition_number].title +
+                                '</span>'
                             );
                         }
                     },
