@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     // mengelola data aset
     Route::get('/aset', [AsetController::class, 'index'])->name('aset');
     Route::get('/aset-data-table', [AsetController::class, 'dataTable']);
+    Route::post('/aset/store', [AsetController::class, 'store'])->name('aset.store');
 
     // mengelola data history penghapusan aset
     Route::get('/history-penghapusan', [HistoryPenghapusanController::class, 'index'])->name('history-penghapusan');
@@ -42,6 +43,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     // mengelola data sub kriteria
     Route::get('/users', [UserController::class, 'index'])->name('users');
+    Route::post('/users/create', [UserController::class, 'create'])->name('users.store');
+    Route::put('/users/update/{id}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
 
     Route::get('/profile', function () {
         return 'hello';

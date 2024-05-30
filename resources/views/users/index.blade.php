@@ -20,6 +20,17 @@
             </div>
         </div>
 
+        @if (session()->has('success'))
+            <div class="p-2">
+                <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                    <div class="alert-body">
+                        {{ session('success') }}
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="location.reload();"></button>
+                </div>
+            </div>
+        @endif
+
         <div class="content-body">
             <!-- Basic Tables start -->
             <div class="row" id="basic-table">
@@ -27,6 +38,10 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">Table Basic</h4>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#AddUserForm">
+                                Add New User
+                            </button>
                         </div>
                         <div class="table-responsive">
                             <table class="table">
@@ -60,10 +75,14 @@
                                                         <i data-feather="edit-2" class="me-50"></i>
                                                         <span>Edit</span>
                                                     </a>
-                                                    <a class="dropdown-item" href="#">
-                                                        <i data-feather="trash" class="me-50"></i>
-                                                        <span>Delete</span>
-                                                    </a>
+                                                    <form action="{{ route('users.delete', ['id' => $user->id]) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item">
+                                                            <i data-feather="trash" class="me-50"></i>
+                                                            <span>Delete</span>
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </td>
@@ -76,9 +95,51 @@
                 </div>
             </div>
             <!-- Basic Tables end -->
+
+            <!-- Modal -->
+            <div
+            class="modal fade text-start"
+            id="AddUserForm"
+            tabindex="-1"
+            aria-labelledby="myModalLabel33"
+            aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel33">Add User Form</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('users.store') }}" method="POST">
+                        @csrf
+                        <div class="modal-body">
+                            <label>Name: </label>
+                            <div class="mb-1">
+                                <input type="text" name="name" placeholder="Full Name" class="form-control" />
+                            </div>
+                            <label>Email: </label>
+                            <div class="mb-1">
+                                <input type="text" name="email" placeholder="Email Address" class="form-control" />
+                            </div>
+
+                            <label>Password: </label>
+                            <div class="mb-1">
+                                <input type="password" name="password" placeholder="Password" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- END: Content-->
+
+
 
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
