@@ -77,7 +77,7 @@
                                             </div>
 
                                             <!-- Buttom Trigger Edit Modal Form -->
-                                            <a class="item-edit" id="update-user-form" href="{{ route('users.update', ['id' => $user->id]) }}" data-bs-toggle="modal" data-bs-target="#editModal-{{$user->id}}">
+                                            <a class="item-edit" href="{{ route('users.update', ['id' => $user->id]) }}" data-bs-toggle="modal" data-bs-target="#editModal-{{$user->id}}">
                                                 <i data-feather="edit" class="me-50"></i>
                                             </a>
 
@@ -89,7 +89,7 @@
                                                             <h4 class="modal-title" id="myModalLabel33">Update User Form</h4>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
-                                                        <form action="{{ route('users.update', $user->id) }}" method="POST">
+                                                        <form action="{{ route('users.update', $user->id) }}" method="POST" class="update-user-class">
                                                             @csrf
                                                             @method('PUT')
                                                             <div class="modal-body">
@@ -239,6 +239,29 @@
             });
         });
 
+        document.querySelectorAll('.update-user-class').forEach(form => {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Are you sure?',
+                    text: "Do you want to save the changes?",
+                    confirmButtonText: 'Yes, save it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Update User Failed',
+                            text: 'Invalid email or password. Please try again.',
+                            confirmButtonText: 'Retry'
+                        });
+                    }
+                });
+            });
+        });
 
         document.getElementById('add-user-form').addEventListener('submit', function(event) {
             event.preventDefault();
