@@ -84,7 +84,7 @@ Proyek ini adalah implementasi dari metode TOPSIS (Technique for Order Preferenc
 TOPSIS (Technique for Order Preference by Similarity to Ideal Solution) adalah metode pengambilan keputusan multikriteria yang didasarkan pada konsep bahwa alternatif terbaik adalah yang memiliki jarak terpendek dari solusi ideal positif dan jarak terjauh dari solusi ideal negatif. Langkah-langkah utama dalam TOPSIS meliputi normalisasi matriks keputusan, pembobotan kriteria, menentukan solusi ideal, dan menghitung jarak serta nilai preferensi untuk setiap alternatif.
 
 ## Kontak
-Jika Anda memiliki pertanyaan atau memerlukan bantuan, silakan hubungi kami di [email@example.com].
+Jika Anda memiliki pertanyaan atau memerlukan bantuan, silakan hubungi kami di [aziznurulloh8@gmail.com].
 
 ## Lisensi
 Proyek ini dilisensikan di bawah MIT License - lihat file LICENSE.md untuk detail lebih lanjut.
