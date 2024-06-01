@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -28,18 +30,27 @@ class UserController extends Controller
         return redirect('/users')->with('success', 'New User has been added');
     }
 
-    function update(Request $request, User $user) {
-        $validated = $request->validate([
-            'name' => 'required|max:255',
-            'email'=> 'required|email:dns|unique:users',
-            'password' => 'required|min:5|max:255'
-        ]);
+    function detail(User $user) {
+        return view('users.index', ['user' => $user]);
+    }
 
-        $validated['role'] = 0; //default 0 atau role user biasa
+    function update(Request $request, $id) {
+        try {
+            $validated = $request->validate([
+                'name' => 'required|max:255',
+                'email' => 'required|email:dns|unique:users,email,' . $id,
+                'password' => 'required|min:5|max:255'
+            ]);
 
-        User::where('id', $user->id)->update($validated);
+            $validated['role'] = 0;
+            $validated['password'] = Hash::make($validated['password']);
 
-        return redirect('/users')->with('success', 'User has been updated');
+            User::where('id', $id)->update($validated);
+
+            return redirect('/users')->with('success', 'User has been updated');
+        } catch (ValidationException $e) {
+            dd($e->errors());
+        }
     }
 
     function delete($id) {

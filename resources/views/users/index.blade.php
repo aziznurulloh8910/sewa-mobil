@@ -20,6 +20,7 @@
             </div>
         </div>
 
+
         <div class="content-body">
             <!-- Basic Tables start -->
             <div class="row" id="basic-table">
@@ -55,25 +56,98 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <div class="dropdown dropstart">
+                                            <div class="dropdown dropstart d-inline-flex">
                                                 <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0" data-bs-toggle="dropdown">
                                                     <i data-feather="more-vertical"></i>
                                                 </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#">
-                                                        <i data-feather="edit-2" class="me-50"></i>
-                                                        <span>Edit</span>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item" href="{{ route('users.detail', ['id' => $user->id]) }}" data-bs-toggle="modal" data-bs-target="#DetailUser-{{ $user->id }}" >
+                                                        <i data-feather="user" class="me-50"></i>
+                                                        <span>Detail</span>
                                                     </a>
-                                                    <a class="dropdown-item" href="{{ route('users.delete', ['id' => $user->id]) }} "id="delete-user-button" data-name="{{ $user->name }}">
+                                                    <a class="dropdown-item" href="{{ route('users.delete', ['id' => $user->id]) }}" id="delete-user-button" data-name="{{ $user->name }}" data-id="{{ $user->id }}">
                                                         <i data-feather="trash" class="me-50"></i>
                                                         <span>Delete</span>
                                                     </a>
-                                                    <form id="delete-user-form" action="{{ route('users.delete', ['id' => $user->id]) }}" method="POST" style="display: none;">
+                                                    <form id="delete-user-form-{{ $user->id }}" action="{{ route('users.delete', ['id' => $user->id]) }}" method="POST" style="display: none;">
                                                         @csrf
                                                         @method('DELETE')
                                                     </form>
                                                 </div>
                                             </div>
+
+                                            <!-- Buttom Trigger Edit Modal Form -->
+                                            <a class="item-edit" id="update-user-form" href="{{ route('users.update', ['id' => $user->id]) }}" data-bs-toggle="modal" data-bs-target="#editModal-{{$user->id}}">
+                                                <i data-feather="edit" class="me-50"></i>
+                                            </a>
+
+                                            <!-- Edit Modal Form -->
+                                            <div class="modal fade text-start" id="editModal-{{$user->id}}" tabindex="-1" aria-labelledby="myModalLabel33" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title" id="myModalLabel33">Update User Form</h4>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form action="{{ route('users.update', $user->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <div class="modal-body">
+                                                                <label>Name: </label>
+                                                                <div class="mb-1">
+                                                                    <input type="text" name="name" placeholder="Full Name" class="form-control" value="{{ old('name', $user->name) }}" />
+                                                                </div>
+                                                                <label>Email: </label>
+                                                                <div class="mb-1">
+                                                                    <input type="text" name="email" placeholder="Email Address" class="form-control" value="{{ old('email', $user->email) }}" />
+                                                                </div>
+
+                                                                <label>Password: </label>
+                                                                <div class="mb-1">
+                                                                    <input type="password" name="password" placeholder="Password" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <!-- Detail Modal -->
+                                            <div class="modal fade text-start" id="DetailUser-{{ $user->id }}" tabindex="-1" aria-labelledby="myModalLabel33" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title" id="myModalLabel33">Detail User</h4>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="col">
+                                                                <div class="row">
+                                                                    <label>Name: {{ $user->name }}</label>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <label>Email: {{ $user->email }}</label>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <label>Role:
+                                                                        @if ($user->role == 1)
+                                                                            Super Admin
+                                                                        @else
+                                                                            Admin
+                                                                        @endif
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </td>
                                     </tr>
                                     @endforeach
@@ -85,42 +159,36 @@
             </div>
             <!-- Basic Tables end -->
 
-            <!-- Modal -->
-            <div
-            class="modal fade text-start"
-            id="AddUserForm"
-            tabindex="-1"
-            aria-labelledby="myModalLabel33"
-            aria-hidden="true"
-            >
+            <!-- Create Modal -->
+            <div class="modal fade text-start" id="AddUserForm" tabindex="-1" aria-labelledby="myModalLabel33" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel33">Add User Form</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form action="{{ route('users.store') }}" method="POST" id="add-user-form">
-                        @csrf
-                        <div class="modal-body">
-                            <label>Name: </label>
-                            <div class="mb-1">
-                                <input type="text" name="name" placeholder="Full Name" class="form-control" />
-                            </div>
-                            <label>Email: </label>
-                            <div class="mb-1">
-                                <input type="text" name="email" placeholder="Email Address" class="form-control" />
-                            </div>
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel33">Add User Form</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="{{ route('users.create') }}" method="POST" id="add-user-form">
+                            @csrf
+                            <div class="modal-body">
+                                <label>Name: </label>
+                                <div class="mb-1">
+                                    <input type="text" name="name" placeholder="Full Name" class="form-control" />
+                                </div>
+                                <label>Email: </label>
+                                <div class="mb-1">
+                                    <input type="text" name="email" placeholder="Email Address" class="form-control" />
+                                </div>
 
-                            <label>Password: </label>
-                            <div class="mb-1">
-                                <input type="password" name="password" placeholder="Password" class="form-control" />
+                                <label>Password: </label>
+                                <div class="mb-1">
+                                    <input type="password" name="password" placeholder="Password" class="form-control" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        </div>
-                    </form>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -138,6 +206,7 @@
         document.getElementById('delete-user-button').addEventListener('click', function(event) {
             event.preventDefault(); // Prevent the default action
 
+            var user_id = this.getAttribute('data-id')
             var user_name = this.getAttribute('data-name')
 
             Swal.fire({
@@ -153,7 +222,7 @@
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    document.getElementById('delete-user-form').submit();
+                    document.getElementById(`delete-user-form-${user_id}`).submit();
 
                     setTimeout(function() {
                         Swal.fire({

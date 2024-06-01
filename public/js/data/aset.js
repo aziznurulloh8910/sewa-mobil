@@ -22,20 +22,20 @@ $(document).ready(function() {
                 render: function (data, type, full, meta) {
                     return (
                     '<div class="d-inline-flex">' +
-                    '<a class="pe-1 dropdown-toggle hide-arrow text-primary" data-bs-toggle="dropdown">' +
-                    feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
-                    '</a>' +
-                    '<div class="dropdown-menu dropdown-menu-end">' +
-                    '<a href="javascript:;" class="dropdown-item">' +
-                    feather.icons['file-text'].toSvg({ class: 'font-small-4 me-50' }) +
-                    'Details</a>' +
-                    '<a href="javascript:;" class="dropdown-item">' +
-                    feather.icons['archive'].toSvg({ class: 'font-small-4 me-50' }) +
-                    'Archive</a>' +
-                    '<a href="javascript:;" class="dropdown-item delete-record">' +
-                    feather.icons['trash-2'].toSvg({ class: 'font-small-4 me-50' }) +
-                    'Delete</a>' +
-                    '</div>' +
+                        '<a class="pe-1 dropdown-toggle hide-arrow text-primary" data-bs-toggle="dropdown">' +
+                            feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
+                        '</a>' +
+                        '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="javascript:;" class="dropdown-item">' +
+                                feather.icons['file-text'].toSvg({ class: 'font-small-4 me-50' }) +
+                            'Details</a>' +
+                            '<a href="javascript:;" class="dropdown-item">' +
+                            feather.icons['archive'].toSvg({ class: 'font-small-4 me-50' }) +
+                            'Archive</a>' +
+                            '<a href="javascript:;" class="dropdown-item delete-record">' +
+                            feather.icons['trash-2'].toSvg({ class: 'font-small-4 me-50' }) +
+                            'Delete</a>' +
+                        '</div>' +
                     '</div>' +
                     '<a href="javascript:;" class="item-edit">' +
                     feather.icons['edit'].toSvg({ class: 'font-small-4' }) +

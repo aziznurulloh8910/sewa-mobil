@@ -43,9 +43,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     // mengelola data sub kriteria
     Route::get('/users', [UserController::class, 'index'])->name('users');
-    Route::post('/users/create', [UserController::class, 'create'])->name('users.store');
+    Route::post('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::get('/users/detail/{id}', [UserController::class, 'detail'])->name('users.detail');
     Route::put('/users/update/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
+
+    Route::get('/marquee', function () {
+        return view('marquee');
+    });
 
     Route::get('/profile', function () {
         return 'hello';
