@@ -19,8 +19,13 @@
                 <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="user-nav d-sm-flex d-none">
                         <span class="user-name fw-bolder">{{ auth()->user()->name }}</span>
-                        <span class="user-status">admin</span>
-                        {{-- <span class="user-status">{{ auth()->user()->email }}</span> --}}
+                        <span class="user-status">
+                            @if (auth()->user()->role == 1)
+                                Super Admin
+                            @else
+                                Admin
+                            @endif
+                        </span>
                     </div>
                     <span class="avatar">
                         <img class="round" src="{{ asset('app-assets/images/portrait/small/avatar-s-11.jpg') }}" alt="avatar" height="40" width="40">
@@ -28,7 +33,7 @@
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
-                    <a class="dropdown-item" href="{{ route('profile') }}"><i class="me-50" data-feather="user"></i> Profile</a>
+                    <a class="dropdown-item" href="{{ route('profile') }}" data-bs-toggle="modal" data-bs-target="#profileUser"><i class="me-50" data-feather="user"></i> Profile</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ route('logout') }}" id="logout-button"><i class="me-50" data-feather="power"></i> Logout</a>
                 </div>
@@ -118,6 +123,48 @@
             <div class="d-flex justify-content-start"><span class="me-75" data-feather="alert-circle"></span><span>No results found.</span></div>
         </a></li>
 </ul>
+
+<!-- Edit User Modal -->
+<div class="modal fade" id="profileUser" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-edit-user">
+        <div class="modal-content">
+            <div class="modal-header bg-transparent">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pb-5 px-sm-5 pt-50">
+                <div class="text-center mb-2">
+                    <h1 class="mb-1">User Information</h1>
+                    <p>Updating user details will receive a privacy audit.</p>
+                </div>
+                <form id="editUserForm" class="row gy-1 pt-75" onsubmit="return false">
+                    <div class="row mb-2">
+                        <label class="form-label" for="modalEditUserFullName">Full Name</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            value="{{ auth()->user()->name }}"
+                        />
+                    </div>
+                    <div class="row mb-2">
+                        <label class="form-label" for="modalEditUserLastName">Email</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            value="{{ auth()->user()->email }}"
+                        />
+                    </div>
+                    <div class="col-12 text-center mt-2 pt-50">
+                        <button type="button" class="btn btn-primary me-1">Update Data</button>
+                        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ Edit User Modal -->
 
 <script>
     document.getElementById('logout-button').addEventListener('click', function(event) {

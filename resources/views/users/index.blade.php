@@ -77,12 +77,12 @@
                                             </div>
 
                                             <!-- Buttom Trigger Edit Modal Form -->
-                                            <a class="item-edit" href="{{ route('users.update', ['id' => $user->id]) }}" data-bs-toggle="modal" data-bs-target="#editModal-{{$user->id}}">
+                                            <a class="item-edit" href="{{ route('users.update', ['id' => $user->id]) }}" data-bs-toggle="modal" data-bs-target="#editModal-{{ $user->id }}">
                                                 <i data-feather="edit" class="me-50"></i>
                                             </a>
 
                                             <!-- Edit Modal Form -->
-                                            <div class="modal fade text-start" id="editModal-{{$user->id}}" tabindex="-1" aria-labelledby="myModalLabel33" aria-hidden="true">
+                                            <div class="modal fade text-start" id="editModal-{{ $user->id }}" tabindex="-1" aria-labelledby="myModalLabel33" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -99,12 +99,14 @@
                                                                 </div>
                                                                 <label>Email: </label>
                                                                 <div class="mb-1">
-                                                                    <input type="text" name="email" placeholder="Email Address" class="form-control" value="{{ old('email', $user->email) }}" />
+                                                                    <input type="text" name="email" placeholder="Email Address" class="form-control form-control-merge" value="{{ old('email', $user->email) }}" />
                                                                 </div>
 
                                                                 <label>Password: </label>
                                                                 <div class="mb-1">
-                                                                    <input type="password" name="password" placeholder="Password" class="form-control" />
+                                                                    <div class="input-group input-group-merge form-password-toggle">
+                                                                        <input class="form-control form-control-merge" type="password" name="password" placeholder="············" aria-describedby="password" tabindex="2" /><span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
@@ -147,7 +149,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </td>
                                     </tr>
                                     @endforeach
@@ -176,12 +177,14 @@
                                 </div>
                                 <label>Email: </label>
                                 <div class="mb-1">
-                                    <input type="text" name="email" placeholder="Email Address" class="form-control" />
+                                    <input type="text" name="email" placeholder="Email Address" class="form-control " />
                                 </div>
 
                                 <label>Password: </label>
                                 <div class="mb-1">
-                                    <input type="password" name="password" placeholder="Password" class="form-control" />
+                                    <div class="input-group input-group-merge form-password-toggle">
+                                        <input class="form-control form-control-merge" type="password" name="password" placeholder="············" aria-describedby="password" tabindex="2" /><span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">

@@ -24,10 +24,9 @@ class AuthController extends Controller
 
         $user->save();
 
-        // Setelah berhasil register, ambil informasi pengguna yang baru saja dibuat
         $registeredUser = User::where('email', $request->email)->first();
 
-        return response()->json(['success' => true, 'user' => $registeredUser->name]); // Sertakan nama pengguna dalam respons
+        return response()->json(['success' => true, 'user' => $registeredUser->name]);
     }
 
 
