@@ -12,13 +12,6 @@
     <div class="app-content content ">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
-        <div class="content-wrapper container-xxl p-0">
-            <div class="content-header row">
-                <div class="content-header-left col-md-9 col-12 mb-2">
-                    <h2>Data Users</h2>
-                </div>
-            </div>
-        </div>
 
 
         <div class="content-body">
@@ -27,7 +20,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Table Basic</h4>
+                            <h2>Data Users</h2>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#AddUserForm">
                                 Add New User
@@ -118,33 +111,41 @@
                                                 </div>
                                             </div>
 
-
                                             <!-- Detail Modal -->
-                                            <div class="modal fade text-start" id="DetailUser-{{ $user->id }}" tabindex="-1" aria-labelledby="myModalLabel33" aria-hidden="true">
-                                                <div class="modal-dialog">
+                                            <div class="modal fade" id="DetailUser-{{ $user->id }}" tabindex="-1" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-edit-user">
                                                     <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title" id="myModalLabel33">Detail User</h4>
+                                                        <div class="modal-header bg-transparent">
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
-                                                        <div class="modal-body">
-                                                            <div class="col">
-                                                                <div class="row">
-                                                                    <label>Name: {{ $user->name }}</label>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <label>Email: {{ $user->email }}</label>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <label>Role:
-                                                                        @if ($user->role == 1)
-                                                                            Super Admin
-                                                                        @else
-                                                                            Admin
-                                                                        @endif
-                                                                    </label>
-                                                                </div>
+                                                        <div class="modal-body pb-5 px-sm-5 pt-50">
+                                                            <div class="text-center mb-2">
+                                                                <h1 class="mb-1">User Information</h1>
+                                                                <p>Updating user details will receive a privacy audit.</p>
                                                             </div>
+                                                            <form id="editUserForm-{{ $user->id }}" class="row gy-1 pt-75" onsubmit="return false">
+                                                                <div class="row mb-2">
+                                                                    <label class="form-label" for="modalEditUserFullName">Full Name</label>
+                                                                    <input
+                                                                        type="text"
+                                                                        class="form-control"
+                                                                        value="{{ auth()->user()->name }}"
+                                                                    />
+                                                                </div>
+                                                                <div class="row mb-2">
+                                                                    <label class="form-label" for="modalEditUserLastName">Email</label>
+                                                                    <input
+                                                                        type="text"
+                                                                        class="form-control"
+                                                                        value="{{ auth()->user()->email }}"
+                                                                    />
+                                                                </div>
+                                                                <div class="col-12 text-center mt-2 pt-50">
+                                                                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
+                                                                        Back To Table
+                                                                    </button>
+                                                                </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>

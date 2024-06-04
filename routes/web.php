@@ -53,7 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::get('/profile', function () {
-        return 'hello';
+        return view('users.profile');
     })->name('profile');
 
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
