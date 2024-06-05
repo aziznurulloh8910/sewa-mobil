@@ -111,7 +111,7 @@
                         icon: 'success',
                         title: 'Registration Successful',
                         text: 'Welcome, ' + data.user + '!, You have successfully registered. Please login to access the system',
-                        confirmButtonText: 'Let's go to the login page'
+                        confirmButtonText: 'Let\'s go to the login page'
                     }).then(() => {
                         window.location.href = '/login';
                     });

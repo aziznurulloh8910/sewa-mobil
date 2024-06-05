@@ -17,7 +17,6 @@
                         <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
                             <h2 class="card-title fw-bold mb-1">Welcome to the Assets Inventory System of SMA 27 Bandung! 👋</h2>
                             <p class="card-text mb-2">Please sign-in to your account to manage and track assets.</p>
-                            <p>cek</p>
                             <form class="auth-login-form mt-2" action="{{ route('login') }}" method="POST"  id="login-form">
                                 @csrf
                                 <div class="mb-1">
