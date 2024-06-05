@@ -100,4 +100,17 @@ class AuthController extends Controller
 
         return redirect('/register')->with('success', 'Your account has been deleted.');
     }
+
+    function forgot_password_view() {
+        return view('auth.forgot-password');
+    }
+
+    function reset_password_view() {
+        return view('auth.reset-password');
+    }
+
+    function forgot_password_post(Request $request) {
+        return redirect('reset-password');
+    }
+
 }

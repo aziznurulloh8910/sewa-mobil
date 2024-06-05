@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="mb-1">
                                     <div class="d-flex justify-content-between">
-                                        <label class="form-label" for="password">Password</label><a href="auth-forgot-password-cover.html"><small>Forgot Password?</small></a>
+                                        <label class="form-label" for="password">Password</label><a href="{{ route('forgot-password') }}"><small>Forgot Password?</small></a>
                                     </div>
                                     <div class="input-group input-group-merge form-password-toggle">
                                         <input class="form-control form-control-merge" id="password" type="password" name="password" placeholder="············" aria-describedby="password" tabindex="2" /><span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
