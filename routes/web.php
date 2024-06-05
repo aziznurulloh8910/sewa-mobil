@@ -48,13 +48,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/users/update/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
 
-    Route::get('/marquee', function () {
-        return view('marquee');
-    });
-
     Route::get('/profile', function () {
         return view('users.profile');
     })->name('profile');
+    Route::put('/update-profile/{id}', [AuthController::class, 'update_profile'])->name('users.update.profile');
+    Route::delete('/delete-account/{id}', [AuthController::class, 'delete_account_at_profile'])->name('users.delete.profile');
 
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
 });

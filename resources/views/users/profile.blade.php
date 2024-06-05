@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <!-- form -->
-                    <form class="validate-form pt-50" action="{{ route('users.update', auth()->user()->id) }}" method="POST" id="update-user-profile">
+                    <form class="validate-form pt-50" action="{{ route('users.update.profile', ['id' => auth()->user()->id]) }}" method="POST" id="update-user-profile">
                         @csrf
                         @method('PUT')
                         <div class="row">
@@ -47,16 +47,19 @@
                             <div class="col-12 col-sm-6 mb-1">
                                 <label class="form-label" for="accountPassword">Current Password</label>
                                 <div class="input-group form-password-toggle input-group-merge">
-                                    <input type="password" class="form-control" id="account-old-password" name="current-password" placeholder="Enter current password" />
+                                    <input type="password" class="form-control" id="account-old-password" name="current_password" placeholder="Enter current password" />
                                     <div class="input-group-text cursor-pointer">
                                         <i data-feather="eye"></i>
                                     </div>
                                 </div>
+                                @if ($errors->has('current_password'))
+                                    <span class="text-danger">{{ $errors->first('current_password') }}</span>
+                                @endif
                             </div>
                             <div class="col-12 col-sm-6 mb-1">
                                 <label class="form-label" for="accountNewPassword">New Password</label>
                                 <div class="input-group form-password-toggle input-group-merge">
-                                    <input type="password" id="account-new-password" name="new-password" class="form-control" placeholder="Enter new password" />
+                                    <input type="password" id="account-new-password" name="new_password" class="form-control" placeholder="Enter new password" />
                                     <div class="input-group-text cursor-pointer">
                                         <i data-feather="eye"></i>
                                     </div>
@@ -86,7 +89,9 @@
                     </div>
                 </div>
 
-                <form id="formAccountDeactivation" class="validate-form" onsubmit="return false">
+                <form id="formAccountDeactivation" class="validate-form" action="{{ route('users.delete.profile', ['id'=> auth()->user()->id]) }}" method="POST" >
+                    @csrf
+                    @method('DELETE')
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="accountActivation" id="accountActivation" data-msg="Please confirm you want to delete account" />
                         <label class="form-check-label font-small-3" for="accountActivation">
@@ -99,7 +104,7 @@
                 </form>
             </div>
         </div>
-        <!--/ profile -->
+
     </div>
     <!-- END: Content-->
 
@@ -115,8 +120,10 @@
             document.getElementById('update-user-profile').addEventListener('submit', function(event) {
                 event.preventDefault();
 
+                const form = this;
+
                 Swal.fire({
-                    icon: 'success',
+                    icon: 'question',
                     title: 'Are you sure?',
                     text: "Do you want to save the changes?",
                     confirmButtonText: 'Yes, save it!'
@@ -130,6 +137,34 @@
                             text: 'Invalid email or password. Please try again.',
                             confirmButtonText: 'Retry'
                         });
+                    }
+                });
+            });
+
+            document.getElementById('formAccountDeactivation').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const form = this;
+
+                if (!document.getElementById('accountActivation').checked) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Please confirm you want to delete account.'
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Are you sure?',
+                    text: "Once you delete your account, there is no going back. Please be certain.",
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
                     }
                 });
             });

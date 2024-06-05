@@ -21,6 +21,19 @@
                             <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
                                 <h2 class="card-title fw-bold mb-1">Sign Up here 🚀</h2>
                                 <p class="card-text mb-2">Manage school assets inventory easily and efficiently!</p>
+
+                                <!-- Flash Message -->
+                                @if (session('success'))
+                                    <div class="demo-spacing-0">
+                                        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                                            <div class="alert-body">
+                                                {{ session('success') }}
+                                            </div>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    </div>
+                                @endif
+
                                 <form class="auth-register-form mt-2" action="{{ route('register') }}" method="POST" id="register-form">
                                     @csrf
                                     <div class="mb-1">
@@ -94,8 +107,8 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Registration Successful',
-                        text: 'Welcome, ' + data.user + '!',
-                        confirmButtonText: 'OK'
+                        text: 'Welcome, ' + data.user + '!, You have successfully registered. Please login to access the system',
+                        confirmButtonText: 'Let's go to the login page'
                     }).then(() => {
                         window.location.href = '/home';
                     });

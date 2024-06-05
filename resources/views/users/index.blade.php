@@ -55,11 +55,11 @@
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <a class="dropdown-item" href="{{ route('users.detail', ['id' => $user->id]) }}" data-bs-toggle="modal" data-bs-target="#DetailUser-{{ $user->id }}" >
-                                                        <i data-feather="user" class="me-50"></i>
+                                                        <i data-feather="file-text" class="me-50"></i>
                                                         <span>Detail</span>
                                                     </a>
                                                     <a class="dropdown-item" href="{{ route('users.delete', ['id' => $user->id]) }}" id="delete-user-button" data-name="{{ $user->name }}" data-id="{{ $user->id }}">
-                                                        <i data-feather="trash" class="me-50"></i>
+                                                        <i data-feather="trash-2" class="me-50"></i>
                                                         <span>Delete</span>
                                                     </a>
                                                     <form id="delete-user-form-{{ $user->id }}" action="{{ route('users.delete', ['id' => $user->id]) }}" method="POST" style="display: none;">
@@ -141,7 +141,7 @@
                                                                     />
                                                                 </div>
                                                                 <div class="col-12 text-center mt-2 pt-50">
-                                                                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
+                                                                    <button type="reset" class="btn btn-outline-primary" data-bs-dismiss="modal" aria-label="Close">
                                                                         Back To Table
                                                                     </button>
                                                                 </div>

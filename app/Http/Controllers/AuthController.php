@@ -56,4 +56,48 @@ class AuthController extends Controller
 
         return redirect()->route('login');
     }
+
+    function update_profile(Request $request, $id) {
+        try {
+            $validated = $request->validate([
+                'name' => 'required|max:255',
+                'email' => 'required|email:dns|unique:users,email,' . $id,
+                'current_password' => 'required',
+                'new_password' => 'required|min:5|max:255'
+            ]);
+
+            $user = auth()->user();
+            if (!Hash::check($validated['current_password'], $user->password)) {
+                return redirect()->route('profile', $id)
+                    ->withErrors(['current_password' => 'The current password is incorrect'])
+                    ->withInput();
+            }
+
+            $user->name = $validated['name'];
+            $user->email = $validated['email'];
+            if ($validated['new_password']) {
+                $user->password = Hash::make($validated['new_password']);
+            }
+            $user->role = 0;
+            $user->save();
+
+            return redirect('/profile')->with('success', 'User has been updated');
+        } catch (ValidationException $e) {
+            return redirect()->route('profile', $id)
+                ->withErrors($e->errors())
+                ->withInput();
+        }
+    }
+
+    public function delete_account_at_profile($id) {
+        $user = Auth::user();
+
+        if ($user->id != $id) {
+            return redirect()->route('profile')->with('error', 'Unauthorized action.');
+        }
+
+        $user->delete();
+
+        return redirect('/register')->with('success', 'Your account has been deleted.');
+    }
 }
