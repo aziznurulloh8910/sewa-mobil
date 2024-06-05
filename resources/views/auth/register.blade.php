@@ -99,7 +99,10 @@
             const formData = new FormData(this);
             fetch(this.getAttribute('action'), {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
             })
             .then(response => response.json())
             .then(data => {
@@ -110,7 +113,7 @@
                         text: 'Welcome, ' + data.user + '!, You have successfully registered. Please login to access the system',
                         confirmButtonText: 'Let's go to the login page'
                     }).then(() => {
-                        window.location.href = '/home';
+                        window.location.href = '/login';
                     });
                 } else {
                     Swal.fire({
@@ -123,7 +126,15 @@
             })
             .catch(error => {
                 console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'An error occurred',
+                    text: 'Something went wrong. Please try again later.',
+                    confirmButtonText: 'Retry'
+                });
             });
         });
     </script>
+
+
 </x-layout>
