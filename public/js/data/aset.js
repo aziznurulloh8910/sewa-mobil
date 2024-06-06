@@ -186,16 +186,31 @@ $(document).ready(function() {
             },
             success: function(response) {
                 if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: response.success,
+                        showConfirmButton: true,
+                        confirmButtonText: 'OK',
+                    });
+
+                    $('#assetForm')[0].reset();
                     $('#ModalFormAset').modal('hide');
                     $('#dataAset').DataTable().ajax.reload();
-                    alert(response.success);
                 }
             },
             error: function(response) {
                 let errors = response.responseJSON.errors;
+                let errorText = '';
                 for (let key in errors) {
-                    alert(errors[key]);
+                    errorText += errors[key] + '<br>';
                 }
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    html: errorText
+                });
             }
         });
     });
