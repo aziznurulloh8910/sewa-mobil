@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('asset_code');
             $table->string('location');
             $table->string('brand_type');
-            $table->year('procurement_year');
+            $table->integer('procurement_year');
             $table->integer('quantity');
             $table->double('acquisition_cost');
             $table->double('recorded_value');

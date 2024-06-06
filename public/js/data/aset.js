@@ -67,7 +67,7 @@ $(document).ready(function() {
                 }
             },
         ],
-        order: [[0, 'asc']],
+        order: [[0, 'desc']],
         dom: '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center m-1 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between m-1 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
         displayLength: 7,
         lengthMenu: [7, 10, 25, 50, 75, 100],
@@ -170,65 +170,32 @@ $(document).ready(function() {
     });
     $('div.head-label').html('<h3 class="mb-0">Data Aset</h3>');
 
+    $('#assetForm').on('submit', function(e) {
+        e.preventDefault();
 
-    // Add New record
-    // ? Remove/Update this code as per your requirements ?
-    // var count = 101;
-    // $('.data-submit').on('click', function () {
-    //     var $new_name = $('.add-new-record .dt-full-name').val(),
-    //     $new_post = $('.add-new-record .dt-post').val(),
-    //     $new_email = $('.add-new-record .dt-email').val(),
-    //     $new_date = $('.add-new-record .dt-date').val(),
-    //     $new_salary = $('.add-new-record .dt-salary').val();
+        let formData = $(this).serialize();
 
-    //     if ($new_name != '') {
-    //     dt_basic.row
-    //         .add({
-    //         responsive_id: null,
-    //         id: count,
-    //         full_name: $new_name,
-    //         post: $new_post,
-    //         email: $new_email,
-    //         start_date: $new_date,
-    //         salary: '$' + $new_salary,
-    //         status: 5
-    //         })
-    //         .draw();
-    //     count++;
-    //     $('.modal').modal('hide');
-    //     }
-    // });
+        $.ajax({
+            url: "http://localhost:8000/aset/store",
+            method: "POST",
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if (response.success) {
+                    $('#ModalFormAset').modal('hide');
+                    $('#dataAset').DataTable().ajax.reload();
+                    alert(response.success);
+                }
+            },
+            error: function(response) {
+                let errors = response.responseJSON.errors;
+                for (let key in errors) {
+                    alert(errors[key]);
+                }
+            }
+        });
+    });
 
-    // $('.data-submit').on('click', function (e) {
-    //     e.preventDefault();
-    //     $.ajax({
-    //         url: "http://localhost:8000/aset/store",
-    //         type: 'POST',
-    //         data: $('#assetForm').serialize(),
-    //         headers: {
-    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //         },
-    //         success: function (response) {
-    //             if(response.success) {
-    //                 // Handle success response
-    //                 $('.modal').modal('hide');
-    //                 alert('Aset berhasil disimpan');
-    //                 location.reload();
-    //             } else {
-    //                 // Handle error response
-    //                 alert('Gagal menyimpan aset');
-    //             }
-    //         },
-    //         error: function (response) {
-    //             // Handle server errors
-    //             alert('Terjadi kesalahan, silakan coba lagi.');
-    //         }
-    //     });
-    // });
-
-
-    // // Delete Record
-    // $('.datatables-basic tbody').on('click', '.delete-record', function () {
-    //     dt_basic.row($(this).parents('tr')).remove().draw();
-    // });
 });

@@ -34,7 +34,7 @@
                                     </div>
                                 @endif
 
-                                <form class="auth-register-form mt-2" action="{{ route('register') }}" method="POST" id="register-form">
+                                <form class="auth-register-form mt-2" action="{{ route('register.post') }}" method="POST" id="register-form">
                                     @csrf
                                     <div class="mb-1">
                                         <label class="form-label" for="name">Full Name</label>

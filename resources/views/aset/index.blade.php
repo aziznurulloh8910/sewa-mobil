@@ -68,7 +68,7 @@
                                                 </div>
                                                 <label>Nomor Registrasi</label>
                                                 <div class="mb-1">
-                                                    <input type="text" placeholder="Nomor Registrasi" name="registration_number" id="registration_number" class="form-control" />
+                                                    <input type="number" placeholder="Nomor Registrasi" name="registration_number" id="registration_number" class="form-control" />
                                                 </div>
                                                 <label>Lokasi</label>
                                                 <div class="mb-1">

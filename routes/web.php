@@ -16,9 +16,9 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', [AuthController::class, 'registerView'])->name('register');
-    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register.post');
     Route::get('/login', [AuthController::class, 'loginView'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
     Route::get('/forgot-password', [AuthController::class, 'forgot_password_view'])->name('forgot-password');
     Route::post('/forgot-password', [AuthController::class, 'forgot_password_post'])->name('forgot-password-post');
