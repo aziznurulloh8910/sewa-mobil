@@ -5,11 +5,13 @@ $(document).ready(function() {
             "dataSrc": "data"
         },
         columns: [
-            { "data": "id" },
+            { "data": "name" },
+            { "data": "registration_number" },
             { "data": "asset_code" },
             { "data": "location" },
             { "data": "quantity" },
             { "data": "acquisition_cost" },
+            { "data": "recorded_value" },
             { "data": "condition" },
             { "data": "" },
         ],

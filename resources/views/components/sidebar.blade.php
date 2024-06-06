@@ -15,7 +15,7 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content mt-2">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class="nav-item {{ Request::is('home') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('home-dashboard') }}"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span></a>
+            <li class="nav-item {{ Request::is('home') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('home') }}"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span></a>
             </li>
 
             <li class=" navigation-header"><span data-i18n="Data Inventarisasi Aset">Data Inventarisasi Aset</span><i data-feather="more-horizontal"></i>
@@ -42,10 +42,10 @@
             <li class="nav-item {{ Request::is('sub-kriteria') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('sub-kriteria') }}">
                 <i data-feather="database"></i><span class="menu-title text-truncate" data-i18n="Data Sub Kriteria">Data Sub Kriteria</span></a>
             </li>
-            <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('home-dashboard') }}">
+            <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('home') }}">
                 <i data-feather="bar-chart-2"></i><span class="menu-title text-truncate" data-i18n="Data Perhitungan">Data Perhitungan</span></a>
             </li>
-            <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('home-dashboard') }}">
+            <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('home') }}">
                 <i data-feather="list"></i><span class="menu-title text-truncate" data-i18n="Hasil Perankingan">Hasil Perankingan</span></a>
             </li>
 

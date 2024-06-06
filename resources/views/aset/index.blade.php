@@ -25,20 +25,24 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="table-responsive">
-                                <table id="dataAset" class="datatables-basic table">
-                                    <thead>
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>Asset Code</th>
-                                            <th>Location</th>
-                                            <th>Quantity</th>
-                                            <th>Price</th>
-                                            <th>Condition</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                            <div class="card-datatable">
+                                <div class="table-responsive">
+                                    <table id="dataAset" class="table table-bordered table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th>Asset Name </th>
+                                                <th>Reg Num</th>
+                                                <th>Asset Code</th>
+                                                <th>Location</th>
+                                                <th>Quantity</th>
+                                                <th>Price</th>
+                                                <th>Mount</th>
+                                                <th>Condition</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
