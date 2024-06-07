@@ -24,16 +24,10 @@ $(document).ready(function() {
         },
         columns: [
             { data: "name" },
-            { data: "registration_number" },
-            { data: "asset_code" },
             { data: "location" },
+            { data: "procurement_year" },
             { data: "quantity" },
             { data: "acquisition_cost",
-                render: function(data, type, row) {
-                    return formatIDR(data);
-                }
-            },
-            { data: "recorded_value",
                 render: function(data, type, row) {
                     return formatIDR(data);
                 }
@@ -194,6 +188,24 @@ $(document).ready(function() {
 
     $('div.head-label').html('<h3 class="mb-0">Data Aset</h3>');
 
+    var acquisitionCostInput = document.getElementById('acquisition_cost');
+
+    function formatToIDR(number) {
+        var numberString = number.toString();
+        var split = numberString.split('.');
+        var rupiah = split[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+        rupiah = 'Rp ' + rupiah + (split[1] ? ',' + split[1] : '');
+
+        return rupiah;
+    }
+
+    acquisitionCostInput.addEventListener('input', function(e) {
+        var value = e.target.value;
+        value = value.replace(/[^,\d]/g, '');
+        e.target.value = formatToIDR(value);
+    });
+
     // Function to clear the form
     function clearForm() {
         $('#assetForm')[0].reset();
@@ -204,6 +216,20 @@ $(document).ready(function() {
     // Handle form submission
     $('#assetForm').on('submit', function(e) {
         e.preventDefault();
+
+        // Remove IDR formatting and get numeric value
+        var acquisitionCostValue = acquisitionCostInput.value.replace(/[^,\d]/g, '');
+
+        // Append hidden input with numeric value
+        var hiddenInput = $('<input>', {
+            type: 'hidden',
+            name: 'acquisition_cost',
+            value: acquisitionCostValue
+        });
+        $(this).append(hiddenInput);
+
+        // Remove formatted value from form data
+        acquisitionCostInput.value = acquisitionCostValue;
 
         var formData = $(this).serialize();
         var actionUrl = $(this).attr('action');

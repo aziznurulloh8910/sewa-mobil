@@ -29,14 +29,12 @@
                                     <table id="dataAset" class="table table-bordered table-responsive">
                                         <thead>
                                             <tr>
-                                                <th>Asset Name </th>
-                                                <th>Reg Num</th>
-                                                <th>Asset Code</th>
-                                                <th>Location</th>
-                                                <th>Quantity</th>
-                                                <th>Price</th>
-                                                <th>Mount</th>
-                                                <th>Condition</th>
+                                                <th>Nama Barang</th>
+                                                <th>Lokasi</th>
+                                                <th>Tahun Pengadaan</th>
+                                                <th>Jumlah Barang</th>
+                                                <th>Harga Satuan</th>
+                                                <th>Kondisi Fisik</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -96,7 +94,7 @@
                                                 </div>
                                                 <label>Harga Satuan</label>
                                                 <div class="mb-1">
-                                                    <input type="number" placeholder="Harga Satuan" name="acquisition_cost" id="acquisition_cost" class="form-control" />
+                                                    <input type="text" placeholder="Harga Satuan" name="acquisition_cost" id="acquisition_cost" class="form-control" />
                                                 </div>
                                                 <label for="condition">Kondisi</label>
                                                 <div class="mb-1">
