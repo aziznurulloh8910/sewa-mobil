@@ -3,7 +3,6 @@
     <x-navbar></x-navbar>
     <!-- END: Header-->
 
-
     <!-- BEGIN: Main Menu-->
     <x-sidebar></x-sidebar>
     <!-- END: Main Menu-->
@@ -58,6 +57,7 @@
                             </div>
                             <form id="assetForm" action="{{ route('aset.store') }}" method="POST">
                                 @csrf
+                                <input type="hidden" id="_method" name="_method" value="POST">
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-md-6">
@@ -134,8 +134,6 @@
     <div class="drag-target"></div>
 
     <x-footer></x-footer>
-
-
 
     @push('data')
         <script src="{{ asset('/js/data/aset.js') }}"></script>
