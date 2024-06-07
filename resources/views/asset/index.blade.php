@@ -13,12 +13,6 @@
         <div class="header-navbar-shadow"></div>
         <div class="content-body">
 
-            @if (session()->has('success'))
-                <div class="alert alert-primary">
-                {{ session('success') }}
-                </div>
-            @endif
-
             <!-- Basic table -->
             <section id="basic-datatable">
                 <div class="row">
@@ -66,7 +60,7 @@
                                                 </div>
                                                 <label>Kode Barang</label>
                                                 <div class="mb-1">
-                                                    <input type="number" placeholder="Kode Barang" name="asset_code" id="asset_code" class="form-control" />
+                                                    <input type="text" placeholder="Kode Barang" name="asset_code" id="asset_code" class="form-control" />
                                                 </div>
                                                 <label>Nomor Registrasi</label>
                                                 <div class="mb-1">

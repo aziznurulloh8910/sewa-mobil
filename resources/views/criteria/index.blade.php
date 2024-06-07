@@ -13,12 +13,6 @@
         <div class="header-navbar-shadow"></div>
         <div class="content-body">
 
-            @if (session()->has('success'))
-                <div class="alert alert-primary">
-                {{ session('success') }}
-                </div>
-            @endif
-
             <!-- Basic table -->
             <section id="basic-datatable">
                 <div class="row">
@@ -26,11 +20,11 @@
                         <div class="card">
                             <div class="card-datatable">
                                 <div class="table-responsive">
-                                    <table id="dataAset" class="table table-bordered">
+                                    <table id="dataCriteria" class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Kode</th>
                                                 <th>Nama Kriteria</th>
+                                                <th>Kode Kriteria</th>
                                                 <th>Atribut</th>
                                                 <th>Bobot</th>
                                                 <th></th>
@@ -44,69 +38,43 @@
                 </div>
 
                 <!-- Modal -->
-                <div class="modal fade text-start" id="ModalFormAset" tabindex="-1" aria-labelledby="ModalFormAsetLabel" aria-hidden="true">
+                <div class="modal fade text-start" id="ModalFormCriteria" tabindex="-1" aria-labelledby="ModalFormCriteriaLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="ModalFormAsetLabel">Form Data Aset</h4>
+                                <h4 class="modal-title" id="ModalFormCriteriaLabel">Form Data Kriteria</h4>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form id="assetForm" action="{{ route('asset.store') }}" method="POST">
+                            <form id="criteriaForm" action="{{ route('criteria.store') }}" method="POST">
                                 @csrf
                                 <input type="hidden" id="_method" name="_method" value="POST">
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="row">
-                                                <label>Nama Barang</label>
+                                                <label>Nama Kriteria</label>
                                                 <div class="mb-1">
-                                                    <input type="text" placeholder="Nama Barang" name="name" id="asset_name" class="form-control" />
+                                                    <input type="text" placeholder="Nama Kriteria" name="name" id="criteria_name" class="form-control" />
                                                 </div>
-                                                <label>Kode Barang</label>
+                                                <label>Kode Kriteria</label>
                                                 <div class="mb-1">
-                                                    <input type="number" placeholder="Kode Barang" name="asset_code" id="asset_code" class="form-control" />
-                                                </div>
-                                                <label>Nomor Registrasi</label>
-                                                <div class="mb-1">
-                                                    <input type="number" placeholder="Nomor Registrasi" name="registration_number" id="registration_number" class="form-control" />
-                                                </div>
-                                                <label>Lokasi</label>
-                                                <div class="mb-1">
-                                                    <input type="text" placeholder="Lokasi" name="location" id="location" class="form-control" />
-                                                </div>
-                                                <label>Merk/Type</label>
-                                                <div class="mb-1">
-                                                    <input type="text" placeholder="Merk/Type" name="brand_type" id="brand_type" class="form-control" />
+                                                    <input type="text" placeholder="Kode Kriteria" name="criteria_code" id="criteria_code" class="form-control" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="row">
-                                                <label>Tahun Pengadaan</label>
+                                                <label for="attribute">Atribut</label>
                                                 <div class="mb-1">
-                                                    <input type="number" placeholder="Tahun Pengadaan" name="procurement_year" id="procurement_year" class="form-control" maxlength="4" pattern="\d{4}" />
-                                                </div>
-                                                <label>Jumlah Barang</label>
-                                                <div class="mb-1">
-                                                    <input type="number" placeholder="Jumlah Barang" name="quantity" id="quantity" class="form-control" />
-                                                </div>
-                                                <label>Harga Satuan</label>
-                                                <div class="mb-1">
-                                                    <input type="text" placeholder="Harga Satuan" name="acquisition_cost" id="acquisition_cost" class="form-control" />
-                                                </div>
-                                                <label for="condition">Kondisi</label>
-                                                <div class="mb-1">
-                                                    <select class="form-select" name="condition" id="condition">
-                                                        <option selected>-- Pilih Kondisi --</option>
-                                                        <option value="4">Baik</option>
-                                                        <option value="3">Rusak Ringan</option>
-                                                        <option value="2">Rusak Berat</option>
-                                                        <option value="1">Tidak Ada</option>
+                                                    <select class="form-select" name="attribute" id="attribute">
+                                                        <option selected>-- Pilih Atribut --</option>
+                                                        <option value="benefit">Benefit</option>
+                                                        <option value="cost">Cost</option>
                                                     </select>
                                                 </div>
-                                                <label>Keterangan</label>
+                                                <label>Bobot</label>
                                                 <div class="mb-1">
-                                                    <input type="text" placeholder="Keterangan" name="description" id="description" class="form-control" />
+                                                    <input type="number" placeholder="Bobot" name="weight" id="weight" class="form-control" />
                                                 </div>
                                             </div>
                                         </div>

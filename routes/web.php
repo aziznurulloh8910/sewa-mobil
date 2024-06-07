@@ -37,6 +37,10 @@ Route::group(['middleware' => 'auth'], function () {
     // mengelola data kriteria
     Route::get('/criteria', [CriteriaController::class, 'index'])->name('criteria');
     Route::get('/criteria-data-table', [CriteriaController::class, 'dataTable']);
+    Route::post('/criteria/store', [CriteriaController::class, 'store'])->name('criteria.store');
+    Route::get('/criteria/{id}', [CriteriaController::class, 'show'])->name('criteria.show');
+    Route::put('/criteria/update/{id}', [CriteriaController::class, 'update'])->name('criteria.update');
+    Route::delete('/criteria/delete/{id}', [CriteriaController::class, 'delete'])->name('criteria.delete');
 
     // mengelola data sub kriteria
     Route::get('/sub-criteria', function (){

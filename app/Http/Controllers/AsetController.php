@@ -71,13 +71,13 @@ class AsetController extends Controller
 
         $asset->update($validated);
 
-        return response()->json(['success' => 'Data Asset berhasil diperbarui']);
+        return response()->json(['success' => 'Asset updated successfully.']);
     }
 
     public function delete($id) {
         $asset = Asset::findOrFail($id);
         $asset->delete();
 
-        return response()->json(['success' => 'Data Asset berhasil dihapus']);
+        return response()->json(['success' => 'Asset deleted successfully.']);
     }
 }

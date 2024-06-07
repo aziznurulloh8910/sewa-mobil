@@ -16,7 +16,6 @@ $(document).ready(function() {
         }
     });
 
-
     var table = $('#dataAset').DataTable({
         ajax: {
             url: "http://localhost:8000/asset-data-table",
@@ -46,8 +45,8 @@ $(document).ready(function() {
                             '<a class="pe-1 dropdown-toggle hide-arrow text-primary" data-bs-toggle="dropdown">' +
                                 feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
                             '</a>' +
-                            '<div class="dropdown-menu dropdown-menu-end details-record" data-id="' + full['id'] + '">' +
-                                '<a href="javascript:;" class="dropdown-item">' +
+                            '<div class="dropdown-menu dropdown-menu-end">' +
+                                '<a href="javascript:;" class="dropdown-item details-record" data-id="' + full['id'] + '">' +
                                     feather.icons['file-text'].toSvg({ class: 'font-small-4 me-50' }) +
                                 'Details</a>' +
                                 '<a href="javascript:;" class="dropdown-item delete-record" data-id="' + full['id'] + '">' +
@@ -156,7 +155,7 @@ $(document).ready(function() {
                 type: 'column',
                 renderer: function(api, rowIdx, columns) {
                     var data = $.map(columns, function(col, i) {
-                        return col.title !== '' // ? Do not show row in modal popup if title is blank (for check box)
+                        return col.title !== ''
                             ? '<tr data-dt-row="' +
                                 col.rowIdx +
                                 '" data-dt-column="' +
@@ -179,7 +178,6 @@ $(document).ready(function() {
         },
         language: {
             paginate: {
-                // remove previous & next text from pagination
                 previous: '&nbsp;',
                 next: '&nbsp;'
             }
@@ -245,7 +243,7 @@ $(document).ready(function() {
                 if (response.success) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Berhasil',
+                        title: 'Add New Asset Successful',
                         text: response.success,
                         timer: 2000,
                         showConfirmButton: false
@@ -267,7 +265,7 @@ $(document).ready(function() {
 
                 Swal.fire({
                     icon: 'error',
-                    title: 'Gagal',
+                    title: 'Failed',
                     html: errorText
                 });
             }
@@ -303,8 +301,8 @@ $(document).ready(function() {
             error: function(response) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Gagal',
-                    text: 'Gagal mengambil data aset'
+                    title: 'Failed',
+                    text: 'Failed to get asset data'
                 });
             }
         });
@@ -320,8 +318,8 @@ $(document).ready(function() {
         var id = $(this).data('id');
 
         Swal.fire({
-            title: 'Apakah anda yakin?',
-            text: "Data aset ini akan dihapus!",
+            title: 'Are you sure?',
+            text: "The data asset will be deleted!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: 'primary',
@@ -337,7 +335,7 @@ $(document).ready(function() {
                     },
                     success: function(response) {
                         Swal.fire(
-                            'Dihapus!',
+                            'Deleted!',
                             response.success,
                             'success'
                         );
@@ -347,8 +345,8 @@ $(document).ready(function() {
                     },
                     error: function(response) {
                         Swal.fire(
-                            'Gagal!',
-                            'Data aset gagal dihapus.',
+                            'Failed!',
+                            'Asset failed to delete.',
                             'error'
                         );
                     }
@@ -381,7 +379,6 @@ $(document).ready(function() {
             method: 'GET',
             success: function(response) {
                 var assetDetails = `
-
                     <div class="row mx-1">
                         <div class="col-md-4">
                             <p><strong>Nama Barang</strong></p>
@@ -481,8 +478,8 @@ $(document).ready(function() {
             error: function(response) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Gagal',
-                    text: 'Gagal mengambil data aset'
+                    title: 'Failed',
+                    text: 'Failed to get asset data'
                 });
             }
         });
