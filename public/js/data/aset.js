@@ -1,4 +1,15 @@
 $(document).ready(function() {
+
+    function formatIDR(number) {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }).format(number);
+    }
+
+
     var table = $('#dataAset').DataTable({
         ajax: {
             url: "http://localhost:8000/aset-data-table",
@@ -10,8 +21,16 @@ $(document).ready(function() {
             { data: "asset_code" },
             { data: "location" },
             { data: "quantity" },
-            { data: "acquisition_cost" },
-            { data: "recorded_value" },
+            { data: "acquisition_cost",
+                render: function(data, type, row) {
+                    return formatIDR(data);
+                }
+            },
+            { data: "recorded_value",
+                render: function(data, type, row) {
+                    return formatIDR(data);
+                }
+            },
             { data: "condition" },
             { data: "" },
         ],
