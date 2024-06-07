@@ -9,6 +9,13 @@ $(document).ready(function() {
         }).format(number);
     }
 
+    $('#procurement_year').on('input', function() {
+        var value = $(this).val();
+        if (value.length > 4) {
+            $(this).val(value.slice(0, 4));
+        }
+    });
+
 
     var table = $('#dataAset').DataTable({
         ajax: {
@@ -206,7 +213,7 @@ $(document).ready(function() {
 
         $.ajax({
             url: actionUrl,
-            method: 'POST', // Always POST because _method will override
+            method: 'POST',
             data: formData,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

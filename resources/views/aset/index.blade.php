@@ -68,7 +68,7 @@
                                                 </div>
                                                 <label>Kode Barang</label>
                                                 <div class="mb-1">
-                                                    <input type="text" placeholder="Kode Barang" name="asset_code" id="asset_code" class="form-control" />
+                                                    <input type="number" placeholder="Kode Barang" name="asset_code" id="asset_code" class="form-control" />
                                                 </div>
                                                 <label>Nomor Registrasi</label>
                                                 <div class="mb-1">
@@ -88,7 +88,7 @@
                                             <div class="row">
                                                 <label>Tahun Pengadaan</label>
                                                 <div class="mb-1">
-                                                    <input type="number" placeholder="Tahun Pengadaan" name="procurement_year" id="procurement_year" class="form-control" />
+                                                    <input type="number" placeholder="Tahun Pengadaan" name="procurement_year" id="procurement_year" class="form-control" maxlength="4" pattern="\d{4}" />
                                                 </div>
                                                 <label>Jumlah Barang</label>
                                                 <div class="mb-1">
