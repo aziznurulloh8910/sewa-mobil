@@ -19,7 +19,7 @@ $(document).ready(function() {
 
     var table = $('#dataAset').DataTable({
         ajax: {
-            url: "http://localhost:8000/aset-data-table",
+            url: "http://localhost:8000/asset-data-table",
             dataSrc: "data"
         },
         columns: [
@@ -198,7 +198,7 @@ $(document).ready(function() {
     function clearForm() {
         $('#assetForm')[0].reset();
         $('input[name="_method"]').val('POST');
-        $('#assetForm').attr('action', 'http://localhost:8000/aset/store');
+        $('#assetForm').attr('action', 'http://localhost:8000/asset/store');
     }
 
     // Handle form submission
@@ -254,11 +254,11 @@ $(document).ready(function() {
 
         // Get asset data
         $.ajax({
-            url: 'http://localhost:8000/aset/' + id,
+            url: 'http://localhost:8000/asset/' + id,
             method: 'GET',
             success: function(response) {
                 // Populate modal fields
-                $('#assetForm').attr('action', 'http://localhost:8000/aset/update/' + id);
+                $('#assetForm').attr('action', 'http://localhost:8000/asset/update/' + id);
                 $('input[name="_method"]').val('PUT');
                 $('#asset_name').val(response.name);
                 $('#asset_code').val(response.asset_code);
@@ -304,7 +304,7 @@ $(document).ready(function() {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: 'http://localhost:8000/aset/delete/' + id,
+                    url: 'http://localhost:8000/asset/delete/' + id,
                     method: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -351,7 +351,7 @@ $(document).ready(function() {
         var id = $(this).data('id');
 
         $.ajax({
-            url: 'http://localhost:8000/aset/' + id,
+            url: 'http://localhost:8000/asset/' + id,
             method: 'GET',
             success: function(response) {
                 var assetDetails = `

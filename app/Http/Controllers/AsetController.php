@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Aset;
+use App\Models\Asset;
 use Illuminate\Support\Facades\Log;
 
 class AsetController extends Controller
 {
     function index() {
-        return view('aset.index');
+        return view('asset.index');
     }
 
     function dataTable() {
-        $data = Aset::latest()->get();
+        $data = Asset::latest()->get();
         return response()->json(['data' => $data]);
     }
 
@@ -36,20 +36,20 @@ class AsetController extends Controller
         $validated['accumulated_depreciation'] = $request->procurement_year;
         $validated['total_depreciation'] = $validated['accumulated_depreciation'];
 
-        Aset::create($validated);
+        Asset::create($validated);
 
         return response()->json(['success' => 'Asset added successfully.']);
     }
 
     public function show($id)
     {
-        $aset = Aset::findOrFail($id);
-        return response()->json($aset);
+        $asset = Asset::findOrFail($id);
+        return response()->json($asset);
     }
 
     public function update(Request $request, $id)
     {
-        $aset = Aset::findOrFail($id);
+        $asset = Asset::findOrFail($id);
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -68,15 +68,15 @@ class AsetController extends Controller
         $validated['accumulated_depreciation'] = $request->procurement_year;
         $validated['total_depreciation'] = $validated['accumulated_depreciation'];
 
-        $aset->update($validated);
+        $asset->update($validated);
 
-        return response()->json(['success' => 'Data aset berhasil diperbarui']);
+        return response()->json(['success' => 'Data Asset berhasil diperbarui']);
     }
 
     public function delete($id) {
-        $aset = Aset::findOrFail($id);
-        $aset->delete();
+        $asset = Asset::findOrFail($id);
+        $asset->delete();
 
-        return response()->json(['success' => 'Data aset berhasil dihapus']);
+        return response()->json(['success' => 'Data Asset berhasil dihapus']);
     }
 }

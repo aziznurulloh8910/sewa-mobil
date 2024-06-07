@@ -55,7 +55,7 @@
                                 <h4 class="modal-title" id="ModalFormAsetLabel">Form Data Aset</h4>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form id="assetForm" action="{{ route('aset.store') }}" method="POST">
+                            <form id="assetForm" action="{{ route('asset.store') }}" method="POST">
                                 @csrf
                                 <input type="hidden" id="_method" name="_method" value="POST">
                                 <div class="modal-body">
@@ -136,6 +136,6 @@
     <x-footer></x-footer>
 
     @push('data')
-        <script src="{{ asset('/js/data/aset.js') }}"></script>
+        <script src="{{ asset('/js/data/asset.js') }}"></script>
     @endpush
 </x-layout-dashboard>

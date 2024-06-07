@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Aset;
+use App\Models\Asset;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        Aset::factory()->count(5)->create();
+        Asset::factory()->count(5)->create();
 
         User::factory()->create([
             'name' => 'Super Admin',

@@ -3,10 +3,6 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AsetController;
-use App\Http\Controllers\KriteriaController;
-use App\Http\Controllers\SubKriteriaController;
-use App\Http\Controllers\HistoryPenghapusanController;
-use App\Http\Controllers\PengadaanAsetController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,24 +26,32 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     // mengelola data aset
-    Route::get('/aset', [AsetController::class, 'index'])->name('aset');
-    Route::get('/aset-data-table', [AsetController::class, 'dataTable']);
-    Route::post('/aset/store', [AsetController::class, 'store'])->name('aset.store');
-    Route::get('/aset/{id}', [AsetController::class, 'show'])->name('aset.show');
-    Route::put('/aset/update/{id}', [AsetController::class, 'update'])->name('aset.update');
-    Route::delete('/aset/delete/{id}', [AsetController::class, 'delete'])->name('aset.delete');
-
-    // mengelola data history penghapusan aset
-    Route::get('/history-penghapusan', [HistoryPenghapusanController::class, 'index'])->name('history-penghapusan');
-
-    // mengelola data history penghapusan aset
-    Route::get('/pengadaan-aset', [PengadaanAsetController::class, 'index'])->name('pengadaan-aset');
+    Route::get('/asset', [AsetController::class, 'index'])->name('asset');
+    Route::get('/asset-data-table', [AsetController::class, 'dataTable']);
+    Route::post('/asset/store', [AsetController::class, 'store'])->name('asset.store');
+    Route::get('/asset/{id}', [AsetController::class, 'show'])->name('asset.show');
+    Route::put('/asset/update/{id}', [AsetController::class, 'update'])->name('asset.update');
+    Route::delete('/asset/delete/{id}', [AsetController::class, 'delete'])->name('asset.delete');
 
     // mengelola data kriteria
-    Route::get('/kriteria', [KriteriaController::class, 'index'])->name('kriteria');
+    Route::get('/criteria', function (){
+        return view('criteria.index');
+    })->name('criteria');
 
     // mengelola data sub kriteria
-    Route::get('/sub-kriteria', [SubKriteriaController::class, 'index'])->name('sub-kriteria');
+    Route::get('/sub-criteria', function (){
+        return view('subCriteria.index');
+    })->name('sub-criteria');
+
+    // mengelola data history penghapusan aset
+    Route::get('/deletion-history', function (){
+        return view('history.index');
+    })->name('deletion-history');
+
+    // mengelola data history penghapusan aset
+    Route::get('/asset-procurement', function (){
+        return view('procurement.index');
+    })->name('asset-procurement');
 
     // mengelola data sub kriteria
     Route::get('/users', [UserController::class, 'index'])->name('users');

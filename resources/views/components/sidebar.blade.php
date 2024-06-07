@@ -21,13 +21,13 @@
             <li class=" navigation-header"><span data-i18n="Data Inventarisasi Aset">Data Inventarisasi Aset</span><i data-feather="more-horizontal"></i>
             </li>
 
-            <li class="nav-item {{ Request::is('aset') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('aset') }}">
+            <li class="nav-item {{ Request::is('asset') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('asset') }}">
                 <i data-feather="database"></i><span class="menu-title text-truncate" data-i18n="Data Aset">Data Aset</span></a>
             </li>
-            <li class=" nav-item {{ Request::is('history-penghapusan') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('history-penghapusan') }}">
+            <li class=" nav-item {{ Request::is('deletion-history') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('deletion-history') }}">
                 <i data-feather="trash-2"></i><span class="menu-title text-truncate" data-i18n="History Penghapusan Aset">History Penghapusan</span></a>
             </li>
-            <li class="nav-item {{ Request::is('pengadaan-aset') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('pengadaan-aset') }}">
+            <li class="nav-item {{ Request::is('asset-procurement') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('asset-procurement') }}">
                 <i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="Pengadaan Aset">Pengadaan Aset</span></a>
             </li>
 
@@ -36,10 +36,10 @@
                 <i data-feather="more-horizontal"></i>
             </li>
 
-            <li class="nav-item {{ Request::is('kriteria') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('kriteria') }}">
+            <li class="nav-item {{ Request::is('criteria') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('criteria') }}">
                 <i data-feather="database"></i><span class="menu-title text-truncate" data-i18n="Data Kriteria">Data Kriteria</span></a>
             </li>
-            <li class="nav-item {{ Request::is('sub-kriteria') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('sub-kriteria') }}">
+            <li class="nav-item {{ Request::is('sub-criteria') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('sub-criteria') }}">
                 <i data-feather="database"></i><span class="menu-title text-truncate" data-i18n="Data Sub Kriteria">Data Sub Kriteria</span></a>
             </li>
             <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('home') }}">
