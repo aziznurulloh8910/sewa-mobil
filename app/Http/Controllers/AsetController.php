@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Asset;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class AsetController extends Controller
 {
@@ -35,6 +35,7 @@ class AsetController extends Controller
         $validated['recorded_value'] = $request->acquisition_cost * $request->quantity;
         $validated['accumulated_depreciation'] = $request->procurement_year;
         $validated['total_depreciation'] = $validated['accumulated_depreciation'];
+        $validated['user_id'] = Auth::id();
 
         Asset::create($validated);
 
