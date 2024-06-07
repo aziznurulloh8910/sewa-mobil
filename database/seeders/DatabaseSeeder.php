@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Asset;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Criteria;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             'role' => 0,
         ]);
 
-        Asset::factory()->count(5)->create();
+        Asset::factory()->count(20)->create();
+
+        Criteria::factory()->count(5)->create();
     }
 }
