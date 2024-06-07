@@ -118,13 +118,6 @@ $(document).ready(function() {
 
     $('div.head-label').html('<h3 class="mb-0">Data Kriteria</h3>');
 
-    // Function to clear the form
-    function clearForm() {
-        $('#criteriaForm')[0].reset();
-        $('input[name="_method"]').val('POST');
-        $('#criteriaForm').attr('action', 'http://localhost:8000/criteria/store');
-    }
-
     // Handle form submission
     $('#criteriaForm').on('submit', function(e) {
         e.preventDefault();
@@ -171,6 +164,52 @@ $(document).ready(function() {
             }
         });
     });
+
+    // Fungsi untuk membersihkan form
+    function clearForm() {
+        $('#criteriaForm')[0].reset();
+        $('input[name="_method"]').val('POST');
+        $('#criteriaForm').attr('action', 'http://localhost:8000/criteria/store');
+    }
+
+    // Event listener untuk menampilkan modal form criteria
+    $('.create-new').on('click', function() {
+        // Generate kode kriteria baru
+        var lastCode = getLastCriteriaCode();
+        var newCode = generateNextCriteriaCode(lastCode);
+
+        // Set nilai kode kriteria pada form
+        $('#criteria_code').val(newCode);
+
+        // Show modal
+        $('#ModalFormCriteria').modal('show');
+    });
+
+    // Fungsi untuk mendapatkan kode kriteria terakhir dari tabel
+    function getLastCriteriaCode() {
+        var lastCode = '';
+        var data = table.rows().data();
+
+        // Loop melalui setiap data untuk mendapatkan kode kriteria terakhir
+        data.each(function(rowData) {
+            var criteriaCode = rowData.criteria_code;
+            var codeNumber = parseInt(criteriaCode.substring(1)); // Mengambil angka setelah huruf C
+            if (codeNumber && (criteriaCode.startsWith('C') && (criteriaCode.length === 2))) {
+                if (codeNumber > lastCode) {
+                    lastCode = codeNumber;
+                }
+            }
+        });
+
+        return lastCode;
+    }
+
+    // Fungsi untuk menghasilkan kode kriteria berikutnya
+    function generateNextCriteriaCode(lastCode) {
+        // Menambahkan 1 ke angka terakhir
+        var nextCodeNumber = lastCode + 1;
+        return 'C' + nextCodeNumber;
+    }
 
     // Edit criteria
     $('#dataCriteria').on('click', '.item-edit', function() {
