@@ -14,10 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        Asset::factory()->count(5)->create();
-
         User::factory()->create([
             'name' => 'Super Admin',
             'email' => 'admin@mail.com',
@@ -29,5 +25,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'user@mail.com',
             'role' => 0,
         ]);
+
+        Asset::factory()->count(5)->create();
     }
 }

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Asset>
@@ -17,7 +18,8 @@ class AssetFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word,
+            'name' => $this->faker->name,
+            'user_id' => $this->faker->randomElement([1, 2]),
             'registration_number' => $this->faker->unique()->numberBetween(1000, 9999),
             'asset_code' => $this->faker->unique()->bothify('ASSET-###??'),
             'location' => $this->faker->city,

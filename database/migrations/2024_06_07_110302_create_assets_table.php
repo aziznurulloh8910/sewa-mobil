@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->integer('registration_number');
             $table->string('asset_code');
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->float('total_depreciation');
             $table->integer('condition');
             $table->string('description')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
