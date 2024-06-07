@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/aset/store', [AsetController::class, 'store'])->name('aset.store');
     Route::get('/aset/{id}', [AsetController::class, 'show'])->name('aset.show');
     Route::put('/aset/update/{id}', [AsetController::class, 'update'])->name('aset.update');
+    Route::delete('/aset/delete/{id}', [AsetController::class, 'delete'])->name('aset.delete');
 
     // mengelola data history penghapusan aset
     Route::get('/history-penghapusan', [HistoryPenghapusanController::class, 'index'])->name('history-penghapusan');

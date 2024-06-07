@@ -33,7 +33,7 @@ $(document).ready(function() {
                                 '<a href="javascript:;" class="dropdown-item">' +
                                 feather.icons['archive'].toSvg({ class: 'font-small-4 me-50' }) +
                                 'Archive</a>' +
-                                '<a href="javascript:;" class="dropdown-item delete-record">' +
+                                '<a href="javascript:;" class="dropdown-item delete-record" data-id="' + full['id'] + '">' +
                                 feather.icons['trash-2'].toSvg({ class: 'font-small-4 me-50' }) +
                                 'Delete</a>' +
                             '</div>' +
@@ -264,6 +264,48 @@ $(document).ready(function() {
     // Clear form when modal is closed
     $('#ModalFormAset').on('hidden.bs.modal', function () {
         clearForm();
+    });
+
+    // Function to delete asset
+    $('#dataAset').on('click', '.delete-record', function() {
+        var id = $(this).data('id');
+
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Data aset ini akan dihapus!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: 'primary',
+            cancelButtonColor: 'secondary',
+            confirmButtonText: 'Ya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: 'http://localhost:8000/aset/delete/' + id,
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        Swal.fire(
+                            'Dihapus!',
+                            response.success,
+                            'success'
+                        );
+
+                        // Reload table data
+                        $('#dataAset').DataTable().ajax.reload();
+                    },
+                    error: function(response) {
+                        Swal.fire(
+                            'Gagal!',
+                            'Data aset gagal dihapus.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
     });
 
 });

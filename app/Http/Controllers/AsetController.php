@@ -72,4 +72,11 @@ class AsetController extends Controller
 
         return response()->json(['success' => 'Data aset berhasil diperbarui']);
     }
+
+    public function delete($id) {
+        $aset = Aset::findOrFail($id);
+        $aset->delete();
+
+        return response()->json(['success' => 'Data aset berhasil dihapus']);
+    }
 }
