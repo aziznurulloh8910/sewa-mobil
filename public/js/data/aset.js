@@ -174,9 +174,56 @@ $(document).ready(function() {
     // Function to clear the form
     function clearForm() {
         $('#assetForm')[0].reset();
-        $('#assetForm').find('input[name="_method"]').remove();
-        $('#assetForm').attr('action', 'http://localhost:8000/aset/');
+        $('input[name="_method"]').val('POST');
+        $('#assetForm').attr('action', 'http://localhost:8000/aset/store');
     }
+
+    // Handle form submission
+    $('#assetForm').on('submit', function(e) {
+        e.preventDefault();
+
+        var formData = $(this).serialize();
+        var actionUrl = $(this).attr('action');
+
+        $.ajax({
+            url: actionUrl,
+            method: 'POST', // Always POST because _method will override
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: response.success,
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+
+                    // Clear form fields
+                    clearForm();
+
+                    $('#ModalFormAset').modal('hide');
+                    $('#dataAset').DataTable().ajax.reload();
+                }
+            },
+            error: function(response) {
+                let errors = response.responseJSON.errors;
+                let errorText = '';
+                for (let key in errors) {
+                    errorText += errors[key] + '<br>';
+                }
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    html: errorText
+                });
+            }
+        });
+    });
 
     // Edit asset
     $('#dataAset').on('click', '.item-edit', function() {
@@ -189,11 +236,7 @@ $(document).ready(function() {
             success: function(response) {
                 // Populate modal fields
                 $('#assetForm').attr('action', 'http://localhost:8000/aset/update/' + id);
-                if (!$('input[name="_method"]').length) {
-                    $('#assetForm').append('<input type="hidden" name="_method" value="PUT">');
-                } else {
-                    $('input[name="_method"]').val('PUT');
-                }
+                $('input[name="_method"]').val('PUT');
                 $('#asset_name').val(response.name);
                 $('#asset_code').val(response.asset_code);
                 $('#registration_number').val(response.registration_number);
@@ -218,55 +261,9 @@ $(document).ready(function() {
         });
     });
 
-    // Handle form submission
-    $('#assetForm').on('submit', function(e) {
-        e.preventDefault();
-
-        var formData = $(this).serialize();
-        var actionUrl = $(this).attr('action');
-
-        $.ajax({
-            url: actionUrl,
-            method: 'POST', // this remains POST because Laravel will use _method to override
-            data: formData,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response) {
-                if (response.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil',
-                        text: response.success,
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-
-                    // Clear form fields
-                    clearForm();
-
-                    $('#ModalFormAset').modal('hide');
-                    table.ajax.reload();
-                }
-            },
-            error: function(response) {
-                let errors = response.responseJSON.errors;
-                let errorText = '';
-                for (let key in errors) {
-                    errorText += errors[key] + '<br>';
-                }
-
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal',
-                    html: errorText
-                });
-            }
-        });
-    });
-
     // Clear form when modal is closed
     $('#ModalFormAset').on('hidden.bs.modal', function () {
         clearForm();
     });
+
 });
