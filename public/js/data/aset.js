@@ -52,13 +52,10 @@ $(document).ready(function() {
                             '<a class="pe-1 dropdown-toggle hide-arrow text-primary" data-bs-toggle="dropdown">' +
                                 feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
                             '</a>' +
-                            '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<div class="dropdown-menu dropdown-menu-end details-record" data-id="' + full['id'] + '">' +
                                 '<a href="javascript:;" class="dropdown-item">' +
                                     feather.icons['file-text'].toSvg({ class: 'font-small-4 me-50' }) +
                                 'Details</a>' +
-                                '<a href="javascript:;" class="dropdown-item">' +
-                                feather.icons['archive'].toSvg({ class: 'font-small-4 me-50' }) +
-                                'Archive</a>' +
                                 '<a href="javascript:;" class="dropdown-item delete-record" data-id="' + full['id'] + '">' +
                                 feather.icons['trash-2'].toSvg({ class: 'font-small-4 me-50' }) +
                                 'Delete</a>' +
@@ -329,6 +326,137 @@ $(document).ready(function() {
                             'error'
                         );
                     }
+                });
+            }
+        });
+    });
+
+    function getConditionText(condition) {
+        switch (condition) {
+            case 1:
+                return '<span class="badge badge-light-danger">Tidak Ada</span>';
+            case 2:
+                return '<span class="badge badge-light-warning">Rusak Berat</span>';
+            case 3:
+                return '<span class="badge badge-light-secondary">Rusak Ringan</span>';
+            case 4:
+                return '<span class="badge badge-light-success">Baik</span>';
+            default:
+                return '<span class="badge badge-light">Unknown</span>';
+        }
+    }
+
+    // Show asset details in Swal.fire
+    $('#dataAset').on('click', '.details-record', function() {
+        var id = $(this).data('id');
+
+        $.ajax({
+            url: 'http://localhost:8000/aset/' + id,
+            method: 'GET',
+            success: function(response) {
+                var assetDetails = `
+
+                    <div class="row mx-1">
+                        <div class="col-md-4">
+                            <p><strong>Nama Barang</strong></p>
+                        </div>
+                        <div class="col-md-8">
+                            <p>: ${response.name}</p>
+                        </div>
+                    </div>
+                    <div class="row mx-1">
+                        <div class="col-md-4">
+                            <p><strong>Nomor Registrasi</strong></p>
+                        </div>
+                        <div class="col-md-8">
+                            <p>: ${response.registration_number}</p>
+                        </div>
+                    </div>
+                    <div class="row mx-1">
+                        <div class="col-md-4">
+                            <p><strong>Kode Barang</strong></p>
+                        </div>
+                        <div class="col-md-8">
+                            <p>: ${response.asset_code}</p>
+                        </div>
+                    </div>
+                    <div class="row mx-1">
+                        <div class="col-md-4">
+                            <p><strong>Lokasi</strong></p>
+                        </div>
+                        <div class="col-md-8">
+                            <p>: ${response.location}</p>
+                        </div>
+                    </div>
+                    <div class="row mx-1">
+                        <div class="col-md-4">
+                            <p><strong>Jumlah Barang</strong></p>
+                        </div>
+                        <div class="col-md-8">
+                            <p>: ${response.quantity}</p>
+                        </div>
+                    </div>
+                    <div class="row mx-1">
+                        <div class="col-md-4">
+                            <p><strong>Harga Satuan</strong></p>
+                        </div>
+                        <div class="col-md-8">
+                            <p>: ${formatIDR(response.acquisition_cost)}</p>
+                        </div>
+                    </div>
+                    <div class="row mx-1">
+                        <div class="col-md-4">
+                            <p><strong>Total Harga</strong></p>
+                        </div>
+                        <div class="col-md-8">
+                            <p>: ${formatIDR(response.recorded_value)}</p>
+                        </div>
+                    </div>
+                    <div class="row mx-1">
+                        <div class="col-md-4">
+                            <p><strong>Nilai Setelah Depresiasi</strong></p>
+                        </div>
+                        <div class="col-md-8">
+                            <p>: ${formatIDR(response.accumulated_depreciation)}</p>
+                        </div>
+                    </div>
+                    <div class="row mx-1">
+                        <div class="col-md-4">
+                            <p><strong>Total Depresiasi</strong></p>
+                        </div>
+                        <div class="col-md-8">
+                            <p>: ${formatIDR(response.total_depreciation)}</p>
+                        </div>
+                    </div>
+                    <div class="row mx-1">
+                        <div class="col-md-4">
+                            <p><strong>Kondisi</strong></p>
+                        </div>
+                        <div class="col-md-8">
+                            <p>: ${getConditionText(response.condition)}</p>
+                        </div>
+                    </div>
+                    <div class="row mx-1">
+                        <div class="col-md-4">
+                            <p><strong>Keterangan</strong></p>
+                        </div>
+                        <div class="col-md-8">
+                            <p>: ${response.description}</p>
+                        </div>
+                    </div>
+                `;
+                Swal.fire({
+                    title: 'Informasi Detail Aset',
+                    html: '<div style="text-align: left;">' + assetDetails + '</div>',
+                    width: '700px',
+                    confirmButtonText: 'Back to table',
+                });
+            },
+            error: function(response) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: 'Gagal mengambil data aset'
                 });
             }
         });
