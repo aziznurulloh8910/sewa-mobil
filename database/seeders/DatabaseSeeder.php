@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Asset;
 use App\Models\Criteria;
+use App\Models\SubCriteria;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -28,6 +29,11 @@ class DatabaseSeeder extends Seeder
 
         Asset::factory()->count(20)->create();
 
-        Criteria::factory()->count(5)->create();
+        Criteria::factory()
+            ->count(5)
+            ->has(SubCriteria::factory()->count(4), 'subCriteria')
+            ->create();
+
+        // Criteria::factory()->count(5)->create();
     }
 }

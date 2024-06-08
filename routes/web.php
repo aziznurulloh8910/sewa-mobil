@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AsetController;
 use App\Http\Controllers\CriteriaController;
+use App\Http\Controllers\SubCriteriaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,9 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/criteria/delete/{id}', [CriteriaController::class, 'delete'])->name('criteria.delete');
 
     // mengelola data sub kriteria
-    Route::get('/sub-criteria', function (){
-        return view('subCriteria.index');
-    })->name('sub-criteria');
+    Route::get('/sub-criteria', [SubCriteriaController::class, 'index'])->name('sub-criteria');
 
     // mengelola data history penghapusan aset
     Route::get('/deletion-history', function (){
