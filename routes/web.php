@@ -43,8 +43,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/criteria/update/{id}', [CriteriaController::class, 'update'])->name('criteria.update');
     Route::delete('/criteria/delete/{id}', [CriteriaController::class, 'delete'])->name('criteria.delete');
 
-    // mengelola data sub kriteria
-    Route::get('/sub-criteria', [SubCriteriaController::class, 'index'])->name('sub-criteria');
+    // mengelola data subkriteria
+    Route::get('/subcriteria', [SubCriteriaController::class, 'index'])->name('subcriteria');
+    Route::post('/subcriteria/store', [SubCriteriaController::class, 'store'])->name('subcriteria.store');
+    Route::get('/subcriteria/{id}', [SubCriteriaController::class, 'show'])->name('subcriteria.show');
+    Route::put('/subcriteria/update/{id}', [SubCriteriaController::class, 'update'])->name('subcriteria.update');
+    Route::delete('/subcriteria/delete/{id}', [SubCriteriaController::class, 'delete'])->name('subcriteria.delete');
 
     // mengelola data history penghapusan aset
     Route::get('/deletion-history', function (){

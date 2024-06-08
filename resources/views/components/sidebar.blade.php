@@ -39,7 +39,7 @@
             <li class="nav-item {{ Request::is('criteria') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('criteria') }}">
                 <i data-feather="database"></i><span class="menu-title text-truncate" data-i18n="Data Kriteria">Data Kriteria</span></a>
             </li>
-            <li class="nav-item {{ Request::is('sub-criteria') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('sub-criteria') }}">
+            <li class="nav-item {{ Request::is('subcriteria') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('subcriteria') }}">
                 <i data-feather="database"></i><span class="menu-title text-truncate" data-i18n="Data Sub Kriteria">Data Sub Kriteria</span></a>
             </li>
             <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('home') }}">
