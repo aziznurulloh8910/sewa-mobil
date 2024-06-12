@@ -15,7 +15,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Sub Kriteria for {{ $criteria->name }}</h4>
+                                    <h4 class="card-title">Sub Kriteria for {{ $criteria->name }} ({{ $criteria->criteria_code }})</h4>
                                     <button class="btn btn-primary create-new" data-criteria-id="{{ $criteria->id }}">Add New Sub Kriteria</button>
                                 </div>
                                 <div class="card-datatable">
