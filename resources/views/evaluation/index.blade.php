@@ -42,38 +42,19 @@
                                 <input type="hidden" id="asset_id" name="asset_id">
                                 <div class="modal-body">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Kriteria 1</label>
-                                            <div class="mb-1">
-                                                <select class="form-select" name="criteria_1" id="criteria_1">
-                                                    <option selected>-- select option ---</option>
-                                                    <!-- Options will be populated dynamically -->
-                                                </select>
+                                        @foreach($criteria as $item)
+                                            <div class="col-md-6">
+                                                <label>{{ $item->name }}</label>
+                                                <div class="mb-1">
+                                                    <select class="form-select" name="criteria_{{ $item->id }}" id="criteria_{{ $item->id }}">
+                                                        <option selected>-- select option ---</option>
+                                                        @foreach($item->subCriteria as $sub)
+                                                            <option value="{{ $sub->id }}">{{ $sub->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
-                                            <label>Kriteria 2</label>
-                                            <div class="mb-1">
-                                                <select class="form-select" name="criteria_2" id="criteria_2">
-                                                    <option selected>-- select option ---</option>
-                                                    <!-- Options will be populated dynamically -->
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label>Kriteria 3</label>
-                                            <div class="mb-1">
-                                                <select class="form-select" name="criteria_3" id="criteria_3">
-                                                    <option selected>-- select option ---</option>
-                                                    <!-- Options will be populated dynamically -->
-                                                </select>
-                                            </div>
-                                            <label>Kriteria 4</label>
-                                            <div class="mb-1">
-                                                <select class="form-select" name="criteria_4" id="criteria_4">
-                                                    <option selected>-- select option ---</option>
-                                                    <!-- Options will be populated dynamically -->
-                                                </select>
-                                            </div>
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="modal-footer">

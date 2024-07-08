@@ -173,17 +173,6 @@ $(document).ready(function() {
         var id = $(this).data('id');
         $('#asset_id').val(id);
 
-        var criteriaOptions = [
-            { id: 1, name: 'Kriteria 1' },
-            { id: 2, name: 'Kriteria 2' },
-            { id: 3, name: 'Kriteria 3' },
-            { id: 4, name: 'Kriteria 4' }
-        ];
-
-        criteriaOptions.forEach(function(option) {
-            $('#criteria_1, #criteria_2, #criteria_3, #criteria_4').append(new Option(option.name, option.id));
-        });
-
         $('#ModalFormEvaluation').modal('show');
     });
 
