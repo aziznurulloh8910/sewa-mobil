@@ -1,12 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AsetController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\AsetController;
-use App\Http\Controllers\CriteriaController;
-use App\Http\Controllers\SubCriteriaController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CriteriaController;
+use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\SubCriteriaController;
 
 Route::get('/', function () {
     return redirect('login');
@@ -49,6 +50,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/subcriteria/{id}', [SubCriteriaController::class, 'show'])->name('subcriteria.show');
     Route::put('/subcriteria/update/{id}', [SubCriteriaController::class, 'update'])->name('subcriteria.update');
     Route::delete('/subcriteria/delete/{id}', [SubCriteriaController::class, 'delete'])->name('subcriteria.delete');
+
+    Route::get('/evaluation', [EvaluationController::class, 'index'])->name('evaluation');
+    Route::get('/evaluation-data-table', [EvaluationController::class, 'dataTable']);
+    Route::post('/evaluation/store', [EvaluationController::class, 'store'])->name('evaluation.store');
 
     // mengelola data history penghapusan aset
     Route::get('/deletion-history', function (){
