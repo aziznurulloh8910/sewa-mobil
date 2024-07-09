@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     var table = $('#dataCriteria').DataTable({
         ajax: {
-            url: "http://localhost:8000/criteria-data-table",
+            url: "http://localhost:8000/criteria/data-table",
             dataSrc: "data"
         },
         columns: [

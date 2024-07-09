@@ -14,21 +14,28 @@ class EvaluationController extends Controller
         return view('evaluation.index', compact('criteria'));
     }
 
-    function dataTable() {
+    public function dataTable() {
         $criteria = Criteria::all();
         $data = Asset::latest()->get()->map(function ($item) use ($criteria) {
             $item->is_evaluated = Evaluation::where('asset_id', $item->id)->exists();
             foreach ($criteria as $criterion) {
                 $evaluation = Evaluation::where('asset_id', $item->id)
                                         ->where('criteria_id', $criterion->id)
-                                        ->with('subCriteria') // Pastikan relasi subCriteria di-load
+                                        ->with('subCriteria')
                                         ->first();
-                $item['criteria_' . $criterion->id] = $evaluation ? $evaluation->subCriteria->score : null; // Mengembalikan skor subkriteria
+                $item['criteria_' . $criterion->id] = $evaluation ? $evaluation->subCriteria->score : null;
             }
             return $item;
         });
 
-        // Pastikan setiap item memiliki semua kolom criteria_*
+        $this->ensureAllCriteriaColumns($data, $criteria);
+
+        \Log::info($data); // Log data untuk debugging
+
+        return response()->json(['data' => $data]);
+    }
+
+    private function ensureAllCriteriaColumns($data, $criteria) {
         $data->each(function ($item) use ($criteria) {
             foreach ($criteria as $criterion) {
                 if (!isset($item['criteria_' . $criterion->id])) {
@@ -36,11 +43,6 @@ class EvaluationController extends Controller
                 }
             }
         });
-
-        // Log data untuk debugging
-        \Log::info($data);
-
-        return response()->json(['data' => $data]);
     }
 
     public function store(Request $request) {
@@ -50,9 +52,7 @@ class EvaluationController extends Controller
             'criteria.*' => 'required|exists:sub_criterias,id',
         ]);
 
-        // Proses penyimpanan data
         foreach ($validated['criteria'] as $criteriaId => $subCriteriaId) {
-            // Simpan data ke database
             Evaluation::updateOrCreate(
                 ['asset_id' => $validated['asset_id'], 'criteria_id' => $criteriaId],
                 ['sub_criteria_id' => $subCriteriaId]
@@ -62,75 +62,31 @@ class EvaluationController extends Controller
         return response()->json(['success' => 'Data penilaian berhasil disimpan.']);
     }
 
+    public function edit($id) {
+        $asset = Asset::findOrFail($id);
+        $criteria = Criteria::with('subCriteria')->get();
+        $evaluations = Evaluation::where('asset_id', $id)->get()->keyBy('criteria_id');
+
+        return response()->json([
+            'asset' => $asset,
+            'criteria' => $criteria,
+            'evaluations' => $evaluations
+        ]);
+    }
+
     public function ranking() {
         $criteria = Criteria::all();
         $assets = Asset::all();
-
-        // Ambil data evaluasi
         $evaluations = Evaluation::with('subCriteria')->get();
 
-        // Matriks keputusan
-        $decisionMatrix = [];
-        foreach ($assets as $asset) {
-            $row = [];
-            foreach ($criteria as $criterion) {
-                $evaluation = $evaluations->filter(function ($eval) use ($asset, $criterion) {
-                    return $eval->asset_id == $asset->id && $eval->criteria_id == $criterion->id;
-                })->first();
-                $row[] = $evaluation ? $evaluation->subCriteria->score : 0;
-            }
-            $decisionMatrix[] = $row;
-        }
+        $decisionMatrix = $this->createDecisionMatrix($assets, $criteria, $evaluations);
+        $normalizedMatrix = $this->normalizeMatrix($decisionMatrix);
+        $weightedMatrix = $this->weightMatrix($normalizedMatrix, $criteria);
+        $idealSolutions = $this->calculateIdealSolutions($weightedMatrix);
+        $distances = $this->calculateDistances($weightedMatrix, $idealSolutions);
+        $preferences = $this->calculatePreferences($distances);
 
-        // Normalisasi matriks keputusan
-        $normalizedMatrix = [];
-        foreach ($decisionMatrix as $row) {
-            $normalizedRow = [];
-            foreach ($row as $index => $value) {
-                $columnSum = sqrt(array_sum(array_column($decisionMatrix, $index)));
-                $normalizedRow[] = $columnSum != 0 ? $value / $columnSum : 0;
-            }
-            $normalizedMatrix[] = $normalizedRow;
-        }
-
-        // Bobot kriteria (misalnya bobot sama untuk semua kriteria)
-        $weights = array_fill(0, count($criteria), 1 / count($criteria));
-
-        // Matriks ternormalisasi terbobot
-        $weightedMatrix = [];
-        foreach ($normalizedMatrix as $row) {
-            $weightedRow = [];
-            foreach ($row as $index => $value) {
-                $weightedRow[] = $value * $weights[$index];
-            }
-            $weightedMatrix[] = $weightedRow;
-        }
-
-        // Solusi ideal positif dan negatif
-        $idealPositive = array_map('max', array_map(null, ...$weightedMatrix));
-        $idealNegative = array_map('min', array_map(null, ...$weightedMatrix));
-
-        // Jarak ke solusi ideal
-        $distances = [];
-        foreach ($weightedMatrix as $row) {
-            $positiveDistance = sqrt(array_sum(array_map(function ($value, $ideal) {
-                return pow($value - $ideal, 2);
-            }, $row, $idealPositive)));
-            $negativeDistance = sqrt(array_sum(array_map(function ($value, $ideal) {
-                return pow($value - $ideal, 2);
-            }, $row, $idealNegative)));
-            $distances[] = ['positive' => $positiveDistance, 'negative' => $negativeDistance];
-        }
-
-        // Nilai preferensi
-        $preferences = array_map(function ($distance) {
-            return $distance['negative'] / ($distance['positive'] + $distance['negative']);
-        }, $distances);
-
-        // Urutkan aset berdasarkan nilai preferensi
-        $rankedAssets = $assets->map(function ($asset, $index) use ($preferences) {
-            return ['asset' => $asset, 'preference' => $preferences[$index]];
-        })->sortByDesc('preference');
+        $rankedAssets = $this->rankAssets($assets, $preferences);
 
         return view('ranking.index', ['rankedAssets' => $rankedAssets]);
     }
@@ -138,11 +94,32 @@ class EvaluationController extends Controller
     public function process() {
         $criteria = Criteria::all();
         $assets = Asset::all();
-
-        // Ambil data evaluasi
         $evaluations = Evaluation::with('subCriteria')->get();
 
-        // Matriks keputusan
+        $decisionMatrix = $this->createDecisionMatrix($assets, $criteria, $evaluations);
+        $normalizedMatrix = $this->normalizeMatrix($decisionMatrix);
+        $weightedMatrix = $this->weightMatrix($normalizedMatrix, $criteria);
+        $idealSolutions = $this->calculateIdealSolutions($weightedMatrix);
+        $distances = $this->calculateDistances($weightedMatrix, $idealSolutions);
+        $preferences = $this->calculatePreferences($distances);
+
+        $rankedAssets = $this->rankAssets($assets, $preferences);
+
+        return view('evaluation.process', [
+            'criteria' => $criteria,
+            'assets' => $assets,
+            'decisionMatrix' => $decisionMatrix,
+            'normalizedMatrix' => $normalizedMatrix,
+            'weightedMatrix' => $weightedMatrix,
+            'idealPositive' => $idealSolutions['positive'],
+            'idealNegative' => $idealSolutions['negative'],
+            'distances' => $distances,
+            'preferences' => $preferences,
+            'rankedAssets' => $rankedAssets
+        ]);
+    }
+
+    private function createDecisionMatrix($assets, $criteria, $evaluations) {
         $decisionMatrix = [];
         foreach ($assets as $asset) {
             $row = [];
@@ -154,8 +131,10 @@ class EvaluationController extends Controller
             }
             $decisionMatrix[] = $row;
         }
+        return $decisionMatrix;
+    }
 
-        // Normalisasi matriks keputusan
+    private function normalizeMatrix($decisionMatrix) {
         $normalizedMatrix = [];
         foreach ($decisionMatrix as $row) {
             $normalizedRow = [];
@@ -165,11 +144,11 @@ class EvaluationController extends Controller
             }
             $normalizedMatrix[] = $normalizedRow;
         }
+        return $normalizedMatrix;
+    }
 
-        // Bobot kriteria (misalnya bobot sama untuk semua kriteria)
+    private function weightMatrix($normalizedMatrix, $criteria) {
         $weights = array_fill(0, count($criteria), 1 / count($criteria));
-
-        // Matriks ternormalisasi terbobot
         $weightedMatrix = [];
         foreach ($normalizedMatrix as $row) {
             $weightedRow = [];
@@ -178,44 +157,39 @@ class EvaluationController extends Controller
             }
             $weightedMatrix[] = $weightedRow;
         }
+        return $weightedMatrix;
+    }
 
-        // Solusi ideal positif dan negatif
-        $idealPositive = array_map('max', array_map(null, ...$weightedMatrix));
-        $idealNegative = array_map('min', array_map(null, ...$weightedMatrix));
+    private function calculateIdealSolutions($weightedMatrix) {
+        return [
+            'positive' => array_map('max', array_map(null, ...$weightedMatrix)),
+            'negative' => array_map('min', array_map(null, ...$weightedMatrix))
+        ];
+    }
 
-        // Jarak ke solusi ideal
+    private function calculateDistances($weightedMatrix, $idealSolutions) {
         $distances = [];
         foreach ($weightedMatrix as $row) {
             $positiveDistance = sqrt(array_sum(array_map(function ($value, $ideal) {
                 return pow($value - $ideal, 2);
-            }, $row, $idealPositive)));
+            }, $row, $idealSolutions['positive'])));
             $negativeDistance = sqrt(array_sum(array_map(function ($value, $ideal) {
                 return pow($value - $ideal, 2);
-            }, $row, $idealNegative)));
+            }, $row, $idealSolutions['negative'])));
             $distances[] = ['positive' => $positiveDistance, 'negative' => $negativeDistance];
         }
+        return $distances;
+    }
 
-        // Nilai preferensi
-        $preferences = array_map(function ($distance) {
+    private function calculatePreferences($distances) {
+        return array_map(function ($distance) {
             return $distance['negative'] / ($distance['positive'] + $distance['negative']);
         }, $distances);
+    }
 
-        // Urutkan aset berdasarkan nilai preferensi
-        $rankedAssets = $assets->map(function ($asset, $index) use ($preferences) {
+    private function rankAssets($assets, $preferences) {
+        return $assets->map(function ($asset, $index) use ($preferences) {
             return ['asset' => $asset, 'preference' => $preferences[$index]];
         })->sortByDesc('preference');
-
-        return view('evaluation.process', [
-            'criteria' => $criteria,
-            'assets' => $assets,
-            'decisionMatrix' => $decisionMatrix,
-            'normalizedMatrix' => $normalizedMatrix,
-            'weightedMatrix' => $weightedMatrix,
-            'idealPositive' => $idealPositive,
-            'idealNegative' => $idealNegative,
-            'distances' => $distances,
-            'preferences' => $preferences,
-            'rankedAssets' => $rankedAssets
-        ]);
     }
 }

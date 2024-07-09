@@ -42,17 +42,18 @@
                             </div>
                             <form id="evaluationForm" action="{{ route('evaluation.store') }}" method="POST">
                                 @csrf
-                                <input type="hidden" id="asset_id" name="asset_id" value="{{ $asset->id ?? '' }}">
+                                <input type="hidden" id="asset_id" name="asset_id" value="{{ old('asset_id') }}">
+                                <input type="hidden" id="evaluation_id" name="evaluation_id" value="{{ old('evaluation_id') }}">
                                 <div class="modal-body">
                                     <div class="row">
                                         @foreach($criteria as $item)
                                             <div class="col-md-6">
                                                 <label>{{ $item->name }}</label>
                                                 <div class="mb-1">
-                                                    <select class="form-select" name="criteria[{{ $item->id }}]" id="criteria_{{ $item->id }}">
+                                                    <select class="form-select" name="criteria[{{ $item->id }}]" id="criteria_{{ $item->id }}" data-id="{{ $item->id }}" value="{{ old('criteria.' . $item->id) }}">
                                                         <option value="" selected>-- select option ---</option>
                                                         @foreach($item->subCriteria as $sub)
-                                                            <option value="{{ $sub->id }}">{{ $sub->name }}</option>
+                                                            <option value="{{ $sub->id }}" {{ old('criteria.' . $item->id) == $sub->id ? 'selected' : '' }}>{{ $sub->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>

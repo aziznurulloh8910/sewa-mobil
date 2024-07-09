@@ -1,20 +1,21 @@
 $(document).ready(function() {
     var criteria = $('#dataEvaluation').data('criteria');
+    var baseUrl = "http://localhost:8000";
 
     var columns = [
         { data: "name" },
         { 
             data: "id",
-            render: function(data, type, full, meta) {
-                return "A" + data; // Menambahkan prefix "A" pada id
+            render: function(data) {
+                return `A${data}`; // Menambahkan prefix "A" pada id
             }
         },
     ];
 
     criteria.forEach(function(item) {
         columns.push({ 
-            data: "criteria_" + item.id,
-            render: function(data, type, full, meta) {
+            data: `criteria_${item.id}`,
+            render: function(data) {
                 return data !== null ? data : '-'; // Menampilkan skor subkriteria
             }
         });
@@ -24,9 +25,8 @@ $(document).ready(function() {
 
     var table = $('#dataEvaluation').DataTable({
         ajax: {
-            url: "http://localhost:8000/evaluation-data-table",
+            url: `${baseUrl}/evaluation/data-table`,
             dataSrc: function(json) {
-                // console.log(json.data); // Log data untuk debugging
                 return json.data;
             }
         },
@@ -36,16 +36,16 @@ $(document).ready(function() {
                 targets: -1,
                 title: 'Actions',
                 orderable: false,
-                render: function(data, type, full, meta) {
+                render: function(data, type, full) {
                     if (full['is_evaluated']) {
                         return (
-                            '<a href="javascript:;" class="edit-nilai badge badge-light-success" data-bs-toggle="modal" data-bs-target="#ModalFormEvaluation" data-id="' + full['id'] + '">' +
+                            `<a href="javascript:;" class="edit-nilai badge badge-light-success" data-bs-toggle="modal" data-bs-target="#ModalFormEvaluation" data-id="${full['id']}">` +
                                 feather.icons['edit'].toSvg({ class: 'font-small-4' }) +
                             ' Edit</a>'
                         );
                     } else {
                         return (
-                            '<a href="javascript:;" class="input-nilai badge badge-light-primary" data-bs-toggle="modal" data-bs-target="#ModalFormEvaluation" data-id="' + full['id'] + '">' +
+                            `<a href="javascript:;" class="input-nilai badge badge-light-primary" data-bs-toggle="modal" data-bs-target="#ModalFormEvaluation" data-id="${full['id']}">` +
                                 feather.icons['plus-square'].toSvg({ class: 'font-small-4' }) +
                             ' Input</a>'
                         );
@@ -71,7 +71,7 @@ $(document).ready(function() {
     // Function to clear the form
     function clearForm() {
         $('#evaluationForm')[0].reset();
-        $('#evaluationForm').attr('action', 'http://localhost:8000/evaluation/store');
+        $('#evaluationForm').attr('action', `${baseUrl}/evaluation/store`);
     }
 
     // Handle form submission
@@ -140,4 +140,27 @@ $(document).ready(function() {
         clearForm();
     });
 
+    // Show modal and populate form fields for edit
+    $('#dataEvaluation').on('click', '.edit-nilai', function() {
+        var id = $(this).data('id');
+        $('#asset_id').val(id);
+
+        $.ajax({
+            url: `${baseUrl}/evaluation/${id}/edit`,
+            method: 'GET',
+            success: function(response) {
+                $('#asset_id').val(response.asset.id);
+                $('#evaluation_id').val(response.asset.id); // Assuming evaluation_id is same as asset_id
+
+                response.criteria.forEach(function(item) {
+                    var evaluation = response.evaluations[item.id];
+                    if (evaluation) {
+                        $('#criteria_' + item.id).val(evaluation.sub_criteria_id);
+                    }
+                });
+
+                $('#ModalFormEvaluation').modal('show');
+            }
+        });
+    });
 });

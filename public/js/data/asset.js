@@ -18,7 +18,7 @@ $(document).ready(function() {
 
     var table = $('#dataAset').DataTable({
         ajax: {
-            url: "http://localhost:8000/asset-data-table",
+            url: "http://localhost:8000/asset/data-table",
             dataSrc: "data"
         },
         columns: [
