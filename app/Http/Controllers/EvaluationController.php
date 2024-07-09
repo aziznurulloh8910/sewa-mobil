@@ -150,8 +150,17 @@ class EvaluationController extends Controller
         return $normalizedMatrix;
     }
 
+    private function calculateCriteriaWeights($criteria) {
+        $total = array_sum(range(1, count($criteria)));
+        $weights = [];
+        foreach ($criteria as $index => $criterion) {
+            $weights[] = (count($criteria) - $index) / $total;
+        }
+        return $weights;
+    }
+
     private function weightMatrix($normalizedMatrix, $criteria) {
-        $weights = array_fill(0, count($criteria), 1 / count($criteria));
+        $weights = $this->calculateCriteriaWeights($criteria);
         $weightedMatrix = [];
         foreach ($normalizedMatrix as $row) {
             $weightedRow = [];
