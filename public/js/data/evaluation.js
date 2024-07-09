@@ -150,6 +150,12 @@ $(document).ready(function() {
 
                     $('#ModalFormEvaluation').modal('hide');
                     $('#dataEvaluation').DataTable().ajax.reload();
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: response.message
+                    });
                 }
             },
             error: function(response) {

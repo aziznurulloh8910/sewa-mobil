@@ -20,18 +20,22 @@ class EvaluationController extends Controller
     }
 
     public function store(Request $request) {
-        $request->validate([
-            'asset_id' => 'required|exists:assets,id',
-            'criteria_id' => 'required|exists:criterias,id',
-            'sub_criteria_id' => 'required|exists:sub_criterias,id',
+        $validated = $request->validate([
+            'asset_id' => 'required',
+            'criteria' => 'required|array',
+            'criteria.*' => 'required|exists:sub_criterias,id',
         ]);
 
-        $evaluation = new Evaluation();
-        $evaluation->asset_id = $request->asset_id;
-        $evaluation->criteria_id = $request->criteria_id;
-        $evaluation->sub_criteria_id = $request->sub_criteria_id;
-        $evaluation->save();
+        // Proses penyimpanan data
+        foreach ($validated['criteria'] as $criteriaId => $subCriteriaId) {
+            // Simpan data ke database
+            Evaluation::create([
+                'asset_id' => $validated['asset_id'],
+                'criteria_id' => $criteriaId,
+                'sub_criteria_id' => $subCriteriaId,
+            ]);
+        }
 
-        return response()->json(['success' => 'Penilaian berhasil disimpan']);
+        return response()->json(['success' => 'Data penilaian berhasil disimpan.']);
     }
 }

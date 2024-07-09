@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('evaluations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("aset_id")->references('id')->on('assets')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId("asset_id")->references('id')->on('assets')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId("criteria_id")->references('id')->on('criterias')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId("sub_criteria_id")->references('id')->on('sub_criterias')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

@@ -39,15 +39,15 @@
                             </div>
                             <form id="evaluationForm" action="{{ route('evaluation.store') }}" method="POST">
                                 @csrf
-                                <input type="hidden" id="asset_id" name="asset_id">
+                                <input type="hidden" id="asset_id" name="asset_id" value="{{ $asset->id ?? '' }}">
                                 <div class="modal-body">
                                     <div class="row">
                                         @foreach($criteria as $item)
                                             <div class="col-md-6">
                                                 <label>{{ $item->name }}</label>
                                                 <div class="mb-1">
-                                                    <select class="form-select" name="criteria_{{ $item->id }}" id="criteria_{{ $item->id }}">
-                                                        <option selected>-- select option ---</option>
+                                                    <select class="form-select" name="criteria[{{ $item->id }}]" id="criteria_{{ $item->id }}">
+                                                        <option value="" selected>-- select option ---</option>
                                                         @foreach($item->subCriteria as $sub)
                                                             <option value="{{ $sub->id }}">{{ $sub->name }}</option>
                                                         @endforeach
