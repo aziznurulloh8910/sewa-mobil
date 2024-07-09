@@ -7,7 +7,7 @@ $(document).ready(function() {
         { 
             data: "id",
             render: function(data) {
-                return `A${data}`; // Menambahkan prefix "A" pada id
+                return `A${data}`;
             }
         },
     ];
@@ -16,7 +16,7 @@ $(document).ready(function() {
         columns.push({ 
             data: `criteria_${item.id}`,
             render: function(data) {
-                return data !== null ? data : '-'; // Menampilkan skor subkriteria
+                return data !== null ? data : '-'; 
             }
         });
     });

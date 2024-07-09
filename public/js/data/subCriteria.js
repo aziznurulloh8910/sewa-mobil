@@ -22,7 +22,7 @@ $(document).ready(function() {
                 if (response.success) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Add New SubCriteria Successful',
+                        title: $('#subCriteriaForm').attr('action').includes('update') ? 'Data Updated Successful' : 'Add New Record Successful',
                         text: response.success,
                         timer: 2000,
                         showConfirmButton: false

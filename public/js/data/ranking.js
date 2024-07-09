@@ -1,8 +1,8 @@
 $(document).ready(function() {
     var table = $('#rankingAset').DataTable({
         dom: `<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center m-1 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between m-1 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>`,
-        order: [[2, 'desc']],
-        displayLength: 5,
+        order: [[3, 'desc']],
+        displayLength: 7,
         lengthMenu: [5, 7, 10, 25],
         buttons: [
             {

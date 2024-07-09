@@ -25,13 +25,16 @@
                                             <tr>
                                                 <th>Ranking</th>
                                                 <th>Aset</th>
+                                                <th>Kode</th>
                                                 <th>Nilai Preferensi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php $rank = 1; @endphp
                                             @foreach($rankedAssets as $index => $rankedAsset)
                                                 <tr>
-                                                    <td>{{ $index + 1 }}</td>
+                                                    <td>{{ $rank++ }}</td>
+                                                    <td>A{{ $index + 1 }}</td>
                                                     <td>{{ $rankedAsset['asset']->name }}</td>
                                                     <td>{{ $rankedAsset['preference'] }}</td>
                                                 </tr>

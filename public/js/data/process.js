@@ -15,11 +15,11 @@ $(document).ready(function() {
         $(`div.${label}-label`).html(`<h3 class="mb-0">${label.replace(/([A-Z])/g, ' $1').trim()}</h3>`);
     }
 
-    initializeDataTable('#matriksKeputusan', 'matriksKeputusan');
-    initializeDataTable('#matriksNormalisasi', 'matriksNormalisasi');
-    initializeDataTable('#matriksTerbobot', 'matriksTerbobot');
-    initializeDataTable('#solusiIdeal', 'solusiIdeal');
-    initializeDataTable('#jarakSolusiIdeal', 'jarakSolusiIdeal');
-    initializeDataTable('#nilaiPreferensi', 'nilaiPreferensi');
-    initializeDataTable('#rankingAset', 'rankingAset');
+    initializeDataTable('#matriksKeputusan', 'MatriksKeputusan');
+    initializeDataTable('#matriksNormalisasi', 'MatriksNormalisasi');
+    initializeDataTable('#matriksTerbobot', 'MatriksTerbobot');
+    initializeDataTable('#solusiIdeal', 'SolusiIdeal');
+    initializeDataTable('#jarakSolusiIdeal', 'JarakSolusiIdeal');
+    initializeDataTable('#nilaiPreferensi', 'NilaiPreferensi');
+    initializeDataTable('#rankingAset', 'RankingAset');
 });
