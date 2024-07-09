@@ -3,6 +3,12 @@ $(document).ready(function() {
 
     var columns = [
         { data: "name" },
+        { 
+            data: "id",
+            render: function(data, type, full, meta) {
+                return "A" + data; // Menambahkan prefix "A" pada id
+            }
+        },
     ];
 
     criteria.forEach(function(item) {
