@@ -20,16 +20,18 @@
                         <div class="card">
                             <div class="card-datatable">
                                 <div class="table-responsive">
-                                    <table id="rankingAset" class="table table-bordered table-responsive">
+                                    <table id="rankingAset" class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Nama Aset</th>
+                                                <th>Ranking</th>
+                                                <th>Aset</th>
                                                 <th>Nilai Preferensi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($rankedAssets as $rankedAsset)
+                                            @foreach($rankedAssets as $index => $rankedAsset)
                                                 <tr>
+                                                    <td>{{ $index + 1 }}</td>
                                                     <td>{{ $rankedAsset['asset']->name }}</td>
                                                     <td>{{ $rankedAsset['preference'] }}</td>
                                                 </tr>
@@ -49,6 +51,10 @@
 
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
+
+    @push('data')
+        <script src="{{ asset('/js/data/ranking.js') }}"></script>
+    @endpush
 
     <x-footer></x-footer>
 </x-layout-dashboard>
