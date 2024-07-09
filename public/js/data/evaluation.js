@@ -16,9 +16,19 @@ $(document).ready(function() {
                 title: 'Actions',
                 orderable: false,
                 render: function(data, type, full, meta) {
-                    return (
-                        '<button type="button" class="btn btn-primary input-nilai" data-bs-toggle="modal" data-bs-target="#ModalFormEvaluation" data-id="' + full['id'] + '">Input Nilai</button>'
-                    );
+                    if (full['is_evaluated']) {
+                        return (
+                            '<a href="javascript:;" class="edit-nilai badge badge-light-success" data-bs-toggle="modal" data-bs-target="#ModalFormEvaluation" data-id="' + full['id'] + '">' +
+                                feather.icons['edit'].toSvg({ class: 'font-small-4' }) +
+                            ' Edit</a>'
+                        );
+                    } else {
+                        return (
+                            '<a href="javascript:;" class="input-nilai badge badge-light-primary" data-bs-toggle="modal" data-bs-target="#ModalFormEvaluation" data-id="' + full['id'] + '">' +
+                                feather.icons['plus-square'].toSvg({ class: 'font-small-4' }) +
+                            ' Input</a>'
+                        );
+                    }
                 }
             }
         ],

@@ -15,7 +15,10 @@ class EvaluationController extends Controller
     }
 
     function dataTable() {
-        $data = Asset::latest()->get();
+        $data = Asset::latest()->get()->map(function ($item) {
+            $item->is_evaluated = Evaluation::where('asset_id', $item->id)->exists();
+            return $item;
+        });
         return response()->json(['data' => $data]);
     }
 
