@@ -25,6 +25,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Aset</th>
+                                                <th>Kode</th>
                                                 @foreach($criteria as $criterion)
                                                     <th>{{ $criterion->name }}</th>
                                                 @endforeach
@@ -34,6 +35,7 @@
                                             @foreach($decisionMatrix as $index => $row)
                                                 <tr>
                                                     <td>{{ $assets[$index]->name }}</td>
+                                                    <td>A{{ $assets[$index]->id }}</td>
                                                     @foreach($row as $value)
                                                         <td>{{ $value }}</td>
                                                     @endforeach

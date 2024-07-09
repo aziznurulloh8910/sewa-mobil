@@ -139,8 +139,11 @@ class EvaluationController extends Controller
         foreach ($decisionMatrix as $row) {
             $normalizedRow = [];
             foreach ($row as $index => $value) {
-                $columnSum = sqrt(array_sum(array_column($decisionMatrix, $index)));
-                $normalizedRow[] = $columnSum != 0 ? $value / $columnSum : 0;
+                $columnValues = array_column($decisionMatrix, $index);
+                $columnSum = sqrt(array_sum(array_map(function($val) {
+                    return pow($val, 2);
+                }, $columnValues)));
+                $normalizedRow[] = $columnSum != 0 ? $value / $columnSum : 0; 
             }
             $normalizedMatrix[] = $normalizedRow;
         }
@@ -183,7 +186,8 @@ class EvaluationController extends Controller
 
     private function calculatePreferences($distances) {
         return array_map(function ($distance) {
-            return $distance['negative'] / ($distance['positive'] + $distance['negative']);
+            $denominator = $distance['positive'] + $distance['negative'];
+            return $denominator != 0 ? $distance['negative'] / $denominator : 0;
         }, $distances);
     }
 
