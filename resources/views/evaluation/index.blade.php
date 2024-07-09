@@ -14,11 +14,13 @@
                         <div class="card">
                             <div class="card-datatable">
                                 <div class="table-responsive w-100">
-                                    <table id="dataEvaluation" class="table table-bordered table-responsive w-100">
+                                    <table id="dataEvaluation" class="table table-bordered table-responsive w-100" data-criteria="{{ json_encode($criteria) }}">
                                         <thead>
                                             <tr>
                                                 <th>Nama Alternatif</th>
-                                                <th>Kode</th>
+                                                @foreach($criteria as $item)
+                                                    <th>{{ $item->name }}</th>
+                                                @endforeach
                                                 <th>Action</th>
                                             </tr>
                                         </thead>

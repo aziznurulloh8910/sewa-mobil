@@ -11,4 +11,8 @@ class Evaluation extends Model
 
     protected $guarded = ['id'];
 
+    public function subCriteria() {
+        return $this->belongsTo(SubCriteria::class, 'sub_criteria_id');
+    }
+
 }

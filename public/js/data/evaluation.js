@@ -1,15 +1,30 @@
 $(document).ready(function() {
+    var criteria = $('#dataEvaluation').data('criteria');
+
+    var columns = [
+        { data: "name" },
+    ];
+
+    criteria.forEach(function(item) {
+        columns.push({ 
+            data: "criteria_" + item.id,
+            render: function(data, type, full, meta) {
+                return data !== null ? data : '-'; // Menampilkan skor subkriteria
+            }
+        });
+    });
+
+    columns.push({ data: " " });
 
     var table = $('#dataEvaluation').DataTable({
         ajax: {
             url: "http://localhost:8000/evaluation-data-table",
-            dataSrc: "data"
+            dataSrc: function(json) {
+                // console.log(json.data); // Log data untuk debugging
+                return json.data;
+            }
         },
-        columns: [
-            { data: "name" },
-            { data: "asset_code" },
-            { data: "" },
-        ],
+        columns: columns,
         columnDefs: [
             {
                 targets: -1,

@@ -15,10 +15,31 @@ class EvaluationController extends Controller
     }
 
     function dataTable() {
-        $data = Asset::latest()->get()->map(function ($item) {
+        $criteria = Criteria::all();
+        $data = Asset::latest()->get()->map(function ($item) use ($criteria) {
             $item->is_evaluated = Evaluation::where('asset_id', $item->id)->exists();
+            foreach ($criteria as $criterion) {
+                $evaluation = Evaluation::where('asset_id', $item->id)
+                                        ->where('criteria_id', $criterion->id)
+                                        ->with('subCriteria') // Pastikan relasi subCriteria di-load
+                                        ->first();
+                $item['criteria_' . $criterion->id] = $evaluation ? $evaluation->subCriteria->score : null; // Mengembalikan skor subkriteria
+            }
             return $item;
         });
+
+        // Pastikan setiap item memiliki semua kolom criteria_*
+        $data->each(function ($item) use ($criteria) {
+            foreach ($criteria as $criterion) {
+                if (!isset($item['criteria_' . $criterion->id])) {
+                    $item['criteria_' . $criterion->id] = null;
+                }
+            }
+        });
+
+        // Log data untuk debugging
+        \Log::info($data);
+
         return response()->json(['data' => $data]);
     }
 
@@ -32,11 +53,10 @@ class EvaluationController extends Controller
         // Proses penyimpanan data
         foreach ($validated['criteria'] as $criteriaId => $subCriteriaId) {
             // Simpan data ke database
-            Evaluation::create([
-                'asset_id' => $validated['asset_id'],
-                'criteria_id' => $criteriaId,
-                'sub_criteria_id' => $subCriteriaId,
-            ]);
+            Evaluation::updateOrCreate(
+                ['asset_id' => $validated['asset_id'], 'criteria_id' => $criteriaId],
+                ['sub_criteria_id' => $subCriteriaId]
+            );
         }
 
         return response()->json(['success' => 'Data penilaian berhasil disimpan.']);
