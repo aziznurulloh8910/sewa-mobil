@@ -54,6 +54,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/evaluation', [EvaluationController::class, 'index'])->name('evaluation');
     Route::get('/evaluation-data-table', [EvaluationController::class, 'dataTable']);
     Route::post('/evaluation/store', [EvaluationController::class, 'store'])->name('evaluation.store');
+    Route::get('/process', [EvaluationController::class, 'process'])->name('process');
+    Route::get('/ranking', [EvaluationController::class, 'ranking'])->name('ranking');
 
     // mengelola data history penghapusan aset
     Route::get('/deletion-history', function (){

@@ -43,9 +43,12 @@
                 <i data-feather="database"></i><span class="menu-title text-truncate" data-i18n="Data Sub Kriteria">Data Sub Kriteria</span></a>
             </li>
             <li class="nav-item {{ Request::is('evaluation') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('evaluation') }}">
+                <i data-feather="database"></i><span class="menu-title text-truncate" data-i18n="Data Perhitungan">Data Penilaian</span></a>
+            </li>
+            <li class="nav-item {{ Request::is('process') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('process') }}">
                 <i data-feather="bar-chart-2"></i><span class="menu-title text-truncate" data-i18n="Data Perhitungan">Data Perhitungan</span></a>
             </li>
-            <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('home') }}">
+            <li class="nav-item {{ Request::is('ranking') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('ranking') }}">
                 <i data-feather="list"></i><span class="menu-title text-truncate" data-i18n="Hasil Perankingan">Hasil Perankingan</span></a>
             </li>
 
