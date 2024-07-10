@@ -448,7 +448,7 @@ $(document).ready(function() {
                             <p><strong>Total Depresiasi</strong></p>
                         </div>
                         <div class="col-md-8">
-                            <p>: ${formatIDR(response.total_depreciation)}</p>
+                            <p>: ${response.total_depreciation}%</p>
                         </div>
                     </div>
                     <div class="row mx-1">

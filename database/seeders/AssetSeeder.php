@@ -80,15 +80,22 @@ class AssetSeeder extends Seeder
         ];
 
         foreach ($assets as $asset) {
+            $quantity = $this->faker->numberBetween(1, 100);
+            $recordedValue = $asset['acquisition_cost'] * $quantity;
+            $currentYear = date('Y');
+            $assetAge = $currentYear - $asset['procurement_year'];
+            $accumulatedDepreciation = ($assetAge * 0.5 * $asset['acquisition_cost']) / 100;
+            $totalDepreciation = $assetAge * 0.5;
+
             Asset::create(array_merge($asset, [
                 'user_id' => $this->faker->randomElement([1, 2]),
                 'registration_number' => $this->faker->unique()->numberBetween(1000, 9999),
                 'location' => $this->faker->city,
                 'brand_type' => $this->faker->company,
-                'quantity' => $this->faker->numberBetween(1, 100),
-                'recorded_value' => $this->faker->numberBetween(100000, 100000000),
-                'accumulated_depreciation' => $this->faker->numberBetween(100000, 100000000),
-                'total_depreciation' => $this->faker->numberBetween(1, 100),
+                'quantity' => $quantity,
+                'recorded_value' => $recordedValue,
+                'accumulated_depreciation' => $accumulatedDepreciation,
+                'total_depreciation' => $totalDepreciation,
                 'description' => $this->faker->sentence,
             ]));
         }

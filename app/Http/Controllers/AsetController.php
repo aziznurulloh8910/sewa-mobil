@@ -25,7 +25,7 @@ class AsetController extends Controller
             'registration_number' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'brand_type' => 'required|string|max:255',
-            'procurement_year' => 'required|integer',
+            'procurement_year' => 'required|integer|digits:4',
             'quantity' => 'required|integer',
             'acquisition_cost' => 'required|numeric',
             'condition' => 'required|integer',
@@ -33,8 +33,10 @@ class AsetController extends Controller
         ]);
 
         $validated['recorded_value'] = $request->acquisition_cost * $request->quantity;
-        $validated['accumulated_depreciation'] = $request->procurement_year;
-        $validated['total_depreciation'] = $validated['accumulated_depreciation'];
+        $currentYear = date('Y');
+        $assetAge = $currentYear - $request->procurement_year;
+        $validated['total_depreciation'] = $assetAge * 0.5;
+        $validated['accumulated_depreciation'] = ($validated['total_depreciation'] * $request->acquisition_cost) / 100;
         $validated['user_id'] = Auth::id();
 
         Asset::create($validated);
@@ -58,7 +60,7 @@ class AsetController extends Controller
             'registration_number' => 'required|integer',
             'location' => 'required|string|max:255',
             'brand_type' => 'required|string|max:255',
-            'procurement_year' => 'required|integer',
+            'procurement_year' => 'required|integer|digits:4',
             'quantity' => 'required|integer',
             'acquisition_cost' => 'required|integer',
             'condition' => 'required|integer',
@@ -66,8 +68,10 @@ class AsetController extends Controller
         ]);
 
         $validated['recorded_value'] = $request->acquisition_cost * $request->quantity;
-        $validated['accumulated_depreciation'] = $request->procurement_year;
-        $validated['total_depreciation'] = $validated['accumulated_depreciation'];
+        $currentYear = date('Y');
+        $assetAge = $currentYear - $request->procurement_year;
+        $validated['total_depreciation'] = $assetAge * 0.5;
+        $validated['accumulated_depreciation'] = ($validated['total_depreciation'] * $request->acquisition_cost) / 100;
 
         $asset->update($validated);
 
