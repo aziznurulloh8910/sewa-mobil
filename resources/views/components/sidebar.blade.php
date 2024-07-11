@@ -52,7 +52,6 @@
                 <i data-feather="list"></i><span class="menu-title text-truncate" data-i18n="Hasil Perankingan">Hasil Perankingan</span></a>
             </li>
 
-
             @if(auth()->user()->role == 1)
                 <li class=" navigation-header"><span data-i18n="Data User">Data User</span>
                     <i data-feather="more-horizontal"></i>

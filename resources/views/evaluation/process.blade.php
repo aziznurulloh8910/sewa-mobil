@@ -24,8 +24,8 @@
                                     <table id="matriksKeputusan" class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Aset</th>
                                                 <th>Kode</th>
+                                                <th>Aset</th>
                                                 @foreach($criteria as $criterion)
                                                     <th>{{ $criterion->name }}</th>
                                                 @endforeach
@@ -34,8 +34,8 @@
                                         <tbody>
                                             @foreach($decisionMatrix as $index => $row)
                                                 <tr>
-                                                    <td>{{ $assets[$index]->name }}</td>
                                                     <td>A{{ $assets[$index]->id }}</td>
+                                                    <td>{{ $assets[$index]->name }}</td>
                                                     @foreach($row as $value)
                                                         <td>{{ $value }}</td>
                                                     @endforeach
@@ -56,14 +56,14 @@
                                             <tr>
                                                 <th>Aset</th>
                                                 @foreach($criteria as $criterion)
-                                                    <th>{{ $criterion->name }}</th>
+                                                    <th>{{ $criterion->criteria_code }}</th>
                                                 @endforeach
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($normalizedMatrix as $index => $row)
                                                 <tr>
-                                                    <td>{{ $assets[$index]->name }}</td>
+                                                    <td>A{{ $assets[$index]->id }}</td>
                                                     @foreach($row as $value)
                                                         <td>{{ $value }}</td>
                                                     @endforeach
@@ -84,14 +84,14 @@
                                             <tr>
                                                 <th>Aset</th>
                                                 @foreach($criteria as $criterion)
-                                                    <th>{{ $criterion->name }}</th>
+                                                    <th>{{ $criterion->criteria_code }}</th>
                                                 @endforeach
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($weightedMatrix as $index => $row)
                                                 <tr>
-                                                    <td>{{ $assets[$index]->name }}</td>
+                                                    <td>A{{ $assets[$index]->id }}</td>
                                                     @foreach($row as $value)
                                                         <td>{{ $value }}</td>
                                                     @endforeach
@@ -168,6 +168,7 @@
                                     <table id="nilaiPreferensi" class="table table-bordered">
                                         <thead>
                                             <tr>
+                                                <th>Kode</th>
                                                 <th>Aset</th>
                                                 <th>Nilai Preferensi</th>
                                             </tr>
@@ -175,6 +176,7 @@
                                         <tbody>
                                             @foreach($preferences as $index => $preference)
                                                 <tr>
+                                                    <td>A{{ $assets[$index]->id }}</td>
                                                     <td>{{ $assets[$index]->name }}</td>
                                                     <td>{{ $preference }}</td>
                                                 </tr>
@@ -203,7 +205,7 @@
                                             @foreach($rankedAssets as $index => $rankedAsset)
                                                 <tr>
                                                     <td>{{ $rank++ }}</td>
-                                                    <td>A{{ $index + 1 }}</td>
+                                                    <td>A{{ $rankedAsset['asset']->id }}</td>
                                                     <td>{{ $rankedAsset['asset']->name }}</td>
                                                     <td>{{ $rankedAsset['preference'] }}</td>
                                                 </tr>

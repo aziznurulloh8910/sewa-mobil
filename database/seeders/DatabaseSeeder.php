@@ -22,5 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CriteriaSeeder::class);
         
         $this->call(EvaluationSeeder::class);
+
+        // \App\Models\Asset::factory(10)->create();
     }
 }

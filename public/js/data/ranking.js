@@ -81,5 +81,5 @@ $(document).ready(function() {
         }
     });
 
-    $('div.head-label').html('<h3 class="mb-0">Rekomendasi Pengadaan Aset</h3>');
+    $('div.head-label').html('<h3 class="mb-0">Hasil Perankingan Aset</h3>');
 });

@@ -24,8 +24,8 @@
                                         <thead>
                                             <tr>
                                                 <th>Ranking</th>
-                                                <th>Aset</th>
                                                 <th>Kode</th>
+                                                <th>Aset</th>
                                                 <th>Nilai Preferensi</th>
                                             </tr>
                                         </thead>
