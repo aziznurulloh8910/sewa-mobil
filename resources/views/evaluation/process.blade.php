@@ -112,7 +112,7 @@
                                             <tr>
                                                 <th></th>
                                                 @foreach($criteria as $criterion)
-                                                    <th>{{ $criterion->name }}</th>
+                                                    <th>{{ $criterion->criteria_code }}</th>
                                                 @endforeach
                                             </tr>
                                         </thead>

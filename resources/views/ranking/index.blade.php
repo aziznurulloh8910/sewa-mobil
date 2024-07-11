@@ -34,7 +34,7 @@
                                             @foreach($rankedAssets as $index => $rankedAsset)
                                                 <tr>
                                                     <td>{{ $rank++ }}</td>
-                                                    <td>A{{ $index + 1 }}</td>
+                                                    <td>A{{ $rankedAsset['asset']->id }}</td>
                                                     <td>{{ $rankedAsset['asset']->name }}</td>
                                                     <td>{{ $rankedAsset['preference'] }}</td>
                                                 </tr>
