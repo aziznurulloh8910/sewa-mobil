@@ -82,7 +82,7 @@ class EvaluationController extends Controller
         $decisionMatrix = $this->createDecisionMatrix($assets, $criteria, $evaluations);
         $normalizedMatrix = $this->normalizeMatrix($decisionMatrix);
         $weightedMatrix = $this->weightMatrix($normalizedMatrix, $criteria);
-        $idealSolutions = $this->calculateIdealSolutions($weightedMatrix);
+        $idealSolutions = $this->calculateIdealSolutions($weightedMatrix, $criteria);
         $distances = $this->calculateDistances($weightedMatrix, $idealSolutions);
         $preferences = $this->calculatePreferences($distances);
 
@@ -99,7 +99,7 @@ class EvaluationController extends Controller
         $decisionMatrix = $this->createDecisionMatrix($assets, $criteria, $evaluations);
         $normalizedMatrix = $this->normalizeMatrix($decisionMatrix);
         $weightedMatrix = $this->weightMatrix($normalizedMatrix, $criteria);
-        $idealSolutions = $this->calculateIdealSolutions($weightedMatrix);
+        $idealSolutions = $this->calculateIdealSolutions($weightedMatrix, $criteria);
         $distances = $this->calculateDistances($weightedMatrix, $idealSolutions);
         $preferences = $this->calculatePreferences($distances);
 
@@ -143,7 +143,7 @@ class EvaluationController extends Controller
                 $columnSum = sqrt(array_sum(array_map(function($val) {
                     return pow($val, 2);
                 }, $columnValues)));
-                $normalizedRow[] = $columnSum != 0 ? $value / $columnSum : 0; 
+                $normalizedRow[] = $columnSum != 0 ? round($value / $columnSum, 3) : 0;
             }
             $normalizedMatrix[] = $normalizedRow;
         }
@@ -165,17 +165,31 @@ class EvaluationController extends Controller
         foreach ($normalizedMatrix as $row) {
             $weightedRow = [];
             foreach ($row as $index => $value) {
-                $weightedRow[] = $value * $weights[$index];
+                $weightedRow[] = round($value * $weights[$index], 3);
             }
             $weightedMatrix[] = $weightedRow;
         }
         return $weightedMatrix;
     }
 
-    private function calculateIdealSolutions($weightedMatrix) {
+    private function calculateIdealSolutions($weightedMatrix, $criteria) {
+        $idealPositive = [];
+        $idealNegative = [];
+
+        foreach ($criteria as $index => $criterion) {
+            $columnValues = array_column($weightedMatrix, $index);
+            if ($criterion->attribute == 'benefit') {
+                $idealPositive[] = max($columnValues);
+                $idealNegative[] = min($columnValues);
+            } else if ($criterion->attribute == 'cost') {
+                $idealPositive[] = min($columnValues);
+                $idealNegative[] = max($columnValues);
+            }
+        }
+
         return [
-            'positive' => array_map('max', array_map(null, ...$weightedMatrix)),
-            'negative' => array_map('min', array_map(null, ...$weightedMatrix))
+            'positive' => $idealPositive,
+            'negative' => $idealNegative
         ];
     }
 
@@ -188,7 +202,10 @@ class EvaluationController extends Controller
             $negativeDistance = sqrt(array_sum(array_map(function ($value, $ideal) {
                 return pow($value - $ideal, 2);
             }, $row, $idealSolutions['negative'])));
-            $distances[] = ['positive' => $positiveDistance, 'negative' => $negativeDistance];
+            $distances[] = [
+                'positive' => round($positiveDistance, 3),
+                'negative' => round($negativeDistance, 3) 
+            ];
         }
         return $distances;
     }
@@ -196,13 +213,13 @@ class EvaluationController extends Controller
     private function calculatePreferences($distances) {
         return array_map(function ($distance) {
             $denominator = $distance['positive'] + $distance['negative'];
-            return $denominator != 0 ? $distance['negative'] / $denominator : 0;
+            return $denominator != 0 ? round($distance['negative'] / $denominator, 3) : 0;
         }, $distances);
     }
 
     private function rankAssets($assets, $preferences) {
         return $assets->map(function ($asset, $index) use ($preferences) {
-            return ['asset' => $asset, 'preference' => $preferences[$index]];
+            return ['asset' => $asset, 'preference' => round($preferences[$index], 3)];
         })->sortByDesc('preference');
     }
 }

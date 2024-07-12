@@ -27,7 +27,8 @@ $(document).ready(function() {
     }
 
     function initializeDataTable(selector, label) {
-        let exportColumns = [0, 1, 2, 3, 4]; // Default columns
+        let exportColumns = [0, 1, 2, 3, 4];
+        let order = [[0, 'asc']]; 
 
         // Menyesuaikan jumlah kolom berdasarkan selector
         if (selector === '#matriksKeputusan') {
@@ -36,11 +37,13 @@ $(document).ready(function() {
             exportColumns = [0, 1, 2];
         } else if (selector === '#rankingAset') {
             exportColumns = [0, 1, 2, 3];
+        } else if (selector === '#solusiIdeal') {
+            order = [[0, 'desc']]; 
         }
 
         $(selector).DataTable({
             dom: `<"card-header border-bottom p-1"<"head-label ${label}-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center m-1 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between m-1 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>`,
-            order: [[0, 'asc']],
+            order: order,
             columnDefs: [
                 { type: 'natural', targets: 0 } 
             ],

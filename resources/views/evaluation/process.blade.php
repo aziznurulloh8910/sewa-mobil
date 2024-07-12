@@ -142,7 +142,7 @@
                                     <table id="jarakSolusiIdeal" class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Aset</th>
+                                                <th>Kode</th>
                                                 <th>Jarak Positif</th>
                                                 <th>Jarak Negatif</th>
                                             </tr>
@@ -150,7 +150,7 @@
                                         <tbody>
                                             @foreach($distances as $index => $distance)
                                                 <tr>
-                                                    <td>{{ $assets[$index]->name }}</td>
+                                                    <td>A{{ $assets[$index]->id }}</td>
                                                     <td>{{ $distance['positive'] }}</td>
                                                     <td>{{ $distance['negative'] }}</td>
                                                 </tr>
