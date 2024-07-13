@@ -12,12 +12,79 @@
     <div class="app-content content ">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
-        <div class="content-wrapper container-xxl p-0">
-            <div class="content-header row">
-                <div class="content-header-left col-md-9 col-12 mb-2">
-                    <h2>History Penghapusan Aset</h2>
+        <div class="content-body">
+
+            <!-- Basic table -->
+            <section id="basic-datatable">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-datatable">
+                                <div class="table-responsive">
+                                    <table id="dataHistory" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>User</th>
+                                                <th>Asset</th>
+                                                <th>Tanggal Penghapusan</th>
+                                                <th>Nilai Sisa</th>
+                                                <th>Deskripsi</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                <!-- Modal -->
+                <div class="modal fade text-start" id="ModalFormHistory" tabindex="-1" aria-labelledby="ModalFormHistoryLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="ModalFormHistoryLabel">Form History Penghapusan</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form id="historyForm" action="{{ route('deletion-history.store') }}" method="POST">
+                                @csrf
+                                <input type="hidden" id="_method" name="_method" value="POST">
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <label>Asset ID</label>
+                                        <div class="mb-1">
+                                            <select name="asset_id" id="asset_id" class="form-control select2">
+                                                <option value="" disabled selected>Pilih Asset ID</option>
+                                                @foreach(App\Models\Asset::all() as $asset)
+                                                    <option value="{{ $asset->id }}">{{ $asset->id }} - {{ $asset->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <label>Tanggal Penghapusan</label>
+                                        <div class="mb-1">
+                                            <input type="date" name="date_of_deletion" id="date_of_deletion" class="form-control" />
+                                        </div>
+                                        <label>Nilai Sisa</label>
+                                        <div class="mb-1">
+                                            <input type="text" placeholder="Nilai Sisa" name="residual_value" id="residual_value" class="form-control" />
+                                        </div>
+                                        <label>Deskripsi</label>
+                                        <div class="mb-1">
+                                            <input type="text" placeholder="Deskripsi" name="description" id="description" class="form-control" />
+                                        </div>                                        
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn btn-primary data-submit">Simpan</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Basic Tables end -->
         </div>
     </div>
     <!-- END: Content-->
@@ -27,4 +94,7 @@
 
     <x-footer></x-footer>
 
+    @push('data')
+        <script src="{{ asset('/js/data/history.js') }}"></script>
+    @endpush
 </x-layout-dashboard>

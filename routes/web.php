@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CriteriaController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\SubCriteriaController;
+use App\Http\Controllers\DeletionHistoryController;
 use App\Http\Middleware\CheckSuperAdmin;
 
 // Redirect to login page
@@ -77,9 +78,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/ranking', [EvaluationController::class, 'ranking'])->middleware('CheckSuperAdmin')->name('ranking');
 
     // History routes
-    Route::get('/deletion-history', function () {
-        return view('history.index');
-    })->name('deletion-history');
+    Route::prefix('deletion-history')->group(function () {
+        Route::get('/', [DeletionHistoryController::class, 'index'])->name('deletion-history');
+        Route::get('/data-table', [DeletionHistoryController::class, 'dataTable'])->name('deletion-history.data-table');
+        Route::post('/store', [DeletionHistoryController::class, 'store'])->name('deletion-history.store');
+        Route::get('/{id}', [DeletionHistoryController::class, 'show'])->name('deletion-history.show');
+        Route::put('/update/{id}', [DeletionHistoryController::class, 'update'])->name('deletion-history.update');
+        Route::delete('/delete/{id}', [DeletionHistoryController::class, 'destroy'])->name('deletion-history.delete');
+    });
 
     Route::get('/asset-procurement', function () {
         return view('procurement.index');
