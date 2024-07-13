@@ -16,13 +16,32 @@
             <div class="content-body">
                 <div class="row">
                     <div class="col-12">
-                        <div class="alert alert-primary" role="alert">
+                        <div class="alert alert-primary alert-dismissible fade show" role="alert">
                             <div class="alert-body">
                                 <strong>Info:</strong> Hello {{ auth()->user()->name }}, Selamat datang di Aplikasi Inventarisasi Aset SMA 27 Bandung 🙋🏻‍♂️🙋🏻‍♀️
                             </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </div>
                 </div>
+
+                <!-- Tambahkan elemen di sini -->
+                <div class="row">
+                    <div class="col-12">
+                        @if(session('error'))
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: '{{ session('error') }}',
+                                    });
+                                });
+                            </script>
+                        @endif
+                    </div>
+                </div>
+                <!-- Akhir elemen yang ditambahkan -->
 
                 <!-- Tambahkan elemen di sini -->
                 <div class="row match-height">
@@ -31,13 +50,8 @@
                         <div class="card card-congratulation-medal">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-8">
-                                        <h5>Hallo 🎉 {{ auth()->user()->name }}</h5>
-                                        <p class="card-text font-small-3">Berikut adalah rekomendasi pengajuan aset, yang dihitung menggunakan metode TOPSIS</p>
-                                    </div>
-                                    <div class="col-4">
-                                        <img src="{{ asset('app-assets/images/illustration/badge.svg') }}" class="congratulation-medal" alt="Medal Pic" />
-                                    </div>
+                                    <h5>Hallo 🎉 {{ auth()->user()->name }}</h5>
+                                    <p class="card-text font-small-3">Berikut adalah rekomendasi pengajuan aset, yang dihitung menggunakan metode TOPSIS</p>
                                 </div>
                                 <!-- <button type="button" href="{{ route('process') }}" class="mt-2 btn btn-xs btn-primary">View TOPSIS</button> -->
                                 <a class="mt-2 btn btn-xs btn-primary" href="{{ route('process') }}">View TOPSIS</a>

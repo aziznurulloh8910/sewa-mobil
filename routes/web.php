@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CriteriaController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\SubCriteriaController;
+use App\Http\Middleware\CheckSuperAdmin;
 
 // Redirect to login page
 Route::get('/', function () {
@@ -45,7 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     // Criteria management routes
-    Route::prefix('criteria')->group(function () {
+    Route::prefix('criteria')->middleware('CheckSuperAdmin')->group(function () {
         Route::get('/', [CriteriaController::class, 'index'])->name('criteria');
         Route::get('/data-table', [CriteriaController::class, 'dataTable']);
         Route::post('/store', [CriteriaController::class, 'store'])->name('criteria.store');
@@ -55,7 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     // Subcriteria management routes
-    Route::prefix('subcriteria')->group(function () {
+    Route::prefix('subcriteria')->middleware('CheckSuperAdmin')->group(function () {
         Route::get('/', [SubCriteriaController::class, 'index'])->name('subcriteria');
         Route::post('/store', [SubCriteriaController::class, 'store'])->name('subcriteria.store');
         Route::get('/{id}', [SubCriteriaController::class, 'show'])->name('subcriteria.show');
@@ -64,7 +65,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     // Evaluation routes
-    Route::prefix('evaluation')->group(function () {
+    Route::prefix('evaluation')->middleware('CheckSuperAdmin')->group(function () {
         Route::get('/', [EvaluationController::class, 'index'])->name('evaluation');
         Route::get('/data-table', [EvaluationController::class, 'dataTable']);
         Route::post('/store', [EvaluationController::class, 'store'])->name('evaluation.store');
@@ -72,8 +73,8 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     // Process and ranking routes
-    Route::get('/process', [EvaluationController::class, 'process'])->name('process');
-    Route::get('/ranking', [EvaluationController::class, 'ranking'])->name('ranking');
+    Route::get('/process', [EvaluationController::class, 'process'])->middleware('CheckSuperAdmin')->name('process');
+    Route::get('/ranking', [EvaluationController::class, 'ranking'])->middleware('CheckSuperAdmin')->name('ranking');
 
     // History routes
     Route::get('/deletion-history', function () {
@@ -85,7 +86,7 @@ Route::group(['middleware' => 'auth'], function () {
     })->name('asset-procurement');
 
     // User management routes
-    Route::prefix('users')->group(function () {
+    Route::prefix('users')->middleware('CheckSuperAdmin::class')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('users');
         Route::post('/create', [UserController::class, 'create'])->name('users.create');
         Route::get('/detail/{id}', [UserController::class, 'detail'])->name('users.detail');
