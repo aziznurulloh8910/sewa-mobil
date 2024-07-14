@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('deletion_histories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('asset_id');
+            $table->unsignedBigInteger('asset_id')->unique();;
             $table->timestamp('date_of_deletion');
             $table->double('residual_value');
             $table->string('description')->nullable();

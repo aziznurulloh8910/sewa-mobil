@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('maintenances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('asset_id')->constrained('assets')->onDelete('cascade');
+            $table->foreignId('asset_id')->constrained('assets')->onDelete('cascade')->unique();;
             $table->date('maintenance_date');
             $table->decimal('cost', 15, 2);
             $table->enum('status', ['planned', 'in progress', 'done']);

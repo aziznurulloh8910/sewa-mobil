@@ -22,7 +22,7 @@ class MaintenanceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'asset_id' => 'required',
+            'asset_id' => 'required|unique:maintenances,asset_id',
             'maintenance_date' => 'required|date',
             'cost' => 'required|numeric',
             'status' => 'required|string',
@@ -45,7 +45,7 @@ class MaintenanceController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'asset_id' => 'required',
+            'asset_id' => 'required|unique:maintenances,asset_id,' . $id,
             'maintenance_date' => 'required|date',
             'cost' => 'required|numeric',
             'status' => 'required|string',

@@ -12,8 +12,13 @@ class Asset extends Model
 
     protected $guarded = ['id'];
 
-    public function assets()
+    public function maintenance()
     {
-        return $this->hasMany(Asset::class);
+        return $this->hasOne(Maintenance::class);
+    }
+
+    public function deletionHistory()
+    {
+        return $this->hasOne(DeletionHistory::class);
     }
 }

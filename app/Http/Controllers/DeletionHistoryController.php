@@ -23,7 +23,7 @@ class DeletionHistoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'asset_id' => 'required',
+            'asset_id' => 'required|unique:deletion_histories,asset_id',
             'date_of_deletion' => 'required|date',
             'residual_value' => 'required|numeric',
             'description' => 'nullable|string',
@@ -46,7 +46,7 @@ class DeletionHistoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'asset_id' => 'required',
+            'asset_id' => 'required|unique:deletion_histories,asset_id,' . $id,
             'date_of_deletion' => 'required|date',
             'residual_value' => 'required|numeric',
             'description' => 'nullable|string',
