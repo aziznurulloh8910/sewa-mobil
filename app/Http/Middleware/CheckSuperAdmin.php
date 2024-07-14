@@ -36,7 +36,7 @@ class CheckSuperAdmin
      */
     private function isSuperAdmin(): bool
     {
-        return auth()->check() && auth()->user()->role == 'super_admin';
+        return auth()->check() && auth()->user()->role == 1;
     }
 
     /**
@@ -68,6 +68,6 @@ class CheckSuperAdmin
         ];
 
         $pageName = $pageNames[$request->path()] ?? $request->path();
-        return redirect('/home')->with('error', 'Anda tidak memiliki akses ke halaman ' . $pageName . '.');
+        return redirect('/home')->with('error', 'You do not have access to the ' . $pageName . ' page.');
     }
 }

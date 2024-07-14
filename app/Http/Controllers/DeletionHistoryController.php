@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DeletionHistory;
+use App\Models\Asset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,11 +11,12 @@ class DeletionHistoryController extends Controller
 {
     public function index()
     {
-        return view('history.index');
+        $data = Asset::all();
+        return view('history.index', compact('data'));
     }
 
     function dataTable() {
-        $data = DeletionHistory::latest()->get();
+        $data = DeletionHistory::with(['user', 'asset'])->latest()->get();
         return response()->json(['data' => $data]);
     }
 

@@ -57,8 +57,7 @@ $(document).ready(function() {
             dataSrc: "data"
         },
         columns: [
-            { data: "user_id" },
-            { data: "asset_id" },
+            { data: "asset.name" },
             { data: "date_of_deletion" },
             { data: "residual_value",
                 render: function(data) {

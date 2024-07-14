@@ -24,8 +24,7 @@
                                     <table id="dataHistory" class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>User</th>
-                                                <th>Asset</th>
+                                                <th>Nama Aset</th>
                                                 <th>Tanggal Penghapusan</th>
                                                 <th>Nilai Sisa</th>
                                                 <th>Deskripsi</th>
@@ -55,9 +54,9 @@
                                         <label>Asset ID</label>
                                         <div class="mb-1">
                                             <select name="asset_id" id="asset_id" class="form-control select2">
-                                                <option value="" disabled selected>Pilih Asset ID</option>
-                                                @foreach(App\Models\Asset::all() as $asset)
-                                                    <option value="{{ $asset->id }}">{{ $asset->id }} - {{ $asset->name }}</option>
+                                                <option value="" disabled selected>Pilih Aset</option>
+                                                @foreach($data as $asset)
+                                                    <option value="{{ $asset->id }}">{{ $asset->asset_code }} - {{ $asset->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -96,5 +95,24 @@
 
     @push('data')
         <script src="{{ asset('/js/data/history.js') }}"></script>
+        <!-- Tambahkan CSS dan JS Select2 -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <style>
+            .select2-container--default .select2-selection--single .select2-selection__arrow {
+                display: none;
+            }
+        </style>
+        <script>
+            $(document).ready(function() {
+                $('.select2').select2();
+            });
+
+            $('#ModalFormHistory').on('shown.bs.modal', function () {
+                $('#asset_id').select2({
+                    dropdownParent: $('#ModalFormHistory')
+                });
+            });
+        </script>
     @endpush
 </x-layout-dashboard>
