@@ -84,7 +84,8 @@ class AssetSeeder extends Seeder
             $recordedValue = $asset['acquisition_cost'] * $quantity;
             $currentYear = date('Y');
             $assetAge = $currentYear - $asset['procurement_year'];
-            $accumulatedDepreciation = ($assetAge * 0.5 * $asset['acquisition_cost']) / 100;
+            $depresiationValue = ($assetAge * 0.5 * $asset['acquisition_cost']) / 100;
+            $accumulatedDepreciation = $asset['acquisition_cost'] - $depresiationValue;
             $totalDepreciation = $assetAge * 0.5;
 
             Asset::create(array_merge($asset, [

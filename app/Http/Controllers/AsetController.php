@@ -36,7 +36,8 @@ class AsetController extends Controller
         $currentYear = date('Y');
         $assetAge = $currentYear - $request->procurement_year;
         $validated['total_depreciation'] = $assetAge * 0.5;
-        $validated['accumulated_depreciation'] = ($validated['total_depreciation'] * $request->acquisition_cost) / 100;
+        $residual = ($validated['total_depreciation'] * $request->acquisition_cost) / 100;
+        $validated['accumulated_depreciation'] = $request->acquisition_cost - $residual;
         $validated['user_id'] = Auth::id();
 
         Asset::create($validated);
@@ -71,7 +72,8 @@ class AsetController extends Controller
         $currentYear = date('Y');
         $assetAge = $currentYear - $request->procurement_year;
         $validated['total_depreciation'] = $assetAge * 0.5;
-        $validated['accumulated_depreciation'] = ($validated['total_depreciation'] * $request->acquisition_cost) / 100;
+        $depresiationValue = ($validated['total_depreciation'] * $request->acquisition_cost) / 100;
+        $validated['accumulated_depreciation'] = $request->acquisition_cost - $depresiationValue;
 
         $asset->update($validated);
 
