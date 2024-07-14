@@ -9,6 +9,7 @@ use App\Http\Controllers\CriteriaController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\SubCriteriaController;
 use App\Http\Controllers\DeletionHistoryController;
+use App\Http\Controllers\MaintenanceController;
 use App\Http\Middleware\CheckSuperAdmin;
 
 // Redirect to login page
@@ -114,4 +115,14 @@ Route::group(['middleware' => 'auth'], function () {
     // Routes for deleting and maintaining assets
     Route::delete('/assets/{id}', [EvaluationController::class, 'deleteAsset']);
     Route::post('/assets/maintain/{id}', [EvaluationController::class, 'maintainAsset']);
+
+    // Routes for maintenance
+    Route::prefix('maintenance')->group(function () {
+        Route::get('/', [MaintenanceController::class, 'index'])->name('maintenance');
+        Route::get('/data-table', [MaintenanceController::class, 'dataTable']);
+        Route::post('/store', [MaintenanceController::class, 'store'])->name('maintenance.store');
+        Route::get('/{id}', [MaintenanceController::class, 'show'])->name('maintenance.show');
+        Route::put('/update/{id}', [MaintenanceController::class, 'update'])->name('maintenance.update');
+        Route::delete('/delete/{id}', [MaintenanceController::class, 'destroy'])->name('maintenance.delete');
+    });
 });

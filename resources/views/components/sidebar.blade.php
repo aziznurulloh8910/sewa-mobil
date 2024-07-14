@@ -30,6 +30,9 @@
             <li class="nav-item {{ Request::is('asset-procurement') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('asset-procurement') }}">
                 <i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="Pengadaan Aset">Pengadaan Aset</span></a>
             </li>
+            <li class="nav-item {{ Request::is('maintenance') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('maintenance') }}">
+                <i data-feather="tool"></i><span class="menu-title text-truncate" data-i18n="Pemeliharaan Aset">Pemeliharaan Aset</span></a>
+            </li>
 
             <li class=" navigation-header">
                 <span data-i18n="Perhitungan TOPSIS">Perhitungan TOPSIS</span>
