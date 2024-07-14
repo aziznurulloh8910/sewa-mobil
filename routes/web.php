@@ -76,6 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Process and ranking routes
     Route::get('/process', [EvaluationController::class, 'process'])->middleware('CheckSuperAdmin')->name('process');
     Route::get('/ranking', [EvaluationController::class, 'ranking'])->middleware('CheckSuperAdmin')->name('ranking');
+    Route::get('/ranking/data-table', [EvaluationController::class, 'rankingDataTable'])->middleware('CheckSuperAdmin')->name('ranking.dataTable');
 
     // History routes
     Route::prefix('deletion-history')->group(function () {
@@ -109,4 +110,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Logout route
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // Routes for deleting and maintaining assets
+    Route::delete('/assets/{id}', [EvaluationController::class, 'deleteAsset']);
+    Route::post('/assets/maintain/{id}', [EvaluationController::class, 'maintainAsset']);
 });

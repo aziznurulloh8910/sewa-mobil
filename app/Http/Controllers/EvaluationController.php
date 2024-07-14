@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Asset;
 use App\Models\Criteria;
 use App\Models\Evaluation;
+use App\Models\DeletionHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EvaluationController extends Controller
 {
@@ -89,6 +91,33 @@ class EvaluationController extends Controller
         $rankedAssets = $this->rankAssets($assets, $preferences);
 
         return view('ranking.index', ['rankedAssets' => $rankedAssets]);
+    }
+
+    public function rankingDataTable() {
+        $criteria = Criteria::all();
+        $assets = Asset::all();
+        $evaluations = Evaluation::with('subCriteria')->get();
+
+        $decisionMatrix = $this->createDecisionMatrix($assets, $criteria, $evaluations);
+        $normalizedMatrix = $this->normalizeMatrix($decisionMatrix);
+        $weightedMatrix = $this->weightMatrix($normalizedMatrix, $criteria);
+        $idealSolutions = $this->calculateIdealSolutions($weightedMatrix, $criteria);
+        $distances = $this->calculateDistances($weightedMatrix, $idealSolutions);
+        $preferences = $this->calculatePreferences($distances);
+
+        $rankedAssets = $this->rankAssets($assets, $preferences);
+
+        $data = $rankedAssets->map(function ($item, $index) {
+            return [
+                'rank' => $index + 1,
+                'asset_code' => $item['asset']->asset_code,
+                'asset_name' => $item['asset']->name,
+                'preference_value' => $item['preference'],
+                'id' => $item['asset']->id
+            ];
+        });
+
+        return response()->json(['data' => $data]);
     }
 
     public function process() {
@@ -221,5 +250,32 @@ class EvaluationController extends Controller
         return $assets->map(function ($asset, $index) use ($preferences) {
             return ['asset' => $asset, 'preference' => round($preferences[$index], 3)];
         })->sortByDesc('preference');
+    }
+
+    public function deleteAsset($id) {
+        DB::transaction(function () use ($id) {
+            $asset = Asset::findOrFail($id);
+            DeletionHistory::create([
+                'user_id' => auth()->user()->id,
+                'asset_id' => $asset->id,
+                'residual_value' => $asset->accumulated_depreciation,
+                'description' => $asset->condition,
+                'date_of_deletion' => now(),
+            ]);
+            $asset->delete();
+        });
+
+        return response()->json(['success' => 'Asset deleted successfully.']);
+    }
+
+    public function maintainAsset($id) {
+        DB::transaction(function () use ($id) {
+            $asset = Asset::findOrFail($id);
+            // Simpan ke tabel maintainlist jika ada, untuk sekarang hanya tandai dengan status 'maintain'
+            $asset->description = 'maintain';
+            $asset->save();
+        });
+
+        return response()->json(['success' => 'Asset marked for maintenance.']);
     }
 }

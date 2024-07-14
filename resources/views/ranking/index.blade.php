@@ -27,19 +27,9 @@
                                                 <th>Kode</th>
                                                 <th>Aset</th>
                                                 <th>Nilai Preferensi</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            @php $rank = 1; @endphp
-                                            @foreach($rankedAssets as $index => $rankedAsset)
-                                                <tr>
-                                                    <td>{{ $rank++ }}</td>
-                                                    <td>A{{ $rankedAsset['asset']->id }}</td>
-                                                    <td>{{ $rankedAsset['asset']->name }}</td>
-                                                    <td>{{ $rankedAsset['preference'] }}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>

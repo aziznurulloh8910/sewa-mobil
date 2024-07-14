@@ -279,9 +279,9 @@ $(document).ready(function() {
             text: "The history record will be deleted!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: 'primary',
+            confirmButtonColor: 'danger',
             cancelButtonColor: 'secondary',
-            confirmButtonText: 'Ya, hapus!'
+            confirmButtonText: 'Yes, delete!'
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({

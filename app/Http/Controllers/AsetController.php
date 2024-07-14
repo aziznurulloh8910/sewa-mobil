@@ -90,7 +90,7 @@ class AsetController extends Controller
             'asset_id' => $asset->id,
             'date_of_deletion' => now(),
             'residual_value' => $asset->accumulated_depreciation,
-            'description' => $asset->description,
+            'description' => $asset->condition,
         ]);
 
         // Soft delete the asset

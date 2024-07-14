@@ -34,7 +34,7 @@ class DeletionHistoryController extends Controller
 
         DeletionHistory::create($data);
 
-        return response()->json(['success' => 'History Penghapusan Aset berhasil ditambahkan.']);
+        return response()->json(['success' => 'Asset Deletion History successfully added.']);
     }
 
     public function show($id)
@@ -58,7 +58,7 @@ class DeletionHistoryController extends Controller
 
         $history->update($data);
 
-        return response()->json(['success' => 'History Penghapusan Aset berhasil diperbarui.']);
+        return response()->json(['success' => 'Asset Deletion History successfully updated.']);
     }
 
     public function destroy($id)
@@ -66,6 +66,6 @@ class DeletionHistoryController extends Controller
         $history = DeletionHistory::findOrFail($id);
         $history->delete();
 
-        return response()->json(['success' => 'History Penghapusan Aset berhasil dihapus.']);
+        return response()->json(['success' => 'Asset Deletion History successfully deleted.']);
     }
 }
