@@ -37,7 +37,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="ModalFormEvaluationLabel">Form Data Penilaian</h4>
+                                <h4 class="modal-title" id="ModalFormEvaluationLabel">Form Data Penilaian <span class="assetNameAccord"> </span></h4>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <form id="evaluationForm" action="{{ route('evaluation.store') }}" method="POST">
@@ -45,6 +45,47 @@
                                 <input type="hidden" id="asset_id" name="asset_id" value="{{ old('asset_id') }}">
                                 <input type="hidden" id="evaluation_id" name="evaluation_id" value="{{ old('evaluation_id') }}">
                                 <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="accordion accordion-border mb-2" id="assetAccordion">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingAssetDetails">
+                                                        <button class="accordion-button collapsed bg-light-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAssetDetails" aria-expanded="false" aria-controls="collapseAssetDetails" style="font-size: small;">
+                                                            Lihat Detail Data "<span class="assetNameAccord"></span>"
+                                                        </button>
+                                                    </h2>
+                                                    <div id="collapseAssetDetails" class="accordion-collapse collapse" aria-labelledby="headingAssetDetails" data-bs-parent="#assetAccordion">
+                                                        <div class="accordion-body table-responsive">
+                                                            <table class="table table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Nama Aset</th>
+                                                                        <th>Harga</th>
+                                                                        <th>Quantity</th>
+                                                                        <th>Kondisi</th>
+                                                                        <th>Tahun Perolehan</th>
+                                                                        <th>Depresiasi</th>
+                                                                        <th>Nilai Residu</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="assetNameAccord"></td>
+                                                                        <td class="assetCostAccord"></td>
+                                                                        <td class="assetQuantityAccord"></td>
+                                                                        <td class="assetConditionAccord"></td>
+                                                                        <td class="assetYearAccord"></td>
+                                                                        <td class="assetDepreciationAccord"></td>
+                                                                        <td class="assetResidualAccord"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         @foreach($criteria as $item)
                                             <div class="col-md-6">

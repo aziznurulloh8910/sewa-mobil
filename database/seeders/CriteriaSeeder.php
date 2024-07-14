@@ -23,10 +23,10 @@ class CriteriaSeeder extends Seeder
             'weight' => 4
         ]);
         SubCriteria::insert([
-            ['criteria_id' => $kondisiAset->id, 'name' => 'Baik', 'score' => 4],
-            ['criteria_id' => $kondisiAset->id, 'name' => 'Rusak Ringan', 'score' => 3],
-            ['criteria_id' => $kondisiAset->id, 'name' => 'Rusak Berat', 'score' => 2],
-            ['criteria_id' => $kondisiAset->id, 'name' => 'Barang Tidak Ada', 'score' => 1],
+            ['criteria_id' => $kondisiAset->id, 'name' => 'Baik', 'score' => 1],
+            ['criteria_id' => $kondisiAset->id, 'name' => 'Rusak Ringan', 'score' => 2],
+            ['criteria_id' => $kondisiAset->id, 'name' => 'Rusak Berat', 'score' => 3],
+            ['criteria_id' => $kondisiAset->id, 'name' => 'Barang Tidak Ada', 'score' => 4],
         ]);
 
         // Kriteria Usia Aset

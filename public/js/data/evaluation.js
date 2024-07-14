@@ -128,20 +128,7 @@ $(document).ready(function() {
     });
 
     // Show modal and populate form fields
-    $('#dataEvaluation').on('click', '.input-nilai', function() {
-        var id = $(this).data('id');
-        $('#asset_id').val(id);
-
-        $('#ModalFormEvaluation').modal('show');
-    });
-
-    // Clear form when modal is closed
-    $('#ModalFormEvaluation').on('hidden.bs.modal', function () {
-        clearForm();
-    });
-
-    // Show modal and populate form fields for edit
-    $('#dataEvaluation').on('click', '.edit-nilai', function() {
+    $('#dataEvaluation').on('click', '.input-nilai, .edit-nilai', function() {
         var id = $(this).data('id');
         $('#asset_id').val(id);
 
@@ -149,8 +136,38 @@ $(document).ready(function() {
             url: `${baseUrl}/evaluation/${id}/edit`,
             method: 'GET',
             success: function(response) {
+                $('.assetNameAccord').text(response.asset.name);
+                $('.assetCostAccord').text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(response.asset.acquisition_cost));
+                $('.assetQuantityAccord').text(response.asset.quantity);
+
+                let conditionText = '';
+                let conditionBadge = '';
+                switch (response.asset.condition) {
+                    case 4:
+                        conditionText = 'Baik';
+                        conditionBadge = 'badge-light-success';
+                        break;
+                    case 3:
+                        conditionText = 'Rusak Ringan';
+                        conditionBadge = 'badge-light-warning';
+                        break;
+                    case 2:
+                        conditionText = 'Rusak Berat';
+                        conditionBadge = 'badge-light-secondary';
+                        break;
+                    case 1:
+                        conditionText = 'Tidak Ada';
+                        conditionBadge = 'badge-light-danger';
+                        break;
+                }
+                $('.assetConditionAccord').html(`<span class="badge ${conditionBadge}">${conditionText}</span>`);
+
+                $('.assetYearAccord').text(response.asset.procurement_year);
+                $('.assetDepreciationAccord').html(`<span style="color: red;">${response.asset.total_depreciation}%</span>`);
+                $('.assetResidualAccord').text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(response.asset.accumulated_depreciation));
+
                 $('#asset_id').val(response.asset.id);
-                $('#evaluation_id').val(response.asset.id); // Assuming evaluation_id is same as asset_id
+                $('#evaluation_id').val(response.asset.id); 
 
                 response.criteria.forEach(function(item) {
                     var evaluation = response.evaluations[item.id];
@@ -162,5 +179,10 @@ $(document).ready(function() {
                 $('#ModalFormEvaluation').modal('show');
             }
         });
+    });
+
+    // Clear form when modal is closed
+    $('#ModalFormEvaluation').on('hidden.bs.modal', function () {
+        clearForm();
     });
 });
