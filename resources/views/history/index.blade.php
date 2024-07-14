@@ -56,7 +56,7 @@
                                             <select name="asset_id" id="asset_id" class="form-control select2">
                                                 <option value="" disabled selected>Pilih Aset</option>
                                                 @foreach($data as $asset)
-                                                    <option value="{{ $asset->id }}">{{ $asset->asset_code }} - {{ $asset->name }}</option>
+                                                    <option value="{{ $asset->id }}" data-residual="{{ $asset->accumulated_depreciation }}" data-description="{{ $asset->condition }}">{{ $asset->asset_code }} - {{ $asset->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

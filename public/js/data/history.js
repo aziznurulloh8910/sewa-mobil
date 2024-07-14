@@ -199,7 +199,7 @@ $(document).ready(function() {
 
     var residualValueInput = document.getElementById('residual_value');
 
-    residualValueInput.addEventListener('input', function(e) {
+    residualValueInput.addEventListener('focus', function(e) {
         var value = e.target.value.replace(/[^,\d]/g, '');
         e.target.value = formatToIDR(value);
     });
@@ -368,6 +368,20 @@ $(document).ready(function() {
                 });
             }
         });
+    });
+
+    $('#asset_id').select2({
+        dropdownParent: $('#ModalFormHistory')
+    });
+
+    $('#asset_id').change(function() {
+        var selectedOption = $(this).find('option:selected');
+        var residualValue = selectedOption.data('residual');
+        var description = selectedOption.data('description');
+
+        // Format nilai sisa ke IDR
+        $('#residual_value').val(formatToIDR(residualValue));
+        $('#description').val(description);
     });
 
 });
