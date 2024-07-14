@@ -51,7 +51,7 @@
                                 <input type="hidden" id="_method" name="_method" value="POST">
                                 <div class="modal-body">
                                     <div class="row">
-                                        <label>Asset ID</label>
+                                        <label>Asset</label>
                                         <div class="mb-1">
                                             <select name="asset_id" id="asset_id" class="form-control select2">
                                                 <option value="" disabled selected>Pilih Aset</option>
@@ -62,7 +62,7 @@
                                         </div>
                                         <label>Tanggal Penghapusan</label>
                                         <div class="mb-1">
-                                            <input type="date" name="date_of_deletion" id="date_of_deletion" class="form-control" />
+                                            <input type="date" name="date_of_deletion" id="date_of_deletion" class="form-control" value="{{ date('Y-m-d') }}" />
                                         </div>
                                         <label>Nilai Sisa</label>
                                         <div class="mb-1">

@@ -64,7 +64,14 @@ $(document).ready(function() {
                     return formatIDR(data);
                 }
             },
-            { data: "description" },
+            { data: "description",
+                render: function(data) {
+                    return data == 1 ? 'Tidak Ada' :
+                           data == 2 ? 'Rusak Berat' :
+                           data == 3 ? 'Rusak Ringan' :
+                           data == 4 ? 'Baik' : data;
+                }
+            },
             { data: "" },
         ],
         columnDefs: [
@@ -349,7 +356,12 @@ $(document).ready(function() {
                             <p><strong>Deskripsi</strong></p>
                         </div>
                         <div class="col-md-8">
-                            <p>: ${response.description}</p>
+                            <p>:
+                                ${response.description == 1 ? 'Tidak Ada' :
+                                  response.description == 2 ? 'Rusak Berat' :
+                                  response.description == 3 ? 'Rusak Ringan' :
+                                  response.description == 4 ? 'Baik' : response.description}
+                            </p>
                         </div>
                     </div>
                 `;
@@ -381,7 +393,11 @@ $(document).ready(function() {
 
         // Format nilai sisa ke IDR
         $('#residual_value').val(formatToIDR(residualValue));
-        $('#description').val(description);
+        $('#description').val(
+            description == 1 ? 'Tidak Ada' :
+            description == 2 ? 'Rusak Berat' :
+            description == 3 ? 'Rusak Ringan' :
+            description == 4 ? 'Baik' : description
+        );
     });
-
 });
