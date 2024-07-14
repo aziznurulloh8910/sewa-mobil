@@ -7,8 +7,16 @@ $(document).ready(function() {
             }
         },
         columns: [
-            { data: "rank" },
-            { data: "asset_code" },
+            { 
+                data: 'rank',
+                orderable: false
+            },
+            { 
+                data: "id",
+                render: function(data) {
+                    return `A${data}`;
+                }
+            },
             { data: "asset_name" },
             { data: "preference_value" },
             { data: "" },
@@ -37,7 +45,7 @@ $(document).ready(function() {
                 }
             }
         ],
-        order: [[0, 'asc']],
+        order: [[3, 'desc']],
         dom: '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center m-1 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between m-1 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
         displayLength: 7,
         lengthMenu: [7, 10, 25, 50, 75, 100],
@@ -118,9 +126,9 @@ $(document).ready(function() {
         }
     });
 
-    var csrfToken = $('meta[name="csrf-token"]').attr('content'); // Pastikan token CSRF tersedia di meta tag
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-    $('div.head-label').html('<h3 class="mb-0">Hasil Perankingan Aset</h3>');
+    $('div.head-label').html('<h3 class="mb-0">Rekomendasi Pengadaan Aset</h3>');
 
     $('#rankingAset').on('click', '.delete-asset', function() {
         var assetId = $(this).data('id');
@@ -179,6 +187,9 @@ $(document).ready(function() {
                 $.ajax({
                     url: '/assets/maintain/' + assetId,
                     type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken 
+                    },
                     success: function(result) {
                         Swal.fire(
                             'Success!',

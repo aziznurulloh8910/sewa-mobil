@@ -27,11 +27,17 @@
             <li class=" nav-item {{ Request::is('deletion-history') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('deletion-history') }}">
                 <i data-feather="trash-2"></i><span class="menu-title text-truncate" data-i18n="History Penghapusan Aset">History Penghapusan</span></a>
             </li>
-            <li class="nav-item {{ Request::is('asset-procurement') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('asset-procurement') }}">
-                <i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="Pengadaan Aset">Pengadaan Aset</span></a>
-            </li>
             <li class="nav-item {{ Request::is('maintenance') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('maintenance') }}">
                 <i data-feather="tool"></i><span class="menu-title text-truncate" data-i18n="Pemeliharaan Aset">Pemeliharaan Aset</span></a>
+            </li>
+
+            <li class=" navigation-header">
+                <span data-i18n="Hasil Perankingan">Hasil Perankingan</span>
+                <i data-feather="more-horizontal"></i>
+            </li>
+
+            <li class="nav-item {{ Request::is('ranking') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('ranking') }}">
+                <i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="Pengadaan Aset">Pengadaan Aset</span></a>
             </li>
 
             <li class=" navigation-header">
@@ -50,9 +56,6 @@
             </li>
             <li class="nav-item {{ Request::is('process') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('process') }}">
                 <i data-feather="bar-chart-2"></i><span class="menu-title text-truncate" data-i18n="Data Perhitungan">Data Perhitungan</span></a>
-            </li>
-            <li class="nav-item {{ Request::is('ranking') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('ranking') }}">
-                <i data-feather="list"></i><span class="menu-title text-truncate" data-i18n="Hasil Perankingan">Hasil Perankingan</span></a>
             </li>
 
             @if(auth()->user()->role == 1)

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('asset_id')->constrained('assets')->onDelete('cascade')->unique();;
             $table->date('maintenance_date');
-            $table->decimal('cost', 15, 2);
+            $table->double('cost')->nullable();
             $table->enum('status', ['planned', 'in progress', 'done']);
             $table->text('description')->nullable();
             $table->timestamps();

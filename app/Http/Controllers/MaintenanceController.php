@@ -24,7 +24,7 @@ class MaintenanceController extends Controller
         $request->validate([
             'asset_id' => 'required|unique:maintenances,asset_id',
             'maintenance_date' => 'required|date',
-            'cost' => 'required|numeric',
+            'cost' => 'nullable|numeric',
             'status' => 'required|string',
             'description' => 'nullable|string',
         ]);
@@ -47,7 +47,7 @@ class MaintenanceController extends Controller
         $request->validate([
             'asset_id' => 'required|unique:maintenances,asset_id,' . $id,
             'maintenance_date' => 'required|date',
-            'cost' => 'required|numeric',
+            'cost' => 'nullable|numeric',
             'status' => 'required|string',
             'description' => 'nullable|string',
         ]);

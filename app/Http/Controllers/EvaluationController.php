@@ -6,6 +6,7 @@ use App\Models\Asset;
 use App\Models\Criteria;
 use App\Models\Evaluation;
 use App\Models\DeletionHistory;
+use App\Models\Maintenance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -107,7 +108,7 @@ class EvaluationController extends Controller
 
         $rankedAssets = $this->rankAssets($assets, $preferences);
 
-        $data = $rankedAssets->map(function ($item, $index) {
+        $data = $rankedAssets->sortByDesc('preference')->values()->map(function ($item, $index) {
             return [
                 'rank' => $index + 1,
                 'asset_code' => $item['asset']->asset_code,
@@ -271,7 +272,14 @@ class EvaluationController extends Controller
     public function maintainAsset($id) {
         DB::transaction(function () use ($id) {
             $asset = Asset::findOrFail($id);
-            // Simpan ke tabel maintainlist jika ada, untuk sekarang hanya tandai dengan status 'maintain'
+            $defaultCost = $asset->acquisition_cost - $asset->accumulated_depreciation;
+            Maintenance::create([
+                'asset_id' => $asset->id,
+                'description' => $asset->description,
+                'cost' => $defaultCost,
+                'status' => 'planned',
+                'maintenance_date' => now(),
+            ]);
             $asset->description = 'maintain';
             $asset->save();
         });
