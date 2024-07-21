@@ -25,7 +25,7 @@
                                                 <tr>
                                                     <th>Nama Sub Kriteria</th>
                                                     <th>Nilai</th>
-                                                    <th>Aksi</th>
+                                                    <th>Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

@@ -204,7 +204,7 @@ $(document).ready(function() {
         }
     });
 
-    $('div.head-label').html('<h3 class="mb-0">Maintenance Records</h3>');
+    $('div.head-label').html('<h3 class="mb-0">Data Pemeliharaan Aset</h3>');
 
     $('#maintenanceForm').on('submit', function(e) {
         e.preventDefault();

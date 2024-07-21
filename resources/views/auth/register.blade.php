@@ -9,6 +9,12 @@
             <div class="content-body">
                 <div class="auth-wrapper auth-cover">
                     <div class="auth-inner row m-0">
+                        <!-- Logo -->
+                        <a class="brand-logo" href="/">
+                            <img src="{{ asset('app-assets/images/logo/logo.png') }}" alt="logo" height="32">
+                            <h2 class="brand-text text-primary ms-1">SMA Negeri 27 Bandung</h2>
+                        </a>
+                        <!-- Logo End-->
                         <!-- Left Text-->
                         <div class="d-none d-lg-flex col-lg-8 align-items-center p-5">
                             <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
