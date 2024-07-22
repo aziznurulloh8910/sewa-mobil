@@ -128,7 +128,7 @@ $(document).ready(function() {
 
     var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-    $('div.head-label').html('<h3 class="mb-0">Rekomendasi Pengadaan Aset</h3>');
+    $('div.head-label').html('<h3 class="mb-0">Hasil Perankingan</h3>');
 
     $('#rankingAset').on('click', '.delete-asset', function() {
         var assetId = $(this).data('id');

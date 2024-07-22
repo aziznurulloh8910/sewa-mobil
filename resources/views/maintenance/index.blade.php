@@ -23,7 +23,7 @@
                                     <table id="dataMaintenance" class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Asset ID</th>
+                                                <th>Nama Aset</th>
                                                 <th>Tanggal Pemeliharaan</th>
                                                 <th>Biaya</th>
                                                 <th>Status</th>
