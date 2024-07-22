@@ -7,7 +7,7 @@ use App\Models\Asset;
 use App\Models\DeletionHistory;
 use Illuminate\Support\Facades\Auth;
 
-class AsetController extends Controller
+class AssetController extends Controller
 {
     function index() {
         return view('asset.index');

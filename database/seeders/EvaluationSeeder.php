@@ -15,19 +15,26 @@ class EvaluationSeeder extends Seeder
      */
     public function run(): void
     {
-        $evaluations = [
-            ['asset_id' => '1', 'C1' => 1, 'C2' => 2, 'C3' => 1, 'C4' => 1],
-            ['asset_id' => '2', 'C1' => 2, 'C2' => 3, 'C3' => 2, 'C4' => 1],
-            ['asset_id' => '3', 'C1' => 3, 'C2' => 3, 'C3' => 2, 'C4' => 2],
-            ['asset_id' => '4', 'C1' => 1, 'C2' => 2, 'C3' => 1, 'C4' => 1],
-            ['asset_id' => '5', 'C1' => 4, 'C2' => 3, 'C3' => 2, 'C4' => 1],
-            ['asset_id' => '6', 'C1' => 2, 'C2' => 3, 'C3' => 2, 'C4' => 1],
-            ['asset_id' => '7', 'C1' => 1, 'C2' => 1, 'C3' => 1, 'C4' => 1],
-            ['asset_id' => '8', 'C1' => 1, 'C2' => 1, 'C3' => 1, 'C4' => 1],
-        ];
+        $assets = Asset::all();
 
-        foreach ($evaluations as $evaluation) {
-            $asset = Asset::where('id', $evaluation['asset_id'])->first();
+        foreach ($assets as $asset) {
+            $currentYear = date('Y');
+            $assetAge = $currentYear - $asset->procurement_year;
+            $depreciationPercentage = ($assetAge * 0.5);
+            $usefulLife = $assetAge; 
+
+            $C1 = $asset->condition;
+            $C2 = $this->getAgeScore($assetAge);
+            $C3 = $this->getDepreciationScore($depreciationPercentage);
+            $C4 = $this->getUsefulLifeScore($usefulLife);
+
+            $evaluation = [
+                'asset_id' => $asset->id,
+                'C1' => $C1,
+                'C2' => $C2,
+                'C3' => $C3,
+                'C4' => $C4
+            ];
 
             foreach (['C1', 'C2', 'C3', 'C4'] as $criteriaCode) {
                 $criteria = Criteria::where('criteria_code', $criteriaCode)->first();
@@ -41,6 +48,45 @@ class EvaluationSeeder extends Seeder
                     'sub_criteria_id' => $subCriteria->id,
                 ]);
             }
+        }
+    }
+
+    private function getAgeScore($age)
+    {
+        if ($age <= 5) {
+            return 1;
+        } elseif ($age <= 10) {
+            return 2;
+        } elseif ($age <= 15) {
+            return 3;
+        } else {
+            return 4;
+        }
+    }
+
+    private function getDepreciationScore($depreciationPercentage)
+    {
+        if ($depreciationPercentage <= 5) {
+            return 1;
+        } elseif ($depreciationPercentage <= 15) {
+            return 2;
+        } elseif ($depreciationPercentage <= 25) {
+            return 3;
+        } else {
+            return 4;
+        }
+    }
+
+    private function getUsefulLifeScore($usefulLife)
+    {
+        if ($usefulLife <= 5) {
+            return 1;
+        } elseif ($usefulLife <= 10) {
+            return 2;
+        } elseif ($usefulLife <= 15) {
+            return 3;
+        } else {
+            return 4;
         }
     }
 }

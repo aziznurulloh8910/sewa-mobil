@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AsetController;
+use App\Http\Controllers\AssetController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
@@ -39,12 +39,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Asset management routes
     Route::prefix('asset')->group(function () {
-        Route::get('/', [AsetController::class, 'index'])->name('asset');
-        Route::get('/data-table', [AsetController::class, 'dataTable']);
-        Route::post('/store', [AsetController::class, 'store'])->name('asset.store');
-        Route::get('/{id}', [AsetController::class, 'show'])->name('asset.show');
-        Route::put('/update/{id}', [AsetController::class, 'update'])->name('asset.update');
-        Route::delete('/delete/{id}', [AsetController::class, 'delete'])->name('asset.delete');
+        Route::get('/', [AssetController::class, 'index'])->name('asset');
+        Route::get('/data-table', [AssetController::class, 'dataTable']);
+        Route::post('/store', [AssetController::class, 'store'])->name('asset.store');
+        Route::get('/{id}', [AssetController::class, 'show'])->name('asset.show');
+        Route::put('/update/{id}', [AssetController::class, 'update'])->name('asset.update');
+        Route::delete('/delete/{id}', [AssetController::class, 'delete'])->name('asset.delete');
     });
 
     // Criteria management routes
