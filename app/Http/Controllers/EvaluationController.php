@@ -157,9 +157,15 @@ class EvaluationController extends Controller
                 $evaluation = $evaluations->filter(function ($eval) use ($asset, $criterion) {
                     return $eval->asset_id == $asset->id && $eval->criteria_id == $criterion->id;
                 })->first();
-                $row[] = $evaluation ? $evaluation->subCriteria->score : 0;
+                // Hanya tambahkan nilai jika tidak 0
+                if ($evaluation && $evaluation->subCriteria->score > 0) {
+                    $row[] = $evaluation->subCriteria->score;
+                }
             }
-            $decisionMatrix[] = $row;
+            // Tambahkan baris hanya jika ada nilai yang valid
+            if (!empty($row)) {
+                $decisionMatrix[] = $row;
+            }
         }
         return $decisionMatrix;
     }
@@ -248,9 +254,13 @@ class EvaluationController extends Controller
     }
 
     private function rankAssets($assets, $preferences) {
-        return $assets->map(function ($asset, $index) use ($preferences) {
-            return ['asset' => $asset, 'preference' => round($preferences[$index], 3)];
-        })->sortByDesc('preference');
+        // Tambahkan aset dengan preferensi 0 untuk yang tidak ada dalam preferensi
+        $rankedAssets = $assets->map(function ($asset, $index) use ($preferences) {
+            return ['asset' => $asset, 'preference' => isset($preferences[$index]) ? round($preferences[$index], 3) : 0];
+        });
+
+        // Urutkan berdasarkan preferensi
+        return $rankedAssets->sortByDesc('preference');
     }
 
     public function deleteAsset($id) {
