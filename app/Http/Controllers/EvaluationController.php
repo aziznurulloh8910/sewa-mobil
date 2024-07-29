@@ -179,7 +179,7 @@ class EvaluationController extends Controller
                 $columnSum = sqrt(array_sum(array_map(function($val) {
                     return pow($val, 2);
                 }, $columnValues)));
-                $normalizedRow[] = $columnSum != 0 ? round($value / $columnSum, 3) : 0;
+                $normalizedRow[] = $columnSum != 0 ? number_format($value / $columnSum, 3) : number_format(0, 3);
             }
             $normalizedMatrix[] = $normalizedRow;
         }
@@ -201,7 +201,7 @@ class EvaluationController extends Controller
         foreach ($normalizedMatrix as $row) {
             $weightedRow = [];
             foreach ($row as $index => $value) {
-                $weightedRow[] = round($value * $weights[$index], 3);
+                $weightedRow[] = number_format($value * $weights[$index], 3);
             }
             $weightedMatrix[] = $weightedRow;
         }
@@ -239,8 +239,8 @@ class EvaluationController extends Controller
                 return pow($value - $ideal, 2);
             }, $row, $idealSolutions['negative'])));
             $distances[] = [
-                'positive' => round($positiveDistance, 3),
-                'negative' => round($negativeDistance, 3) 
+                'positive' => number_format($positiveDistance, 3),
+                'negative' => number_format($negativeDistance, 3)
             ];
         }
         return $distances;
@@ -249,14 +249,14 @@ class EvaluationController extends Controller
     private function calculatePreferences($distances) {
         return array_map(function ($distance) {
             $denominator = $distance['positive'] + $distance['negative'];
-            return $denominator != 0 ? round($distance['negative'] / $denominator, 3) : 0;
+            return $denominator != 0 ? number_format($distance['negative'] / $denominator, 3) : number_format(0, 3);
         }, $distances);
     }
 
     private function rankAssets($assets, $preferences) {
         // Tambahkan aset dengan preferensi 0 untuk yang tidak ada dalam preferensi
         $rankedAssets = $assets->map(function ($asset, $index) use ($preferences) {
-            return ['asset' => $asset, 'preference' => isset($preferences[$index]) ? round($preferences[$index], 3) : 0];
+            return ['asset' => $asset, 'preference' => isset($preferences[$index]) ? number_format($preferences[$index], 3) : number_format(0, 3)];
         });
 
         // Urutkan berdasarkan preferensi

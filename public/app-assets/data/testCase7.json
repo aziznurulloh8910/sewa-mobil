@@ -1,0 +1,45 @@
+[
+    {
+        "name": "Kamera Handy Cam",
+        "asset_code": "1.3.2.09.04.04.007",
+        "registration_number": "0001",
+        "location": "D. R. 32",
+        "brand_type": "Sony/HDR-PJ410/BC5Campuran",
+        "quantity": 1,
+        "procurement_year": 2016,
+        "acquisition_cost": 9625000,
+        "condition": 3
+    },{
+        "name": "Peralatan Studio Audio",
+        "asset_code": "1.3.2.19.03",
+        "registration_number": "0001",
+        "location": "B.R.10",
+        "brand_type": "Paket Alat Podcat",
+        "quantity": 1,
+        "procurement_year": 2021,
+        "acquisition_cost": 3150000,
+        "condition": 1
+    },
+    {
+        "name": "CCTV - Camera Control Television System",
+        "asset_code": "1.3.2.05.01.05.002",
+        "registration_number": "0001",
+        "location": "B.R.10",
+        "brand_type": "IP CAMERA DAHUA 2MP LITE IR FIXED-FOCAL BULLET NETWORK CAMERA",
+        "quantity": 1,
+        "procurement_year": 2022,
+        "acquisition_cost": 1200000,
+        "condition": 2
+    },
+    {
+        "name": "Mesin Penghancur Kertas",
+        "asset_code": "1.3.2.05.01.05.010",
+        "registration_number": "0001",
+        "location": "B.R.10",
+        "brand_type": "Mesin Penghancur Kertas ZSA Auto 75",
+        "quantity": 1,
+        "procurement_year": 2020,
+        "acquisition_cost": 4500000,
+        "condition": 3
+    }
+]

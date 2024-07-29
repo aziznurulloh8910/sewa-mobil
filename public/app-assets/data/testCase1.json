@@ -1,0 +1,46 @@
+[
+    {
+        "name": "PERALATAN STUDIO AUDIO",
+        "asset_code": "1.3.2.19.03",
+        "registration_number": "",
+        "location": "",
+        "brand_type": "Paket Alat Podcat ( 2 Mix, 1 Unit Sound card , Mixer woopower, 2 Set Kabel XLR to 3,5 mm, 1 Unit Spliter 5 Port )",
+        "quantity": 2,
+        "procurement_year": 2021,
+        "acquisition_cost": 3150000,
+        "condition": 1
+    },
+    {
+        "name": "Handy Cam",
+        "asset_code": "1.3.2.09.04.04.007",
+        "registration_number": "0001",
+        "location": "D. R. 32",
+        "brand_type": "---",
+        "quantity": 1,
+        "procurement_year": 2009,
+        "acquisition_cost": 7810000,
+        "condition": 2
+    },
+    {
+        "name": "Loudspeaker",
+        "asset_code": "1.3.2.05.02.06.007",
+        "registration_number": "",
+        "location": "",
+        "brand_type": "SPEAKER AKTIF PORTEBLE POLYTRON BLUETOOTH 12 INCH PTS-12KF25",
+        "quantity": 1,
+        "procurement_year": 2022,
+        "acquisition_cost": 6500000,
+        "condition": 3
+    },
+    {
+        "name": "Televisi",
+        "asset_code": "1.3.2.05.02.06.002",
+        "registration_number": "0001",
+        "location": "D. R. 32",
+        "brand_type": "---",
+        "quantity": 1,
+        "procurement_year": 2009,
+        "acquisition_cost": 1870000,
+        "condition": 4
+    }
+]
