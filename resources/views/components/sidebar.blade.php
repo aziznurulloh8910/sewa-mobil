@@ -4,9 +4,9 @@
             <li class="nav-item me-auto">
                 <a class="navbar-brand" href="{{ asset('home') }}">
                     <span class="brand-logo">
-                        <img src="{{ asset('app-assets/images/logo/logo.png') }}" alt="png" height="32">
+                        <img src="{{ asset('app-assets/images/logo/logo.jpeg') }}" alt="jpeg" height="32">
                     </span>
-                    <h2 class="brand-text">Aset</h2>
+                    <h2 class="brand-text">Sewa Mobil</h2>
                 </a>
             </li>
             <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pe-0" data-bs-toggle="collapse"><i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc" data-ticon="disc"></i></a></li>
@@ -22,7 +22,7 @@
             </li>
 
             <li class="nav-item {{ Request::is('asset') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('asset') }}">
-                <i data-feather="database"></i><span class="menu-title text-truncate" data-i18n="Data Aset">Data Aset</span></a>
+                <i data-feather="database"></i><span class="menu-title text-truncate" data-i18n="Data Mobil">Data Mobil</span></a>
             </li>
 
             @if(auth()->user()->role == 1)
