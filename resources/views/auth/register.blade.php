@@ -11,7 +11,7 @@
                     <div class="auth-inner row m-0">
                         <!-- Logo -->
                         <a class="brand-logo" href="/">
-                            <img src="{{ asset('app-assets/images/logo/logo.png') }}" alt="logo" height="32">
+                            <img src="{{ asset('app-assets/images/logo/logo.jpeg') }}" alt="logo" height="32">
                             <h2 class="brand-text text-primary ms-1">PT Jasamedika</h2>
                         </a>
                         <!-- Logo End-->

@@ -14,19 +14,15 @@ class HomeController extends Controller
     {
         $updatedAt = Asset::latest('updated_at')->value('updated_at');
         $totalAsset = Asset::count();
-        $totalCriteria = Criteria::count();
-        $totalSubCriteria = SubCriteria::count();
         $totalUsers = User::count();
         $totalAssetValue = $this->formatAssetValue(Asset::sum('acquisition_cost'));
         $averageAssetDepreciation = $this->formatDepreciation(Asset::avg('total_depreciation'));
 
         return view('home', compact(
-            'updatedAt', 
-            'totalAsset', 
-            'totalCriteria', 
-            'totalSubCriteria', 
-            'totalUsers', 
-            'totalAssetValue', 
+            'updatedAt',
+            'totalAsset',
+            'totalUsers',
+            'totalAssetValue',
             'averageAssetDepreciation'
         ));
     }

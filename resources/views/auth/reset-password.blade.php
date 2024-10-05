@@ -14,7 +14,7 @@
                         <div class="card mb-0">
                             <div class="card-body">
                                 <a href="index.html" class="brand-logo">
-                                    <img src="{{ asset('app-assets/images/logo/logo.png') }}" alt="png" height="32">
+                                    <img src="{{ asset('app-assets/images/logo/logo.jpeg') }}" alt="jpeg" height="32">
                                     <h2 class="brand-text text-primary ms-1">SMAN 27 Bandung</h2>
                                 </a>
 
