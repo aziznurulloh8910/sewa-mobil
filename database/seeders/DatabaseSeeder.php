@@ -3,10 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Database\Seeders\CriteriaSeeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\AssetSeeder;
-use Database\Seeders\EvaluationSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,10 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
 
         $this->call(AssetSeeder::class);
-
-        $this->call(CriteriaSeeder::class);
-        
-        $this->call(EvaluationSeeder::class);
 
         // \App\Models\Asset::factory(10)->create();
     }
