@@ -18,7 +18,7 @@
             <li class="nav-item {{ Request::is('home') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('home') }}"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span></a>
             </li>
 
-            <li class=" navigation-header"><span data-i18n="Data Inventarisasi Aset">Data Inventarisasi Aset</span><i data-feather="more-horizontal"></i>
+            <li class=" navigation-header"><span data-i18n="Data Sewa Mobil">Data Sewa Mobil</span><i data-feather="more-horizontal"></i>
             </li>
 
             <li class="nav-item {{ Request::is('asset') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('asset') }}">

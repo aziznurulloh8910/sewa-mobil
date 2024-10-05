@@ -132,6 +132,7 @@ class EvaluationController extends Controller
         $idealSolutions = $this->calculateIdealSolutions($weightedMatrix, $criteria);
         $distances = $this->calculateDistances($weightedMatrix, $idealSolutions);
         $preferences = $this->calculatePreferences($distances);
+        $criteriaWeights = $this->calculateCriteriaWeights($criteria);
 
         $rankedAssets = $this->rankAssets($assets, $preferences);
 
@@ -145,7 +146,8 @@ class EvaluationController extends Controller
             'idealNegative' => $idealSolutions['negative'],
             'distances' => $distances,
             'preferences' => $preferences,
-            'rankedAssets' => $rankedAssets
+            'rankedAssets' => $rankedAssets,
+            'criteriaWeights' => $criteriaWeights
         ]);
     }
 

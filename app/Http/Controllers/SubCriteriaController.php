@@ -12,7 +12,7 @@ class SubCriteriaController extends Controller
     public function index()
     {
         $criterias = Criteria::with('subCriteria')->get();
-        return view('subcriteria.index', compact('criterias'));
+        return view('subCriteria.index', compact('criterias'));
     }
 
     public function store(Request $request)

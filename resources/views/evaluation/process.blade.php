@@ -47,6 +47,30 @@
                             </div>
                         </div>
 
+                        <!-- Bobot Kriteria -->
+                        <div class="card">
+                            <div class="card-datatable">
+                                <div class="table-responsive">
+                                    <table id="bobotKriteria" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Kriteria</th>
+                                                <th>Bobot</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($criteria as $index => $criterion)
+                                                <tr>
+                                                    <td>{{ $criterion->name }}</td>
+                                                    <td>{{ $criteriaWeights[$index] }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Matriks Normalisasi -->
                         <div class="card">
                             <div class="card-datatable">

@@ -39,6 +39,8 @@ $(document).ready(function() {
             exportColumns = [0, 1, 2, 3];
         } else if (selector === '#solusiIdeal') {
             order = [[0, 'desc']]; 
+        } else if (selector === '#bobotKriteria') {
+            exportColumns = [0, 1];
         }
 
         $(selector).DataTable({
@@ -118,4 +120,5 @@ $(document).ready(function() {
     initializeDataTable('#jarakSolusiIdeal', 'JarakSolusiIdeal');
     initializeDataTable('#nilaiPreferensi', 'NilaiPreferensi');
     initializeDataTable('#rankingAset', 'RankingAset');
+    initializeDataTable('#bobotKriteria', 'MatriksBobotKriteria');
 });

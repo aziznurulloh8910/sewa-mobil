@@ -22,7 +22,7 @@ class AssetSeeder extends Seeder
     public function run(): void
     {
         // Baca data dari file JSON
-        $json = File::get(public_path('app-assets/data/testCaseAll.json'));
+        $json = File::get(public_path('app-assets/data/testCasebab3.json'));
         $assets = json_decode($json, true);
 
         foreach ($assets as $asset) {

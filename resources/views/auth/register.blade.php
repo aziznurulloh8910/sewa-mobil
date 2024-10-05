@@ -12,7 +12,7 @@
                         <!-- Logo -->
                         <a class="brand-logo" href="/">
                             <img src="{{ asset('app-assets/images/logo/logo.png') }}" alt="logo" height="32">
-                            <h2 class="brand-text text-primary ms-1">SMA Negeri 27 Bandung</h2>
+                            <h2 class="brand-text text-primary ms-1">PT Jasamedika</h2>
                         </a>
                         <!-- Logo End-->
                         <!-- Left Text-->
@@ -26,7 +26,7 @@
                         <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
                             <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
                                 <h2 class="card-title fw-bold mb-1">Sign Up here 🚀</h2>
-                                <p class="card-text mb-2">Manage school assets inventory easily and efficiently!</p>
+                                <p class="card-text mb-2">Manage data sewa mobil easily and efficiently!</p>
 
                                 <!-- Flash Message -->
                                 @if (session('success'))

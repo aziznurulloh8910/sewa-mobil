@@ -18,7 +18,7 @@
                     <div class="col-12">
                         <div class="alert alert-primary alert-dismissible fade show" role="alert">
                             <div class="alert-body">
-                                <strong>Info:</strong> Hello {{ auth()->user()->name }}, Selamat datang di Aplikasi Inventarisasi Aset SMA 27 Bandung 🙋🏻‍♂️🙋🏻‍♀️
+                                <strong>Info:</strong> Hello {{ auth()->user()->name }}, Selamat datang di Aplikasi Sewa Mobol PT Jasamedika 🙋🏻‍♂️🙋🏻‍♀️
                             </div>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
