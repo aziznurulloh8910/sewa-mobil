@@ -4,15 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Asset extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = ['id'];
 
-    public function assets()
+    public function maintenance()
     {
-        return $this->hasMany(Asset::class);
+        return $this->hasOne(Maintenance::class);
+    }
+
+    public function deletionHistory()
+    {
+        return $this->hasOne(DeletionHistory::class);
     }
 }

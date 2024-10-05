@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Asset;
+use App\Models\DeletionHistory;
 use Illuminate\Support\Facades\Auth;
 
-class AsetController extends Controller
+class AssetController extends Controller
 {
     function index() {
         return view('asset.index');
@@ -25,7 +26,7 @@ class AsetController extends Controller
             'registration_number' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'brand_type' => 'required|string|max:255',
-            'procurement_year' => 'required|integer',
+            'procurement_year' => 'required|integer|digits:4',
             'quantity' => 'required|integer',
             'acquisition_cost' => 'required|numeric',
             'condition' => 'required|integer',
@@ -33,8 +34,11 @@ class AsetController extends Controller
         ]);
 
         $validated['recorded_value'] = $request->acquisition_cost * $request->quantity;
-        $validated['accumulated_depreciation'] = $request->procurement_year;
-        $validated['total_depreciation'] = $validated['accumulated_depreciation'];
+        $currentYear = date('Y');
+        $assetAge = $currentYear - $request->procurement_year;
+        $validated['total_depreciation'] = $assetAge * 0.5;
+        $residual = ($validated['total_depreciation'] * $request->acquisition_cost) / 100;
+        $validated['accumulated_depreciation'] = $request->acquisition_cost - $residual;
         $validated['user_id'] = Auth::id();
 
         Asset::create($validated);
@@ -58,7 +62,7 @@ class AsetController extends Controller
             'registration_number' => 'required|integer',
             'location' => 'required|string|max:255',
             'brand_type' => 'required|string|max:255',
-            'procurement_year' => 'required|integer',
+            'procurement_year' => 'required|integer|digits:4',
             'quantity' => 'required|integer',
             'acquisition_cost' => 'required|integer',
             'condition' => 'required|integer',
@@ -66,8 +70,11 @@ class AsetController extends Controller
         ]);
 
         $validated['recorded_value'] = $request->acquisition_cost * $request->quantity;
-        $validated['accumulated_depreciation'] = $request->procurement_year;
-        $validated['total_depreciation'] = $validated['accumulated_depreciation'];
+        $currentYear = date('Y');
+        $assetAge = $currentYear - $request->procurement_year;
+        $validated['total_depreciation'] = $assetAge * 0.5;
+        $depresiationValue = ($validated['total_depreciation'] * $request->acquisition_cost) / 100;
+        $validated['accumulated_depreciation'] = $request->acquisition_cost - $depresiationValue;
 
         $asset->update($validated);
 
@@ -76,6 +83,17 @@ class AsetController extends Controller
 
     public function delete($id) {
         $asset = Asset::findOrFail($id);
+
+        // Create deletion history
+        DeletionHistory::create([
+            'user_id' => Auth::id(),
+            'asset_id' => $asset->id,
+            'date_of_deletion' => now(),
+            'residual_value' => $asset->accumulated_depreciation,
+            'description' => $asset->condition,
+        ]);
+
+        // Soft delete the asset
         $asset->delete();
 
         return response()->json(['success' => 'Asset deleted successfully.']);

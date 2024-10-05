@@ -2,11 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Asset;
-use App\Models\Criteria;
-use App\Models\SubCriteria;
 use Illuminate\Database\Seeder;
+use Database\Seeders\UserSeeder;
+use Database\Seeders\AssetSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,25 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Super Admin',
-            'email' => 'admin@mail.com',
-            'role' => 1,
-        ]);
+        $this->call(UserSeeder::class);
 
-        User::factory()->create([
-            'name' => 'User',
-            'email' => 'user@mail.com',
-            'role' => 0,
-        ]);
+        $this->call(AssetSeeder::class);
 
-        Asset::factory()->count(20)->create();
-
-        Criteria::factory()
-            ->count(5)
-            ->has(SubCriteria::factory()->count(4), 'subCriteria')
-            ->create();
-
-        // Criteria::factory()->count(5)->create();
+        // \App\Models\Asset::factory(10)->create();
     }
 }

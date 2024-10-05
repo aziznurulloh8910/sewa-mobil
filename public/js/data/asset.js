@@ -18,7 +18,7 @@ $(document).ready(function() {
 
     var table = $('#dataAset').DataTable({
         ajax: {
-            url: "http://localhost:8000/asset-data-table",
+            url: "http://localhost:8000/asset/data-table",
             dataSrc: "data"
         },
         columns: [
@@ -65,9 +65,9 @@ $(document).ready(function() {
                 render: function(data, type, full, meta) {
                     var conditionNumber = full['condition'];
                     var condition = {
-                        1: { title: 'Tidak Ada', class: ' badge-light-danger' },
-                        2: { title: 'Rusak Berat', class: 'badge-light-warning' },
-                        3: { title: 'Rusak Ringan', class: ' badge-light-secondary' },
+                        1: { title: 'Tidak Ada', class: ' badge-light-secondary' },
+                        2: { title: 'Rusak Berat', class: 'badge-light-danger' },
+                        3: { title: 'Rusak Ringan', class: ' badge-light-warning' },
                         4: { title: 'Baik', class: ' badge-light-success' },
                     };
                     if (typeof condition[conditionNumber] === 'undefined') {
@@ -448,7 +448,7 @@ $(document).ready(function() {
                             <p><strong>Total Depresiasi</strong></p>
                         </div>
                         <div class="col-md-8">
-                            <p>: ${formatIDR(response.total_depreciation)}</p>
+                            <p>: ${response.total_depreciation}%</p>
                         </div>
                     </div>
                     <div class="row mx-1">
