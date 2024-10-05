@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\RentalController; // Tambahkan ini
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
@@ -51,6 +52,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{id}', [CarController::class, 'show'])->name('car.show');
         Route::put('/update/{id}', [CarController::class, 'update'])->name('car.update');
         Route::delete('/delete/{id}', [CarController::class, 'delete'])->name('car.delete');
+    });
+
+    // Rental management routes
+    Route::prefix('rentals')->group(function () {
+        Route::get('/', [RentalController::class, 'index'])->name('rental');
+        Route::get('/data-table', [RentalController::class, 'dataTable']);
+        Route::post('/store', [RentalController::class, 'store'])->name('rental.store');
+        Route::get('/{id}', [RentalController::class, 'show'])->name('rental.show');
+        Route::put('/update/{id}', [RentalController::class, 'update'])->name('rental.update');
+        Route::delete('/delete/{id}', [RentalController::class, 'delete'])->name('rental.delete');
     });
 
     // User management routes
