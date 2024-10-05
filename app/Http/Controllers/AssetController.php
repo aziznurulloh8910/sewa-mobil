@@ -83,16 +83,7 @@ class AssetController extends Controller
 
     public function delete($id) {
         $asset = Asset::findOrFail($id);
-
-        // Create deletion history
-        DeletionHistory::create([
-            'user_id' => Auth::id(),
-            'asset_id' => $asset->id,
-            'date_of_deletion' => now(),
-            'residual_value' => $asset->accumulated_depreciation,
-            'description' => $asset->condition,
-        ]);
-
+        
         // Soft delete the asset
         $asset->delete();
 

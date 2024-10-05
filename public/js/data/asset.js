@@ -243,7 +243,7 @@ $(document).ready(function() {
                 if (response.success) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Add New Asset Successful',
+                        title: 'Successful',
                         text: response.success,
                         timer: 2000,
                         showConfirmButton: false
