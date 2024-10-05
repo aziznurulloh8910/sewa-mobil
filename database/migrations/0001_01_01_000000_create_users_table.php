@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('address')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('driver_license')->nullable();
             $table->boolean('role');
             $table->rememberToken();
             $table->timestamps();

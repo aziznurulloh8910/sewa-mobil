@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UserSeeder::class);
 
-        $this->call(AssetSeeder::class);
+        // $this->call(AssetSeeder::class);
 
         // \App\Models\Asset::factory(10)->create();
     }

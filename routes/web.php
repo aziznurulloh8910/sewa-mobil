@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AssetController;
+use App\Http\Controllers\CarController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
@@ -40,6 +41,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{id}', [AssetController::class, 'show'])->name('asset.show');
         Route::put('/update/{id}', [AssetController::class, 'update'])->name('asset.update');
         Route::delete('/delete/{id}', [AssetController::class, 'delete'])->name('asset.delete');
+    });
+
+    // Car management routes
+    Route::prefix('cars')->group(function () {
+        Route::get('/', [CarController::class, 'index'])->name('car');
+        Route::get('/data-table', [CarController::class, 'dataTable']);
+        Route::post('/store', [CarController::class, 'store'])->name('car.store');
+        Route::get('/{id}', [CarController::class, 'show'])->name('car.show');
+        Route::put('/update/{id}', [CarController::class, 'update'])->name('car.update');
+        Route::delete('/delete/{id}', [CarController::class, 'delete'])->name('car.delete');
     });
 
     // User management routes

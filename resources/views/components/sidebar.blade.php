@@ -21,8 +21,12 @@
             <li class=" navigation-header"><span data-i18n="Data Sewa Mobil">Data Sewa Mobil</span><i data-feather="more-horizontal"></i>
             </li>
 
+            <li class="nav-item {{ Request::is('car') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('car') }}">
+                <i data-feather="truck"></i><span class="menu-title text-truncate" data-i18n="Data Mobil">Data Mobil</span></a>
+            </li>
+
             <li class="nav-item {{ Request::is('asset') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('asset') }}">
-                <i data-feather="database"></i><span class="menu-title text-truncate" data-i18n="Data Mobil">Data Mobil</span></a>
+                <i data-feather="database"></i><span class="menu-title text-truncate" data-i18n="Data Mobil">Data Aset</span></a>
             </li>
 
             @if(auth()->user()->role == 1)

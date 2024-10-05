@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Asset;
-use App\Models\DeletionHistory;
 use Illuminate\Support\Facades\Auth;
 
 class AssetController extends Controller
@@ -84,7 +83,6 @@ class AssetController extends Controller
     public function delete($id) {
         $asset = Asset::findOrFail($id);
         
-        // Soft delete the asset
         $asset->delete();
 
         return response()->json(['success' => 'Asset deleted successfully.']);
