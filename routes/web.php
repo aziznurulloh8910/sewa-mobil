@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckSuperAdmin;
+use App\Http\Controllers\CarReturnController;
 
 // Redirect to login page
 Route::get('/', function () {
@@ -72,4 +73,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Logout route
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // Car return routes
+    Route::prefix('car-returns')->middleware('auth')->group(function () {
+        Route::get('/', [CarReturnController::class, 'index'])->name('car-return');
+        Route::post('/store', [CarReturnController::class, 'store'])->name('car-return.store');
+    });
 });

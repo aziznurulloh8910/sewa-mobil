@@ -21,12 +21,16 @@
             <li class=" navigation-header"><span data-i18n="Data Sewa Mobil">Data Sewa Mobil</span><i data-feather="more-horizontal"></i>
             </li>
 
-            <li class="nav-item {{ Request::is('car') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('car') }}">
-                <i data-feather="truck"></i><span class="menu-title text-truncate" data-i18n="Data Mobil">Data Mobil</span></a>
+            <li class="nav-item {{ Request::is('cars') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('car') }}">
+                <i data-feather="truck"></i><span class="menu-title text-truncate" data-i18n="car">Mobil</span></a>
             </li>
 
-            <li class="nav-item {{ Request::is('rental') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('rental') }}">
-                <i data-feather="inbox"></i><span class="menu-title text-truncate" data-i18n="Data Rental">Data Rental</span></a>
+            <li class="nav-item {{ Request::is('rentals') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('rental') }}">
+                <i data-feather="inbox"></i><span class="menu-title text-truncate" data-i18n="rental">Rental</span></a>
+            </li>
+
+            <li class="nav-item {{ Request::is('car-returns') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('car-return') }}">
+                <i data-feather="inbox"></i><span class="menu-title text-truncate" data-i18n="car-renturn">Return</span></a>
             </li>
 
             @if(auth()->user()->role == 1)

@@ -10,4 +10,9 @@ class CarReturn extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function rental()
+    {
+        return $this->belongsTo(Rental::class);
+    }
 }

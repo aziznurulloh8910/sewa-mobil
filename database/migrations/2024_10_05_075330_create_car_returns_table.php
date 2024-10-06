@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId("rental_id")->references('id')->on('rentals')->onUpdate('cascade')->onDelete('cascade');
             $table->date('return_date');
             $table->integer('total_days');
-            $table->decimal('total_cost', 10, 2);
+            $table->double('total_cost');
             $table->timestamps();
         });
     }

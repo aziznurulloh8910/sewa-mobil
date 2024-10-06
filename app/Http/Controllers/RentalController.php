@@ -32,7 +32,18 @@ class RentalController extends Controller
             'status' => 'required|string|max:20',
         ]);
 
+        // Cek ketersediaan mobil
+        $car = Car::findOrFail($validated['car_id']);
+        if (!$car->availability) { // Ubah dari is_available ke availability
+            return response()->json(['error' => 'Car is not available.'], 400);
+        }
+
+        // Simpan data rental
         Rental::create($validated);
+
+        // Update status ketersediaan mobil
+        $car->availability = false; // Ubah dari is_available ke availability
+        $car->save();
 
         return response()->json(['success' => 'Rental added successfully.']);
     }

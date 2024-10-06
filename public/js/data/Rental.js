@@ -273,17 +273,25 @@ $(document).ready(function() {
                 }
             },
             error: function(response) {
-                let errors = response.responseJSON.errors;
-                let errorText = '';
-                for (let key in errors) {
-                    errorText += errors[key] + '<br>';
-                }
+                if (response.status === 400 && response.responseJSON.error === 'Car is not available.') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed',
+                        text: 'The car is currently rented or not available.'
+                    });
+                } else {
+                    let errors = response.responseJSON.errors;
+                    let errorText = '';
+                    for (let key in errors) {
+                        errorText += errors[key] + '<br>';
+                    }
 
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Failed',
-                    html: errorText
-                });
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed',
+                        html: errorText
+                    });
+                }
             }
         });
     });
