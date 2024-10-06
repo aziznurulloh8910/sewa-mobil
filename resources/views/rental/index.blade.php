@@ -69,7 +69,7 @@
                                                     <select name="car_id" id="car_id" class="form-select">
                                                     <option value="">-- Pilih Mobil --</option>
                                                         @foreach($cars as $car)
-                                                            <option value="{{ $car->id }}" data-rental-rate="{{ $car->rental_rate }}">{{ $car->model }}</option>
+                                                            <option value="{{ $car->id }}" data-rental-rate="{{ $car->rental_rate }}">{{ $car->brand }} - {{ $car->model }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -96,7 +96,6 @@
                                                 <label>Status</label>
                                                 <div class="mb-1">
                                                     <select name="status" id="status" class="form-select">
-                                                        <option value="">-- Pilih Status --</option>
                                                         <option value="active">Active</option>
                                                         <option value="returned">Returned</option>
                                                     </select>

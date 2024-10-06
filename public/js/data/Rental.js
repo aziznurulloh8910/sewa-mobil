@@ -181,14 +181,6 @@ $(document).ready(function() {
 
     $('div.head-label').html('<h3 class="mb-0">Data Rental</h3>');
 
-    // Function to clear the form
-    function clearForm() {
-        $('#rentalForm')[0].reset();
-        $('input[name="_method"]').val('POST');
-        $('#rentalForm').attr('action', appUrl + '/rentals/store');
-    }
-
-
     // Calculate total days
     $('#start_date, #end_date').on('change', function() {
         var startDate = new Date($('#start_date').val());
@@ -202,9 +194,59 @@ $(document).ready(function() {
         }
     });
 
+    // Calculate total cost
+    $('#start_date, #end_date, #car_id').on('change', function() {
+        var startDate = new Date($('#start_date').val());
+        var endDate = new Date($('#end_date').val());
+        var rentalRate = $('#car_id option:selected').data('rental-rate');
+        
+        if (startDate && endDate && endDate >= startDate && rentalRate) {
+            var timeDiff = Math.abs(endDate - startDate);
+            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            var totalCost = diffDays * rentalRate;
+            $('#total_cost').val(totalCost);
+        } else {
+            $('#total_cost').val('');
+        }
+    });
+
+    var totalCostInput = document.getElementById('total_cost');
+
+    function formatToIDR(number) {
+        var numberString = number.toString();
+        var split = numberString.split('.');
+        var rupiah = split[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+        rupiah = 'Rp ' + rupiah + (split[1] ? ',' + split[1] : '');
+
+        return rupiah;
+    }
+
+    totalCostInput.addEventListener('input', function(e) {
+        var value = e.target.value;
+        value = value.replace(/[^,\d]/g, '');
+        e.target.value = formatToIDR(value);
+    });
+
+    // Set start_date to today's date
+    var today = new Date().toISOString().split('T')[0];
+    $('#start_date').val(today);
+
+    // Function to clear the form
+    function clearForm() {
+        $('#rentalForm')[0].reset();
+        $('input[name="_method"]').val('POST');
+        $('#rentalForm').attr('action', appUrl + '/rentals/store');
+    }
+
     // Handle form submission
     $('#rentalForm').on('submit', function(e) {
         e.preventDefault();
+
+        // Convert total_cost back to number
+        var totalCostInput = $('#total_cost');
+        var costValue = totalCostInput.val().replace(/[^0-9]/g, '');
+        totalCostInput.val(costValue);
 
         var formData = $(this).serialize();
         var actionUrl = $(this).attr('action');
@@ -407,8 +449,5 @@ $(document).ready(function() {
             }
         });
     });
-
-    var today = new Date().toISOString().split('T')[0];
-    $('#start_date').val(today);
 
 });

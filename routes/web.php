@@ -34,16 +34,6 @@ Route::group(['middleware' => 'auth'], function () {
     // Home route
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    // Asset management routes
-    Route::prefix('asset')->group(function () {
-        Route::get('/', [AssetController::class, 'index'])->name('asset');
-        Route::get('/data-table', [AssetController::class, 'dataTable']);
-        Route::post('/store', [AssetController::class, 'store'])->name('asset.store');
-        Route::get('/{id}', [AssetController::class, 'show'])->name('asset.show');
-        Route::put('/update/{id}', [AssetController::class, 'update'])->name('asset.update');
-        Route::delete('/delete/{id}', [AssetController::class, 'delete'])->name('asset.delete');
-    });
-
     // Car management routes
     Route::prefix('cars')->group(function () {
         Route::get('/', [CarController::class, 'index'])->name('car');
