@@ -30,7 +30,7 @@
             </li>
 
             <li class="nav-item {{ Request::is('car-returns') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('car-return') }}">
-                <i data-feather="inbox"></i><span class="menu-title text-truncate" data-i18n="car-renturn">Return</span></a>
+                <i data-feather="rotate-ccw"></i><span class="menu-title text-truncate" data-i18n="car-renturn">Return</span></a>
             </li>
 
             @if(auth()->user()->role == 1)

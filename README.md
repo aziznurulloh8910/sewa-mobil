@@ -1,40 +1,76 @@
-JASAMEDIKA TRANSMEDIC PT
+# Aplikasi Persewaan Mobil
 
-HRD 
+## Deskripsi Proyek
+Proyek ini adalah aplikasi persewaan mobil yang dibangun menggunakan Laravel. Aplikasi ini dirancang untuk memudahkan manajemen persewaan mobil, memungkinkan pengguna untuk mendaftar, menambah mobil, memesan, dan mengembalikan mobil dengan mudah. Proyek ini dibuat sebagai bagian dari tahap rekrutmen di PT Jasamedika.
 
-Tugas: Pembuatan Aplikasi Persewaan Mobil
+## Instalasi
 
-Deskripsi:
+### Prasyarat
+- Pastikan Anda memiliki [PHP](https://www.php.net/downloads) dan [Composer](https://getcomposer.org/download/) terinstal di sistem Anda.
+- Instal pustaka yang diperlukan dengan menjalankan:
+  ```bash
+  composer install
+  ```
 
-Anda diminta untuk membuat sebuah aplikasi persewaan mobil menggunakan bahasa pemrograman sesuai deskripsi lowongan yang Anda pilih. Aplikasi ini akan memungkinkan pengguna untuk melakukan beberapa tugas dasar dalam manajemen persewaan mobil.
+### Langkah Instalasi
+1. Clone repositori ini:
+   ```bash
+   git clone https://github.com/username/repo-name.git
+   ```
+2. Masuk ke direktori proyek:
+   ```bash
+   cd repo-name
+   ```
+3. Salin file `.env.example` menjadi `.env` dan sesuaikan konfigurasi yang diperlukan.
+4. Generate application key:
+   ```bash
+   php artisan key:generate
+   ```
+5. Jalankan migrasi database:
+   ```bash
+   php artisan migrate
+   ```
+6. Jalankan aplikasi:
+   ```bash
+   php artisan serve
+   ```
 
-Fitur Aplikasi:
-1.	Registrasi Pengguna:
-•	Pengguna dapat mendaftar dengan mengisi informasi pribadi seperti nama, alamat, nomor telepon, dan nomor SIM.
-•	Informasi pengguna harus disimpan dan dapat diakses kembali.
+## Konfigurasi
+- Konfigurasi database dapat dilakukan di file `.env`.
+- Pastikan untuk menyesuaikan pengaturan seperti nama database, pengguna, dan kata sandi sesuai kebutuhan Anda.
 
-2.	Manajemen Mobil:
-•	Pengguna dapat menambahkan mobil baru ke dalam sistem dengan mengisi detail mobil seperti merek, model, nomor plat, dan tarif sewa per hari.
-•	Data mobil yang ditambahkan harus disimpan dalam sistem dan dapat diakses kembali.
-•	Pengguna dapat mencari mobil berdasarkan merek, model, atau ketersediaan.
-•	Pengguna dapat melihat daftar semua mobil yang tersedia untuk disewa.
+## Fitur Utama
 
-3.	Peminjaman Mobil:
-•	Pengguna dapat memesan mobil dengan memasukkan tanggal mulai dan tanggal selesai penyewaan, serta memilih mobil yang tersedia.
-•	Sistem harus memverifikasi ketersediaan mobil pada tanggal yang diminta.
-•	Data peminjaman harus disimpan dan dapat diakses kembali.
-•	Pengguna dapat melihat daftar mobil yang sedang mereka sewa.
+1. **Registrasi Pengguna**
+   - Pengguna dapat mendaftar dengan informasi pribadi.
+   - Data pengguna disimpan dan dapat diakses kembali.
 
-4.	Pengembalian Mobil:
-•	Pengguna dapat mengembalikan mobil yang telah mereka sewa dengan memasukkan nomor plat mobil.
-•	Sistem harus memverifikasi bahwa mobil tersebut benar-benar disewa oleh pengguna tersebut dan menghitung jumlah hari penyewaan.
-•	Data pengembalian harus disimpan dan dapat diakses kembali.
-•	Sistem harus menghitung jumlah biaya sewa berdasarkan tarif harian dan durasi sewa.
+2. **Manajemen Mobil**
+   - Tambah mobil baru dengan detail lengkap.
+   - Cari mobil berdasarkan merek, model, atau ketersediaan.
+   - Lihat daftar mobil yang tersedia.
 
-5.	Keluar Aplikasi:
-•	Pengguna dapat keluar dari aplikasi & login lagi di lain waktu
+3. **Peminjaman Mobil**
+   - Pesan mobil dengan memilih tanggal dan mobil yang tersedia.
+   - Verifikasi ketersediaan mobil.
+   - Lihat daftar mobil yang sedang disewa.
 
-Petunjuk Pengerjaan:
+4. **Pengembalian Mobil**
+   - Kembalikan mobil dengan memasukkan nomor plat.
+   - Verifikasi penyewaan dan hitung biaya sewa.
 
-Pastikan Anda menggunakan konsep pemrograman yang relevan, seperti pemrosesan data, penggunaan struktur data, dan fungsi. Aplikasi harus memiliki antarmuka pengguna yang intuitif. Gunakan manajemen kesalahan untuk menangani situasi seperti mobil yang tidak tersedia atau pengguna yang tidak terdaftar. Anda dapat menyimpan data pengguna, mobil, peminjaman, dan pengembalian dalam file teks atau menggunakan database sederhana.
-Anda dapat menyesuaikan persyaratan dan spesifikasi tersebut sesuai dengan kemampuan dan kebutuhan Anda. Jika Anda memiliki pertanyaan lebih lanjut, jangan ragu untuk bertanya!
+5. **Keluar Aplikasi**
+   - Pengguna dapat keluar dan login kembali di lain waktu.
+
+## Petunjuk Penggunaan
+- Ikuti antarmuka pengguna yang intuitif untuk navigasi dan penggunaan aplikasi.
+- Gunakan manajemen kesalahan untuk menangani situasi seperti mobil yang tidak tersedia.
+
+## Kontribusi
+- Silakan buat pull request untuk kontribusi atau perbaikan.
+
+## Lisensi
+Proyek ini dilisensikan di bawah [MIT License](LICENSE).
+
+## Pertanyaan
+Jika Anda memiliki pertanyaan lebih lanjut, jangan ragu untuk menghubungi kami di [email@example.com](mailto:email@example.com).

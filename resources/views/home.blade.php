@@ -43,6 +43,59 @@
                 </div>
                 <!-- Akhir elemen yang ditambahkan -->
 
+                <div class="row">
+                    <div class="col-lg-4 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar bg-light-primary p-25 m-0">
+                                        <div class="avatar-content">
+                                            <i data-feather="truck" class="font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ms-1">
+                                        <h4 class="fw-bolder mb-0">{{ $totalCar }}</h4>
+                                        <p class="card-text font-small-3 mb-0">Jumlah Mobil</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar bg-light-success p-25 m-0">
+                                        <div class="avatar-content">
+                                            <i data-feather="inbox" class="font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ms-1">
+                                        <h4 class="fw-bolder mb-0">{{ $carAvailable }}</h4>
+                                        <p class="card-text font-small-3 mb-0">Mobil Tersedia</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar bg-light-danger p-25 m-0">
+                                        <div class="avatar-content">
+                                            <i data-feather="trending-up" class="font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ms-1">
+                                        <h4 class="fw-bolder mb-0">{{ $carRented }}</h4>
+                                        <p class="card-text font-small-3 mb-0">Mobil Disewa</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
