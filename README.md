@@ -7,30 +7,38 @@ Proyek ini adalah aplikasi persewaan mobil yang dibangun menggunakan Laravel. Ap
 
 ### Prasyarat
 - Pastikan Anda memiliki [PHP](https://www.php.net/downloads) dan [Composer](https://getcomposer.org/download/) terinstal di sistem Anda.
-- Instal pustaka yang diperlukan dengan menjalankan:
+- Instal library yang diperlukan dengan menjalankan:
+
   ```bash
   composer install
   ```
 
 ### Langkah Instalasi
 1. Clone repositori ini:
+
    ```bash
    git clone https://github.com/username/repo-name.git
    ```
 2. Masuk ke direktori proyek:
+
    ```bash
    cd repo-name
    ```
 3. Salin file `.env.example` menjadi `.env` dan sesuaikan konfigurasi yang diperlukan.
 4. Generate application key:
+
    ```bash
    php artisan key:generate
    ```
+
 5. Jalankan migrasi database:
+   
    ```bash
    php artisan migrate
    ```
-6. Jalankan aplikasi:
+  
+8. Jalankan aplikasi:
+
    ```bash
    php artisan serve
    ```
@@ -65,12 +73,3 @@ Proyek ini adalah aplikasi persewaan mobil yang dibangun menggunakan Laravel. Ap
 ## Petunjuk Penggunaan
 - Ikuti antarmuka pengguna yang intuitif untuk navigasi dan penggunaan aplikasi.
 - Gunakan manajemen kesalahan untuk menangani situasi seperti mobil yang tidak tersedia.
-
-## Kontribusi
-- Silakan buat pull request untuk kontribusi atau perbaikan.
-
-## Lisensi
-Proyek ini dilisensikan di bawah [MIT License](LICENSE).
-
-## Pertanyaan
-Jika Anda memiliki pertanyaan lebih lanjut, jangan ragu untuk menghubungi kami di [email@example.com](mailto:email@example.com).
